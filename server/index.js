@@ -20,6 +20,9 @@ app.use(
     })
 )
 
+app.get('/', (req, res) => {
+    res.send('<h1>Welcome to My API front page</h1>')
+})
 app.get('/api/download', (req, res) => {
     const fileURL = "./index.js";
     const fileName = 'resume.js';

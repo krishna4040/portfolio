@@ -10,7 +10,7 @@ const handles = [
     "https://www.linkedin.com/in/krishna-jain-842539205/",
     "https://twitter.com/krishna5048",
     "https://www.instagram.com/_its__krish_/",
-    'http://localhost:5000/api/download'
+    'https://portfolio-mailing.onrender.com/api/download'
 ]
 
 const Footer = () => {
