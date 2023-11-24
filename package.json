@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "@sira-ui/tailwind": "^0.11.6",
+    "@sira-ui/tailwind": "^0.9.1",
     "autoprefixer": "^10.4.15",
     "axios": "^1.5.1",
     "concurrently": "^8.2.1",
