@@ -9,22 +9,14 @@ import project4 from '../assets/projects/Project4.png'
 import HTML from "../assets/stack/HTML.png"
 import CSS from "../assets/stack/CSS.png"
 import tailwind from "../assets/stack/Tailwind.png"
-import bootstrap from "../assets/stack/Bootstrap.svg"
-import material from "../assets/stack/MaterialUI.svg"
 import Js from "../assets/stack/Javascript.svg"
-import typescript from "../assets/stack/Typescript.svg"
 import react from "../assets/stack/React.png"
 import redux from "../assets/stack/Redux.svg"
-import next from "../assets/stack/Next.svg"
 import nextCircle from "../assets/stack/NextJsCircle.png"
 import node from "../assets/stack/NodeJs.svg"
-import express from "../assets/stack/Express.png"
 import mongo from "../assets/stack/MongoDB.svg"
-import chart from "../assets/stack/Chartjs.svg"
 import graphql from "../assets/stack/Graphql.svg"
 import vercel from "../assets/stack/Vercel.svg"
-import bash from "../assets/stack/Bash.svg"
-import docker from "../assets/stack/Docker.svg"
 import git from "../assets/stack/Git.svg"
 import github from "../assets/stack/Github.svg"
 import k8s from "../assets/stack/K8s.svg"
@@ -96,10 +88,10 @@ const Projects = () => {
                     setShow={setShowC4}
                 />
             </div>
-            {showC1 && <Modal link={utility[0].link} title={"Study Notion"} content={"Study Notion is a cutting-edge, all-in-one educational technology platform that redefines the way we learn and teach. It's designed to address the modern challenges in education while leveraging the power of MERN technology stack to provide a seamless, efficient, and engaging learning experience."}  show={showC1} setShow={setShowC1} />}
-            {showC3 && <Modal link={utility[0].link} title={"Recyclez"} content={"Recylez is a waste redistribution system built using the mern stack. It targets individuals in small area and big organisation and ngos in big cities. it assigns user roles as supplier and receiver at each succesuful login and helps in redistributing waste"}  show={showC3} setShow={setShowC3} />}
-            {showC4 && <Modal link={utility[0].link} title={"Dev Detectives"} content={"This is a morden web app that uses github api to fecth user accounts and details"}  show={showC4} setShow={setShowC4} />}
-            {showC2 && <Modal link={utility[0].link} title={"Together"} content={"This is a morden social media platform with all the features such as posting , chatting , audio and video calling , connecting with friends. i ve used webRtc to integrate Real time communication features."}  show={showC2} setShow={setShowC2} />}
+            {showC1 && <Modal link={utility[0].link} title={"Study Notion"} content={"Study Notion is a cutting-edge, all-in-one educational technology platform that redefines the way we learn and teach. It's designed to address the modern challenges in education while leveraging the power of MERN technology stack to provide a seamless, efficient, and engaging learning experience."} show={showC1} setShow={setShowC1} />}
+            {showC3 && <Modal link={utility[0].link} title={"Recyclez"} content={"Recylez is a waste redistribution system built using the mern stack. It targets individuals in small area and big organisation and ngos in big cities. it assigns user roles as supplier and receiver at each succesuful login and helps in redistributing waste"} show={showC3} setShow={setShowC3} />}
+            {showC4 && <Modal link={utility[0].link} title={"Dev Detectives"} content={"This is a morden web app that uses github api to fecth user accounts and details"} show={showC4} setShow={setShowC4} />}
+            {showC2 && <Modal link={utility[0].link} title={"Together"} content={"This is a morden social media platform with all the features such as posting , chatting , audio and video calling , connecting with friends. i ve used webRtc to integrate Real time communication features."} show={showC2} setShow={setShowC2} />}
         </section>
     )
 }
