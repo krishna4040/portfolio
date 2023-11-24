@@ -13,17 +13,13 @@ import next from "../assets/stack/Next.svg"
 import node from "../assets/stack/NodeJs.svg"
 import express from "../assets/stack/Express.png"
 import mongo from "../assets/stack/MongoDB.svg"
-import chart from "../assets/stack/Chartjs.svg"
-import graphql from "../assets/stack/Graphql.svg"
 import vercel from "../assets/stack/Vercel.svg"
-import bash from "../assets/stack/Bash.svg"
-import docker from "../assets/stack/Docker.svg"
 import git from "../assets/stack/Git.svg"
 import github from "../assets/stack/Github.svg"
 
 import blob from '../assets/userAsset/blobvector.png'
 
-import {gsap} from 'gsap'
+import { gsap } from 'gsap'
 
 const arr = [
     HTML, CSS, tailwind, bootstrap, material, Js, typescript, react,
@@ -35,7 +31,7 @@ const Stack = () => {
     const blobRef = useRef(null);
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.fromTo(blobRef.current,{},{
+            gsap.fromTo(blobRef.current, {}, {
                 top: '54%',
                 left: '56%',
                 repeat: -1,
@@ -43,7 +39,7 @@ const Stack = () => {
             })
         })
         return () => ctx.revert();
-    },[])
+    }, [])
 
     return (
         <section className='relative flex flex-col w-full gap-8 p-4 my-40 lg:p-20 lg:flex-row ' id='skills'>
