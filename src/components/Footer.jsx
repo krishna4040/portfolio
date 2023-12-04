@@ -29,7 +29,7 @@ const Footer = () => {
                     <a href={handles[1]} target='_blank'><AiFillLinkedin className='cursor-pointer text-white text-4xl transition-all duration-300 hover:text-[#ff4500]' /></a>
                     <a href={handles[4]}><FcDocument className='cursor-pointer text-white text-4xl transition-all duration-300 hover:text-[#ff4500]' /></a>
                 </div>
-                <span className='absolute left-0 bottom-0 text-[#535c87] text-7xl select-none'>Krishna Jain</span>
+                <span className='absolute left-0 bottom-0 text-[#535c87] text-7xl select-none -z-10'>Krishna Jain</span>
             </div>
         </footer>
     )
