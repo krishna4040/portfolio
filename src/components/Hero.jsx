@@ -72,7 +72,7 @@ const Hero = ({ setIsModel }) => {
                 <p className='text-4xl text-[#343d68]'>Hi! Krishna Jain</p>
                 <p className='text-4xl text-[#343d68]'>I am a <span className='text-[#4e45d5]'>{"Full Stack Developer"}</span></p>
                 <p className='mt-[112px]'>I'm a software developer and here is my portfolio website. Here you'll learn about <br /> my journey as software developer</p>
-                <Button text={"Hire Me"} border={1} />
+                <a href="#contact"><Button text={"Hire Me"} border={1} /></a>
             </div>
             <div className='relative p-10'>
                 <img src={pfp} alt="Profile" className='' ref={profile} />
