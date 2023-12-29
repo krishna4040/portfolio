@@ -16,7 +16,7 @@ app.listen(port, () => {
 });
 app.use(
     cors({
-        origin: 'https://portfolio-krishna-jain.netlify.app/',
+        origin: '*',
         credentials: true
     })
 )
