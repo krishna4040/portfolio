@@ -21,23 +21,6 @@ import git from "../assets/stack/Git.svg"
 import github from "../assets/stack/Github.svg"
 import k8s from "../assets/stack/K8s.svg"
 
-const landing = [
-    { id: 1, title: "Parallax Effect", github: "https://github.com/krishna4040/Blog-website", link: "https://parallax-effect-demand.netlify.app/" },
-    { id: 2, title: "Acme Rockets", github: "https://github.com/krishna4040/acme-rocket", link: "https://acme-grp.netlify.app/" },
-    { id: 3, title: "Retro landing", github: "https://github.com/krishna4040/retro", link: "https://retro-landing.netlify.app/" },
-    { id: 4, title: "Magma", github: "https://github.com/krishna4040/magma", link: "https://magma-animated.netlify.app/" },
-    { id: 5, title: "Mordern Chair", github: "https://github.com/krishna4040/Modern-chair", link: "https://featured-chair.netlify.app/" },
-    { id: 6, title: "Food Delivery", github: "", link: "" }
-];
-
-const utility = [
-    { id: 1, title: "Password Generator", github: "https://github.com/krishna4040/Password-Generator", link: "https://randomized-password-generator.netlify.app/" },
-    { id: 2, title: "Weather App", github: "https://github.com/krishna4040/Weather-app", link: "" },
-    { id: 3, title: "Dev Detectives", github: "https://github.com/krishna4040/dev-detective", link: "https://github-profile-get.netlify.app/" },
-    { id: 4, title: "Tic Tac Toe", github: "https://github.com/krishna4040/tic-tac-toe", link: "https://ttt-play.netlify.app/" },
-    { id: 5, title: "Image Gallery", github: "https://github.com/krishna4040/ImageGallery", link: "https://collection-images.netlify.app/" },
-]
-
 const Projects = () => {
 
     const [showC1, setShowC1] = useState(false);
@@ -55,8 +38,7 @@ const Projects = () => {
                     title={"Study Notion"}
                     desc={"Its a full fleged Edtech platform for teachers and students"}
                     number={"01"}
-                    github={utility[0].github}
-                    link={utility[0].link}
+                    github={"https://github.com/krishna4040/study-notion"}
                     align={"right"}
                     setShow={setShowC1}
                 />
@@ -68,6 +50,8 @@ const Projects = () => {
                     number={"02"}
                     align={"left"}
                     setShow={setShowC2}
+                    link={"https://together-social-media.netlify.app/"}
+                    github={"https://github.com/krishna4040/Together"}
                 />
                 <Card
                     background={project3}
@@ -77,6 +61,7 @@ const Projects = () => {
                     align={"right"}
                     desc={"It is a waste Redistribution System"}
                     setShow={setShowC3}
+                    github={"https://github.com/krishna4040/innovation"}
                 />
                 <Card
                     background={project4}
@@ -86,6 +71,8 @@ const Projects = () => {
                     align={"left"}
                     desc={"This is a morden web app that uses github api to fecth user accounts and details"}
                     setShow={setShowC4}
+                    github={"https://github.com/krishna4040/dev-detective"}
+                    link={"https://github-profile-get.netlify.app/"}
                 />
             </div>
             {showC1 && <Modal link={utility[0].link} title={"Study Notion"} content={"Study Notion is a cutting-edge, all-in-one educational technology platform that redefines the way we learn and teach. It's designed to address the modern challenges in education while leveraging the power of MERN technology stack to provide a seamless, efficient, and engaging learning experience."} show={showC1} setShow={setShowC1} />}
