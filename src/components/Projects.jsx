@@ -75,10 +75,10 @@ const Projects = () => {
                     link={"https://github-profile-get.netlify.app/"}
                 />
             </div>
-            {showC1 && <Modal link={utility[0].link} title={"Study Notion"} content={"Study Notion is a cutting-edge, all-in-one educational technology platform that redefines the way we learn and teach. It's designed to address the modern challenges in education while leveraging the power of MERN technology stack to provide a seamless, efficient, and engaging learning experience."} show={showC1} setShow={setShowC1} />}
-            {showC3 && <Modal link={utility[0].link} title={"Recyclez"} content={"Recylez is a waste redistribution system built using the mern stack. It targets individuals in small area and big organisation and ngos in big cities. it assigns user roles as supplier and receiver at each succesuful login and helps in redistributing waste"} show={showC3} setShow={setShowC3} />}
-            {showC4 && <Modal link={utility[0].link} title={"Dev Detectives"} content={"This is a morden web app that uses github api to fecth user accounts and details"} show={showC4} setShow={setShowC4} />}
-            {showC2 && <Modal link={utility[0].link} title={"Together"} content={"This is a morden social media platform with all the features such as posting , chatting , audio and video calling , connecting with friends. i ve used webRtc to integrate Real time communication features."} show={showC2} setShow={setShowC2} />}
+            {showC1 && <Modal link={""} title={"Study Notion"} content={"Study Notion is a cutting-edge, all-in-one educational technology platform that redefines the way we learn and teach. It's designed to address the modern challenges in education while leveraging the power of MERN technology stack to provide a seamless, efficient, and engaging learning experience."} show={showC1} setShow={setShowC1} />}
+            {showC3 && <Modal link={""} title={"Recyclez"} content={"Recylez is a waste redistribution system built using the mern stack. It targets individuals in small area and big organisation and ngos in big cities. it assigns user roles as supplier and receiver at each succesuful login and helps in redistributing waste"} show={showC3} setShow={setShowC3} />}
+            {showC4 && <Modal link={"https://github-profile-get.netlify.app/"} title={"Dev Detectives"} content={"This is a morden web app that uses github api to fecth user accounts and details"} show={showC4} setShow={setShowC4} />}
+            {showC2 && <Modal link={"https://together-social-media.netlify.app/"} title={"Together"} content={"This is a morden social media platform with all the features such as posting , chatting , audio and video calling , connecting with friends. i ve used webRtc to integrate Real time communication features."} show={showC2} setShow={setShowC2} />}
         </section>
     )
 }
