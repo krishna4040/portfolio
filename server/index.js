@@ -3,7 +3,8 @@ require('dotenv').config();
 const { dbConnect } = require('./config/dbConnect')
 const Message = require('./models/message');
 const cors = require('cors');
-const path = require('path')
+const path = require('path');
+const { sendMail } = require('./config/nodemailer')
 
 const app = express();
 const port = process.env.PORT;
@@ -47,6 +48,7 @@ app.post('/api/createEntry', (req, res) => {
             subject,
             message
         });
+        sendMail(name, email, subject, message);
         res.status(200).json({
             success: true,
             info: 'Mail sent'

@@ -1,22 +1,22 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const {template} = require('../utils/template');
+const { template } = require('../utils/template');
 
 const trnasporter = nodemailer.createTransport({
     host: process.env.HOST,
-    auth:{
+    auth: {
         user: process.env.USER,
         pass: process.env.PASS
     }
 });
 
-exports.sendMail = async (name,email,subject,message) => {
+exports.sendMail = async (name, email, subject, message) => {
     try {
-        const info = trnasporter.sendMail({
+        const info = await trnasporter.sendMail({
             from: email,
             to: process.env.USER,
             subject: subject,
-            html: template(name,email,subject,message)
+            html: template(name, email, subject, message)
         })
         if (!info) {
             throw new Error('Unable to send message');
