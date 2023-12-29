@@ -61,7 +61,7 @@ const Projects = () => {
                     align={"right"}
                     desc={"It is a waste Redistribution System"}
                     setShow={setShowC3}
-                    github={"https://github.com/krishna4040/innovation"}
+                    github={"https://github.com/krishna4040/Recyclez"}
                 />
                 <Card
                     background={project4}
