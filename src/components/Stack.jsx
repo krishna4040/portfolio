@@ -52,9 +52,17 @@ const Stack = () => {
             <div className='flex flex-col w-full lg:w-1/2'>
                 <h4 className='text-5xl font-semibold text-[#ff4500]'><span className='text-8xl'>M</span>e and <br /> My Tech Stack</h4>
                 <div className='w-full mt-4 text-justify lg:w-5/6'>
-                    <p className='m-4'>Hello there! I'm Krishna Jain, a passionate technologist with a knack for turning ideas into powerful digital solutions. I'm currently pursuing my BE(IT) at UIET , Panjab University, I've honed my skills in crafting elegant, efficient, and user-centric applications. My journey in the tech world has led me to specialize in the MERN (MongoDB, Express, React, Node.js) stack and an array of JavaScript libraries.</p>
-                    <p className='m-4'>I'm excited to connect with fellow professionals who share a passion for technology and innovation. Let's explore how my proficiency in the MERN stack and JavaScript libraries can elevate your team's projects to new heights. Feel free to reach out, and let's embark on a journey of technological excellence together!"</p>
+                    <p className='m-4'>
+                        <em>Hello there!</em> 👋 I'm Krishna Jain, a full stack Web-developer on a mission to craft user-centric and robust applications. Currently navigating the challenging seas of BE(IT) at UIET, Panjab University, I specialize in the MERN stack and have a knack for Next.js and Typescript - the dynamic duo demanded by today's tech realm.
+                    </p>
+                    <p className='m-4'>
+                        I'm not just a developer; I'm a part-time freelancer and a full-time learner. As I'm delving into the fascinating world of DevOps and the cloud, I'm constantly on the lookout for the next big thing in tech. I get my kicks from collaborating on real-world projects that have the power to make a difference. 💡
+                    </p>
+                    <p className='m-4'>
+                        Ready to turn ideas into reality, I bring a blend of creativity and precision to the code game. Let's build something amazing together, shall we? 😉
+                    </p>
                 </div>
+
             </div>
             <div className='relative flex flex-wrap justify-center lg:w-[40%] w-full gap-8'>
                 {
@@ -64,7 +72,7 @@ const Stack = () => {
                 }
                 <img ref={blobRef} src={blob} alt="blob" className='absolute top-1/2 left-1/2 z-[-1] translate-x-[-50%] translate-y-[-50%]' />
             </div>
-            <span className='absolute text-[15rem] font-semibold select-none bottom-[-35.5%] right-3 text-[#e7e7e7] hidden lg:block'>Skills</span>
+            <span className='absolute text-[14rem] font-semibold select-none bottom-[-31.5%] right-3 text-[#e7e7e7] hidden lg:block'>Skills</span>
         </section>
     )
 }
