@@ -4,6 +4,7 @@ import { BsInstagram } from 'react-icons/bs'
 import { FaTwitter } from 'react-icons/fa'
 import { AiFillLinkedin } from 'react-icons/ai'
 import { FcDocument } from 'react-icons/fc'
+import axios from 'axios'
 
 const handles = [
     "https://github.com/krishna4040",
@@ -27,7 +28,7 @@ const Footer = () => {
                     <a href={handles[3]} target='_blank'><BsInstagram className='cursor-pointer text-white text-4xl transition-all duration-300 hover:text-[#ff4500]' /></a>
                     <a href={handles[2]} target='_blank'><FaTwitter className='cursor-pointer text-white text-4xl transition-all duration-300 hover:text-[#ff4500]' /></a>
                     <a href={handles[1]} target='_blank'><AiFillLinkedin className='cursor-pointer text-white text-4xl transition-all duration-300 hover:text-[#ff4500]' /></a>
-                    <a href={handles[4]}><FcDocument className='cursor-pointer text-white text-4xl transition-all duration-300 hover:text-[#ff4500]' /></a>
+                    <a href={handles[4]} target='_blank'><FcDocument className='cursor-pointer text-white text-4xl transition-all duration-300 hover:text-[#ff4500]' /></a>
                 </div>
                 <span className='absolute left-0 bottom-0 text-[#535c87] text-7xl select-none -z-10'>Krishna Jain</span>
             </div>

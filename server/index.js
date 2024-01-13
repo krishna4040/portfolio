@@ -25,8 +25,9 @@ app.get('/', (req, res) => {
     res.send('<h1>Welcome to My API front page</h1>')
 })
 app.get('/api/download', (req, res) => {
-    const fileURL = "./index.js";
-    const fileName = 'resume.js';
+
+    const fileURL = "./utils/Krishna's Resume-hackerresume.pdf";
+    const fileName = 'resume.pdf';
 
     res.download(fileURL, fileName, (err) => {
         if (err) {
