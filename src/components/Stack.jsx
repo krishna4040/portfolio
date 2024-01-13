@@ -3,8 +3,6 @@ import React, { useLayoutEffect, useRef } from 'react'
 import HTML from "../assets/stack/HTML.png"
 import CSS from "../assets/stack/CSS.png"
 import tailwind from "../assets/stack/Tailwind.png"
-import bootstrap from "../assets/stack/Bootstrap.svg"
-import material from "../assets/stack/MaterialUI.svg"
 import Js from "../assets/stack/Javascript.svg"
 import typescript from "../assets/stack/Typescript.svg"
 import react from "../assets/stack/React.png"
@@ -17,13 +15,21 @@ import vercel from "../assets/stack/Vercel.svg"
 import git from "../assets/stack/Git.svg"
 import github from "../assets/stack/Github.svg"
 
+import socket from '../assets/skills/socket.png'
+import redis from '../assets/skills/redis.svg'
+import nginix from '../assets/skills/nginix.svg'
+import kafka from '../assets/skills/kafka.png'
+import firebase from '../assets/skills/firebase.png'
+import vite from '../assets/skills/vite.png'
+
 import blob from '../assets/userAsset/blobvector.png'
 
 import { gsap } from 'gsap'
 
 const arr = [
-    HTML, CSS, tailwind, bootstrap, material, Js, typescript, react,
-    redux, next, node, express, mongo, vercel, git, github
+    HTML, CSS, tailwind, Js, typescript, react,
+    redux, next, vite, vercel, node, express, mongo, socket, firebase, redis,
+    nginix, kafka, git, github
 ];
 
 const Stack = () => {
@@ -53,7 +59,7 @@ const Stack = () => {
             <div className='relative flex flex-wrap justify-center lg:w-[40%] w-full gap-8'>
                 {
                     arr.map((icon, index) => {
-                        return <img src={icon} alt="tech" key={index} width={85} className='transition-all duration-500 hover:scale-125' />
+                        return <img src={icon} alt="tech" key={index} className='lg:w-[85px] w-20 transition-all duration-500 hover:scale-125' />
                     })
                 }
                 <img ref={blobRef} src={blob} alt="blob" className='absolute top-1/2 left-1/2 z-[-1] translate-x-[-50%] translate-y-[-50%]' />

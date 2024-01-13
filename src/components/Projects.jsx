@@ -10,16 +10,26 @@ import HTML from "../assets/stack/HTML.png"
 import CSS from "../assets/stack/CSS.png"
 import tailwind from "../assets/stack/Tailwind.png"
 import Js from "../assets/stack/Javascript.svg"
+import ts from '../assets/stack/Typescript.svg'
 import react from "../assets/stack/React.png"
 import redux from "../assets/stack/Redux.svg"
+import vite from '../assets/skills/vite.png'
+import axios from '../assets/skills/axios.png'
+import reactform from '../assets/skills/form.svg'
+import zod from '../assets/skills/zod.png'
+import chart from '../assets/stack/Chartjs.svg'
 import nextCircle from "../assets/stack/NextJsCircle.png"
 import node from "../assets/stack/NodeJs.svg"
+import nodemon from '../assets/skills/nodemon.png'
+import express from "../assets/stack/Express.png"
 import mongo from "../assets/stack/MongoDB.svg"
-import graphql from "../assets/stack/Graphql.svg"
-import vercel from "../assets/stack/Vercel.svg"
+import cloudinary from '../assets/skills/cloudinary.jpg'
+import razorpay from '../assets/skills/Razorpay.svg'
+import swagger from '../assets/skills/swagger.png'
+import socket from '../assets/skills/socket.png'
+import firebase from '../assets/skills/firebase.png'
 import git from "../assets/stack/Git.svg"
 import github from "../assets/stack/Github.svg"
-import k8s from "../assets/stack/K8s.svg"
 
 const Projects = () => {
 
@@ -34,9 +44,9 @@ const Projects = () => {
             <div className='lg:max-w-[1200px] w-full mx-auto lg:p-12 flex flex-col p-4 gap-32'>
                 <Card
                     background={project1}
-                    tech={[HTML, CSS, Js, nextCircle, tailwind, react, node, mongo, redux, git, github]}
+                    tech={[HTML, CSS, tailwind, ts, nextCircle, redux, chart, zod, node, express, mongo, razorpay, cloudinary]}
                     title={"Study Notion"}
-                    desc={"Its a full fleged Edtech platform for teachers and students"}
+                    desc={"Its a modern Ed-tech platform for teachers and students"}
                     number={"01"}
                     github={"https://github.com/krishna4040/study-notion"}
                     align={"right"}
@@ -44,7 +54,7 @@ const Projects = () => {
                 />
                 <Card
                     background={project2}
-                    tech={[HTML, CSS, Js, nextCircle, tailwind, redux, vercel]}
+                    tech={[HTML, CSS, Js, react, redux, vite, node, express, mongo, socket, swagger]}
                     title={"Together"}
                     desc={"A platform for real time messaging audio and video call"}
                     number={"02"}
@@ -55,7 +65,7 @@ const Projects = () => {
                 />
                 <Card
                     background={project3}
-                    tech={[HTML, CSS, Js, nextCircle, tailwind, vercel, graphql, k8s]}
+                    tech={[HTML, CSS, Js, react, redux, vite, axios, reactform, node, express, nodemon, firebase]}
                     title={"Recyclez"}
                     number={"03"}
                     align={"right"}
@@ -65,20 +75,20 @@ const Projects = () => {
                 />
                 <Card
                     background={project4}
-                    tech={[HTML, CSS, Js, nextCircle, tailwind]}
+                    tech={[HTML, CSS, Js, vite, tailwind, git, github]}
                     title={"Dev Detectives"}
                     number={"04"}
                     align={"left"}
-                    desc={"This is a morden web app that uses github api to fecth user accounts and details"}
+                    desc={"This is a modern web app that uses github api to fetch user accounts and details"}
                     setShow={setShowC4}
                     github={"https://github.com/krishna4040/dev-detective"}
                     link={"https://github-profile-get.netlify.app/"}
                 />
             </div>
             {showC1 && <Modal link={""} title={"Study Notion"} content={"Study Notion is a cutting-edge, all-in-one educational technology platform that redefines the way we learn and teach. It's designed to address the modern challenges in education while leveraging the power of MERN technology stack to provide a seamless, efficient, and engaging learning experience."} show={showC1} setShow={setShowC1} />}
-            {showC3 && <Modal link={""} title={"Recyclez"} content={"Recylez is a waste redistribution system built using the mern stack. It targets individuals in small area and big organisation and ngos in big cities. it assigns user roles as supplier and receiver at each succesuful login and helps in redistributing waste"} show={showC3} setShow={setShowC3} />}
-            {showC4 && <Modal link={"https://github-profile-get.netlify.app/"} title={"Dev Detectives"} content={"This is a morden web app that uses github api to fecth user accounts and details"} show={showC4} setShow={setShowC4} />}
-            {showC2 && <Modal link={"https://together-social-media.netlify.app/"} title={"Together"} content={"This is a morden social media platform with all the features such as posting , chatting , audio and video calling , connecting with friends. i ve used webRtc to integrate Real time communication features."} show={showC2} setShow={setShowC2} />}
+            {showC3 && <Modal link={""} title={"Recyclez"} content={"Recylez is a waste redistribution system built using the MERN stack. It targets individuals in small area and big organisation and ngos in big cities. it assigns user roles as supplier and receiver at each succesuful login and helps in redistributing waste"} show={showC3} setShow={setShowC3} />}
+            {showC4 && <Modal link={"https://github-profile-get.netlify.app/"} title={"Dev Detectives"} content={"This is a modern web app that uses github api to fetch user accounts and details"} show={showC4} setShow={setShowC4} />}
+            {showC2 && <Modal link={"https://together-social-media.netlify.app/"} title={"Together"} content={"This is a modern social media platform with all the features such as posting , chatting , audio and video calling , connecting with friends. i ve used webRtc to integrate Real time communication features."} show={showC2} setShow={setShowC2} />}
         </section>
     )
 }
