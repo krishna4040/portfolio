@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react'
+import { TypeAnimation } from 'react-type-animation';
 import Button from './Button'
 import pfp from '../assets/userAsset/pfp.jpg'
 import circle from '../assets/userAsset/circle.png'
@@ -70,7 +71,21 @@ const Hero = ({ setIsModel }) => {
         <header className='relative flex flex-col justify-between gap-16 px-4 py-2 mt-16 lg:gap-0 lg:pb-32 lg:px-28 lg:flex-row'>
             <div className='flex flex-col justify-center w-full gap-5'>
                 <p className='text-4xl text-[#343d68]'>Hi! Krishna Jain</p>
-                <p className='text-4xl text-[#343d68]'>I am a <span className='text-[#4e45d5]'>{"Full Stack Developer"}</span></p>
+                <p className='text-4xl text-[#343d68]'>I am a <TypeAnimation
+                    sequence={[
+                        "Full Stack Developer",
+                        4000,
+                        "Frontend Developer",
+                        5000,
+                        "Backend Developer",
+                        6000,
+                    ]}
+                    wrapper='span'
+                    // speed={50}
+                    style={{ color: '#4e45d5' }}
+                    repeat={Infinity}
+                />
+                </p>
                 <p className='mt-[112px]'>I'm a software developer and here is my portfolio website. Here you'll learn about <br /> my journey as software developer</p>
                 <a href="#contact"><Button text={"Hire Me"} border={1} /></a>
             </div>
