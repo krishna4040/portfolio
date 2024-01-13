@@ -17,7 +17,7 @@ import vite from '../assets/skills/vite.png'
 import axios from '../assets/skills/axios.png'
 import reactform from '../assets/skills/form.svg'
 import zod from '../assets/skills/zod.png'
-import chart from '../assets/stack/Chartjs.svg'
+// import chart from '../assets/stack/Chartjs.svg'
 import nextCircle from "../assets/stack/NextJsCircle.png"
 import node from "../assets/stack/NodeJs.svg"
 import nodemon from '../assets/skills/nodemon.png'
@@ -44,7 +44,7 @@ const Projects = () => {
             <div className='lg:max-w-[1200px] w-full mx-auto lg:p-12 flex flex-col p-4 gap-32'>
                 <Card
                     background={project1}
-                    tech={[HTML, CSS, tailwind, ts, nextCircle, redux, chart, zod, node, express, mongo, razorpay, cloudinary]}
+                    tech={[HTML, CSS, tailwind, ts, nextCircle, redux, zod, node, express, mongo, razorpay, cloudinary]}
                     title={"Study Notion"}
                     desc={"Its a modern Ed-tech platform for teachers and students"}
                     number={"01"}
