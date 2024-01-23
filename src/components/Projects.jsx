@@ -49,6 +49,7 @@ const Projects = () => {
                     desc={"Its a modern Ed-tech platform for teachers and students"}
                     number={"01"}
                     github={"https://github.com/krishna4040/study-notion"}
+                    link={"https://study-notion-ten-snowy.vercel.app/"}
                     align={"right"}
                     setShow={setShowC1}
                 />
