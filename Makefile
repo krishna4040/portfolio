@@ -25,7 +25,7 @@ help: ## Show this help message
 # Development Commands
 install: ## Install dependencies for both client and server
 	@echo "$(YELLOW)Installing server dependencies...$(NC)"
-	npm install
+	npm install --legacy-peer-deps
 	@echo "$(YELLOW)Installing client dependencies...$(NC)"
 	cd client && npm install
 	@echo "$(GREEN)Dependencies installed successfully!$(NC)"
@@ -81,12 +81,6 @@ docker-down: ## Stop all services
 
 docker-logs: ## Show logs from all services
 	$(DOCKER_COMPOSE) logs -f
-
-docker-logs-app: ## Show logs from app service only
-	$(DOCKER_COMPOSE) logs -f app
-
-docker-logs-db: ## Show logs from database service only
-	$(DOCKER_COMPOSE) logs -f mongo
 
 docker-clean: ## Clean up Docker containers and images
 	@echo "$(YELLOW)Cleaning Docker containers and images...$(NC)"
@@ -160,7 +154,10 @@ test: ## Run tests
 
 lint: ## Run linting
 	@echo "$(YELLOW)Running linter...$(NC)"
-	cd client && npm run lint
+	npm run lint
+
+lint-fix:
+	npm run lint:fix
 
 # Utility Commands
 status: ## Show status of all services
