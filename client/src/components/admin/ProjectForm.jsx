@@ -1,181 +1,200 @@
-import React, { useState } from 'react';
-import { projectsAPI } from '../../services/api';
+import React, { useState } from "react"
+import { projectsAPI } from "../../services/api"
 
-const ProjectForm = ({ onProjectCreated, editProject = null, onCancel = null }) => {
+const ProjectForm = ({
+  onProjectCreated,
+  editProject = null,
+  onCancel = null,
+}) => {
   const [formData, setFormData] = useState({
-    title: editProject?.title || '',
-    description: editProject?.description || '',
-    longDescription: editProject?.longDescription || '',
-    githubUrl: editProject?.githubUrl || '',
-    liveUrl: editProject?.liveUrl || '',
-    imageUrl: editProject?.imageUrl || '',
+    title: editProject?.title || "",
+    description: editProject?.description || "",
+    longDescription: editProject?.longDescription || "",
+    githubUrl: editProject?.githubUrl || "",
+    liveUrl: editProject?.liveUrl || "",
+    imageUrl: editProject?.imageUrl || "",
     technologies: editProject?.technologies || [],
     isFeatured: editProject?.isFeatured || false,
-    isVisible: editProject?.isVisible !== undefined ? editProject.isVisible : true
-  });
-  const [techInput, setTechInput] = useState({ name: '', icon: '' });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+    isVisible:
+      editProject?.isVisible !== undefined ? editProject.isVisible : true,
+  })
+  const [techInput, setTechInput] = useState({ name: "", icon: "" })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
-  };
+      [name]: type === "checkbox" ? checked : value,
+    })
+  }
 
   const handleTechChange = (e) => {
     setTechInput({
       ...techInput,
-      [e.target.name]: e.target.value
-    });
-  };
+      [e.target.name]: e.target.value,
+    })
+  }
 
   const addTechnology = () => {
     if (techInput.name && techInput.icon) {
       setFormData({
         ...formData,
-        technologies: [...formData.technologies, { ...techInput }]
-      });
-      setTechInput({ name: '', icon: '' });
+        technologies: [...formData.technologies, { ...techInput }],
+      })
+      setTechInput({ name: "", icon: "" })
     }
-  };
+  }
 
   const removeTechnology = (index) => {
     setFormData({
       ...formData,
-      technologies: formData.technologies.filter((_, i) => i !== index)
-    });
-  };
+      technologies: formData.technologies.filter((_, i) => i !== index),
+    })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+    e.preventDefault()
+    setLoading(true)
+    setError("")
 
     try {
       if (editProject) {
-        await projectsAPI.updateProject(editProject._id, formData);
+        await projectsAPI.updateProject(editProject._id, formData)
       } else {
-        await projectsAPI.createProject(formData);
+        await projectsAPI.createProject(formData)
       }
-      onProjectCreated();
+      onProjectCreated()
       if (!editProject) {
         setFormData({
-          title: '',
-          description: '',
-          longDescription: '',
-          githubUrl: '',
-          liveUrl: '',
-          imageUrl: '',
+          title: "",
+          description: "",
+          longDescription: "",
+          githubUrl: "",
+          liveUrl: "",
+          imageUrl: "",
           technologies: [],
           isFeatured: false,
-          isVisible: true
-        });
+          isVisible: true,
+        })
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to save project');
+      setError(err.response?.data?.message || "Failed to save project")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-6">
-        {editProject ? 'Edit Project' : 'Add New Project'}
+    <div className="rounded-lg bg-white p-6 shadow">
+      <h2 className="mb-6 text-2xl font-bold">
+        {editProject ? "Edit Project" : "Add New Project"}
       </h2>
-      
+
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Title</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Title
+            </label>
             <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">GitHub URL</label>
+            <label className="block text-sm font-medium text-gray-700">
+              GitHub URL
+            </label>
             <input
               type="url"
               name="githubUrl"
               value={formData.githubUrl}
               onChange={handleChange}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Live URL</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Live URL
+            </label>
             <input
               type="url"
               name="liveUrl"
               value={formData.liveUrl}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Image URL</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Image URL
+            </label>
             <input
               type="url"
               name="imageUrl"
               value={formData.imageUrl}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             required
             rows={3}
-            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Long Description</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Long Description
+          </label>
           <textarea
             name="longDescription"
             value={formData.longDescription}
             onChange={handleChange}
             rows={5}
-            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
           />
         </div>
 
         {/* Technologies */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Technologies</label>
-          <div className="flex gap-2 mb-2">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            Technologies
+          </label>
+          <div className="mb-2 flex gap-2">
             <input
               type="text"
               name="name"
               placeholder="Technology name"
               value={techInput.name}
               onChange={handleTechChange}
-              className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
             <input
               type="url"
@@ -183,12 +202,12 @@ const ProjectForm = ({ onProjectCreated, editProject = null, onCancel = null }) 
               placeholder="Icon URL"
               value={techInput.icon}
               onChange={handleTechChange}
-              className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
             <button
               type="button"
               onClick={addTechnology}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
             >
               Add
             </button>
@@ -197,7 +216,7 @@ const ProjectForm = ({ onProjectCreated, editProject = null, onCancel = null }) 
             {formData.technologies.map((tech, index) => (
               <span
                 key={index}
-                className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                className="flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm"
               >
                 {tech.name}
                 <button
@@ -239,15 +258,19 @@ const ProjectForm = ({ onProjectCreated, editProject = null, onCancel = null }) 
           <button
             type="submit"
             disabled={loading}
-            className="bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-700 disabled:opacity-50"
+            className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700 disabled:opacity-50"
           >
-            {loading ? 'Saving...' : editProject ? 'Update Project' : 'Create Project'}
+            {loading
+              ? "Saving..."
+              : editProject
+                ? "Update Project"
+                : "Create Project"}
           </button>
           {onCancel && (
             <button
               type="button"
               onClick={onCancel}
-              className="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700"
+              className="rounded bg-gray-600 px-6 py-2 text-white hover:bg-gray-700"
             >
               Cancel
             </button>
@@ -255,7 +278,7 @@ const ProjectForm = ({ onProjectCreated, editProject = null, onCancel = null }) 
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectForm;
+export default ProjectForm

@@ -1,21 +1,21 @@
-import mongoose from "mongoose";
-import Project from "../models/project.js";
-import About from "../models/about.js";
-import Skill from "../models/skill.js";
-import WorkExperience from "../models/workExperience.js";
-import ContactInfo from "../models/contactInfo.js";
-import dotenv from "dotenv";
+import mongoose from "mongoose"
+import Project from "../models/project.js"
+import About from "../models/about.js"
+import Skill from "../models/skill.js"
+import WorkExperience from "../models/workExperience.js"
+import ContactInfo from "../models/contactInfo.js"
+import dotenv from "dotenv"
 
-dotenv.config();
+dotenv.config()
 
 const seedData = async () => {
   try {
     await mongoose.connect(process.env.DB, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    });
+    })
 
-    console.log("Connected to database");
+    console.log("Connected to database")
 
     // Clear existing data
     await Promise.all([
@@ -24,9 +24,9 @@ const seedData = async () => {
       Skill.deleteMany({}),
       WorkExperience.deleteMany({}),
       ContactInfo.deleteMany({}),
-    ]);
+    ])
 
-    console.log("Cleared existing data");
+    console.log("Cleared existing data")
 
     // Seed About
     const aboutData = {
@@ -44,10 +44,10 @@ const seedData = async () => {
         email: "krishnajain5050@gmail.com",
       },
       isActive: true,
-    };
+    }
 
-    await About.create(aboutData);
-    console.log("Seeded About data");
+    await About.create(aboutData)
+    console.log("Seeded About data")
 
     // Seed Skills
     const skillsData = [
@@ -206,10 +206,10 @@ const seedData = async () => {
         yearsOfExperience: 1,
         order: 2,
       },
-    ];
+    ]
 
-    await Skill.insertMany(skillsData);
-    console.log("Seeded Skills data");
+    await Skill.insertMany(skillsData)
+    console.log("Seeded Skills data")
 
     // Seed Work Experience
     const workExperienceData = [
@@ -292,10 +292,10 @@ const seedData = async () => {
         isVisible: true,
         order: 3,
       },
-    ];
+    ]
 
-    await WorkExperience.insertMany(workExperienceData);
-    console.log("Seeded Work Experience data");
+    await WorkExperience.insertMany(workExperienceData)
+    console.log("Seeded Work Experience data")
 
     // Seed Contact Info
     const contactInfoData = {
@@ -315,16 +315,17 @@ const seedData = async () => {
         end: "18:00",
       },
       socialLinks: {
-        linkedin: "https://linkedin.com/in/krishna-jain",
         github: "https://github.com/krishna4040",
-        twitter: "https://twitter.com/krishna_dev",
-        website: "https://krishnajain.dev",
+        linkedin: "https://www.linkedin.com/in/krishna-jain-842539205/",
+        twitter: "https://x.com/krishna5048",
+        instagram: "https://www.instagram.com/_its__krish_/",
+        website: `${process.env.BASE_URL}`,
       },
       isActive: true,
-    };
+    }
 
-    await ContactInfo.create(contactInfoData);
-    console.log("Seeded Contact Info data");
+    await ContactInfo.create(contactInfoData)
+    console.log("Seeded Contact Info data")
 
     // Seed Projects (from existing seed)
     const projectsData = [
@@ -392,17 +393,17 @@ const seedData = async () => {
         isVisible: true,
         order: 2,
       },
-    ];
+    ]
 
-    await Project.insertMany(projectsData);
-    console.log("Seeded Projects data");
+    await Project.insertMany(projectsData)
+    console.log("Seeded Projects data")
 
-    console.log("All data seeded successfully!");
-    process.exit(0);
+    console.log("All data seeded successfully!")
+    process.exit(0)
   } catch (error) {
-    console.error("Error seeding data:", error);
-    process.exit(1);
+    console.error("Error seeding data:", error)
+    process.exit(1)
   }
-};
+}
 
-seedData();
+seedData()

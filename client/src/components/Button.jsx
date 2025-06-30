@@ -1,17 +1,16 @@
-import React from 'react'
+import React from "react"
 
 const Button = ({ text, border, className, setShow }) => {
-    return (
-        <button
-            className={`bg-[#ff4500] py-3 px-9 hover:bg-white transition-all duration-700 relative shadow-lg z-10 text-white
-                    before:content-[""] before:absolute before:bg-white before:top-0 before:right-0 before:left-0 before:bottom-0 before:z-[-1]
-                    before:origin-left before:transition-all before:duration-700 before:scale-x-0 before:hover:scale-x-100
-                    ${border ? 'hover:border-[3px]' : 'border-none'} hover:border-[#ff4500] hover:text-black w-fit ${className}`}
-            onClick={() => { setShow(true) }}
-        >
-            {text}
-        </button>
-    )
+  return (
+    <button
+      className={`relative z-10 bg-[#ff4500] px-9 py-3 text-white shadow-lg transition-all duration-700 before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0 before:z-[-1] before:origin-left before:scale-x-0 before:bg-white before:transition-all before:duration-700 before:content-[""] hover:bg-white before:hover:scale-x-100 ${border ? "hover:border-[3px]" : "border-none"} w-fit hover:border-[#ff4500] hover:text-black ${className}`}
+      onClick={() => {
+        setShow(true)
+      }}
+    >
+      {text}
+    </button>
+  )
 }
 
 export default Button

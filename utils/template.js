@@ -1,5 +1,5 @@
-export const template = (name,email,subject,message) => {
-    return `
+export const template = (name, email, subject, message) => {
+  return `
     <!DOCTYPE html>
     <html lang="en">
     <head>

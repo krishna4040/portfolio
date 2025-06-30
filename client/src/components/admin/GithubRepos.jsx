@@ -1,103 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import { projectsAPI } from '../../services/api';
+import React, { useState, useEffect } from "react"
+import { projectsAPI } from "../../services/api"
 
 const GithubRepos = ({ onProjectCreated }) => {
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [selectedRepos, setSelectedRepos] = useState([]);
+  const [repos, setRepos] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [selectedRepos, setSelectedRepos] = useState([])
 
   useEffect(() => {
-    fetchGithubRepos();
-  }, []);
+    fetchGithubRepos()
+  }, [])
 
   const fetchGithubRepos = async () => {
     try {
-      setLoading(true);
-      setError('');
-      const response = await projectsAPI.getGithubRepos();
-      setRepos(response.data.repos);
+      setLoading(true)
+      setError("")
+      const response = await projectsAPI.getGithubRepos()
+      setRepos(response.data.repos)
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch GitHub repositories');
+      setError(
+        err.response?.data?.message || "Failed to fetch GitHub repositories",
+      )
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleRepoSelect = (repo) => {
-    setSelectedRepos(prev => {
-      const isSelected = prev.find(r => r.id === repo.id);
+    setSelectedRepos((prev) => {
+      const isSelected = prev.find((r) => r.id === repo.id)
       if (isSelected) {
-        return prev.filter(r => r.id !== repo.id);
+        return prev.filter((r) => r.id !== repo.id)
       } else {
-        return [...prev, repo];
+        return [...prev, repo]
       }
-    });
-  };
+    })
+  }
 
   const createProjectsFromRepos = async () => {
     if (selectedRepos.length === 0) {
-      alert('Please select at least one repository');
-      return;
+      alert("Please select at least one repository")
+      return
     }
 
     try {
-      setLoading(true);
+      setLoading(true)
       for (const repo of selectedRepos) {
         const projectData = {
           title: repo.name,
-          description: repo.description || 'No description available',
+          description: repo.description || "No description available",
           githubUrl: repo.html_url,
-          liveUrl: repo.homepage || '',
-          technologies: repo.topics?.map(topic => ({
-            name: topic,
-            icon: '/default-tech.png'
-          })) || [],
+          liveUrl: repo.homepage || "",
+          technologies:
+            repo.topics?.map((topic) => ({
+              name: topic,
+              icon: "/default-tech.png",
+            })) || [],
           isVisible: true,
-          isFeatured: false
-        };
-        
-        await projectsAPI.createProject(projectData);
+          isFeatured: false,
+        }
+
+        await projectsAPI.createProject(projectData)
       }
-      
-      setSelectedRepos([]);
-      onProjectCreated();
-      alert(`Successfully created ${selectedRepos.length} projects!`);
+
+      setSelectedRepos([])
+      onProjectCreated()
+      alert(`Successfully created ${selectedRepos.length} projects!`)
     } catch (error) {
-      console.error('Error creating projects:', error);
-      alert('Failed to create projects from repositories');
+      console.error("Error creating projects:", error)
+      alert("Failed to create projects from repositories")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   if (loading && repos.length === 0) {
     return (
-      <div className="bg-white shadow rounded-lg p-6">
+      <div className="rounded-lg bg-white p-6 shadow">
         <div className="text-center">Loading GitHub repositories...</div>
       </div>
-    );
+    )
   }
 
   if (error) {
     return (
-      <div className="bg-white shadow rounded-lg p-6">
-        <div className="text-red-600 text-center">
+      <div className="rounded-lg bg-white p-6 shadow">
+        <div className="text-center text-red-600">
           {error}
           <button
             onClick={fetchGithubRepos}
-            className="block mx-auto mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="mx-auto mt-4 block rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           >
             Retry
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="bg-white shadow rounded-lg">
-      <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+    <div className="rounded-lg bg-white shadow">
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
         <h2 className="text-2xl font-bold">GitHub Repositories</h2>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-600">
@@ -106,14 +109,14 @@ const GithubRepos = ({ onProjectCreated }) => {
           <button
             onClick={createProjectsFromRepos}
             disabled={loading || selectedRepos.length === 0}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
+            className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50"
           >
-            {loading ? 'Creating...' : 'Create Projects'}
+            {loading ? "Creating..." : "Create Projects"}
           </button>
           <button
             onClick={fetchGithubRepos}
             disabled={loading}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
           >
             Refresh
           </button>
@@ -122,16 +125,19 @@ const GithubRepos = ({ onProjectCreated }) => {
 
       <div className="max-h-96 overflow-y-auto">
         {repos.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            No repositories found. Make sure your GitHub username is set correctly.
+          <div className="py-8 text-center text-gray-500">
+            No repositories found. Make sure your GitHub username is set
+            correctly.
           </div>
         ) : (
           <div className="divide-y divide-gray-200">
             {repos.map((repo) => (
               <div
                 key={repo.id}
-                className={`p-4 hover:bg-gray-50 cursor-pointer ${
-                  selectedRepos.find(r => r.id === repo.id) ? 'bg-blue-50' : ''
+                className={`cursor-pointer p-4 hover:bg-gray-50 ${
+                  selectedRepos.find((r) => r.id === repo.id)
+                    ? "bg-blue-50"
+                    : ""
                 }`}
                 onClick={() => handleRepoSelect(repo)}
               >
@@ -140,7 +146,7 @@ const GithubRepos = ({ onProjectCreated }) => {
                     <div className="flex items-center gap-2">
                       <input
                         type="checkbox"
-                        checked={!!selectedRepos.find(r => r.id === repo.id)}
+                        checked={!!selectedRepos.find((r) => r.id === repo.id)}
                         onChange={() => handleRepoSelect(repo)}
                         className="mr-2"
                       />
@@ -148,25 +154,28 @@ const GithubRepos = ({ onProjectCreated }) => {
                         {repo.name}
                       </h3>
                       {repo.language && (
-                        <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
+                        <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-800">
                           {repo.language}
                         </span>
                       )}
                     </div>
-                    <p className="text-gray-600 mt-1">
-                      {repo.description || 'No description available'}
+                    <p className="mt-1 text-gray-600">
+                      {repo.description || "No description available"}
                     </p>
-                    <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                    <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
                       <span>⭐ {repo.stargazers_count}</span>
                       <span>🍴 {repo.forks_count}</span>
-                      <span>Updated: {new Date(repo.updated_at).toLocaleDateString()}</span>
+                      <span>
+                        Updated:{" "}
+                        {new Date(repo.updated_at).toLocaleDateString()}
+                      </span>
                     </div>
                     {repo.topics && repo.topics.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-2">
+                      <div className="mt-2 flex flex-wrap gap-1">
                         {repo.topics.map((topic) => (
                           <span
                             key={topic}
-                            className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
+                            className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-800"
                           >
                             {topic}
                           </span>
@@ -203,7 +212,7 @@ const GithubRepos = ({ onProjectCreated }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default GithubRepos;
+export default GithubRepos

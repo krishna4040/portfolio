@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { skillsAPI } from "../../services/api";
+import React, { useState, useEffect } from "react"
+import { skillsAPI } from "../../services/api"
 
 const SkillsManager = () => {
-  const [skills, setSkills] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [editingSkill, setEditingSkill] = useState(null);
+  const [skills, setSkills] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [editingSkill, setEditingSkill] = useState(null)
   const [formData, setFormData] = useState({
     name: "",
     category: "frontend",
@@ -14,7 +14,7 @@ const SkillsManager = () => {
     yearsOfExperience: 0,
     isVisible: true,
     order: 0,
-  });
+  })
 
   const categories = [
     { value: "frontend", label: "Frontend" },
@@ -24,66 +24,66 @@ const SkillsManager = () => {
     { value: "cloud", label: "Cloud" },
     { value: "mobile", label: "Mobile" },
     { value: "other", label: "Other" },
-  ];
+  ]
 
   useEffect(() => {
-    fetchSkills();
-  }, []);
+    fetchSkills()
+  }, [])
 
   const fetchSkills = async () => {
     try {
-      setLoading(true);
-      const response = await skillsAPI.getAllSkillsAdmin();
-      setSkills(response.data.skills);
+      setLoading(true)
+      const response = await skillsAPI.getAllSkillsAdmin()
+      setSkills(response.data.skills)
     } catch (error) {
-      console.error("Error fetching skills:", error);
+      console.error("Error fetching skills:", error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       if (editingSkill) {
-        await skillsAPI.updateSkill(editingSkill._id, formData);
+        await skillsAPI.updateSkill(editingSkill._id, formData)
       } else {
-        await skillsAPI.createSkill(formData);
+        await skillsAPI.createSkill(formData)
       }
 
-      fetchSkills();
-      resetForm();
+      fetchSkills()
+      resetForm()
     } catch (error) {
-      console.error("Error saving skill:", error);
+      console.error("Error saving skill:", error)
     }
-  };
+  }
 
   const handleEdit = (skill) => {
-    setEditingSkill(skill);
-    setFormData(skill);
-  };
+    setEditingSkill(skill)
+    setFormData(skill)
+  }
 
   const handleDelete = async (skillId) => {
     if (window.confirm("Are you sure you want to delete this skill?")) {
       try {
-        await skillsAPI.deleteSkill(skillId);
-        fetchSkills();
+        await skillsAPI.deleteSkill(skillId)
+        fetchSkills()
       } catch (error) {
-        console.error("Error deleting skill:", error);
+        console.error("Error deleting skill:", error)
       }
     }
-  };
+  }
 
   const resetForm = () => {
-    setEditingSkill(null);
+    setEditingSkill(null)
     setFormData({
       name: "",
       category: "frontend",
@@ -93,23 +93,23 @@ const SkillsManager = () => {
       yearsOfExperience: 0,
       isVisible: true,
       order: 0,
-    });
-  };
+    })
+  }
 
   if (loading) {
-    return <div className="text-center">Loading skills...</div>;
+    return <div className="text-center">Loading skills...</div>
   }
 
   return (
     <div className="space-y-6">
       {/* Form */}
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-6">
+      <div className="rounded-lg bg-white p-6 shadow">
+        <h2 className="mb-6 text-2xl font-bold">
           {editingSkill ? "Edit Skill" : "Add New Skill"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Name
@@ -120,7 +120,7 @@ const SkillsManager = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
@@ -133,7 +133,7 @@ const SkillsManager = () => {
                 value={formData.category}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               >
                 {categories.map((cat) => (
                   <option key={cat.value} value={cat.value}>
@@ -156,7 +156,7 @@ const SkillsManager = () => {
                 value={formData.icon}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
@@ -172,7 +172,7 @@ const SkillsManager = () => {
                 min="1"
                 max="5"
                 required
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
@@ -186,7 +186,7 @@ const SkillsManager = () => {
                 value={formData.yearsOfExperience}
                 onChange={handleChange}
                 min="0"
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
@@ -199,7 +199,7 @@ const SkillsManager = () => {
                 name="order"
                 value={formData.order}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
           </div>
@@ -213,7 +213,7 @@ const SkillsManager = () => {
               value={formData.description}
               onChange={handleChange}
               rows={3}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
@@ -231,7 +231,7 @@ const SkillsManager = () => {
           <div className="flex gap-4">
             <button
               type="submit"
-              className="bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-700"
+              className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700"
             >
               {editingSkill ? "Update Skill" : "Add Skill"}
             </button>
@@ -239,7 +239,7 @@ const SkillsManager = () => {
               <button
                 type="button"
                 onClick={resetForm}
-                className="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700"
+                className="rounded bg-gray-600 px-6 py-2 text-white hover:bg-gray-700"
               >
                 Cancel
               </button>
@@ -249,8 +249,8 @@ const SkillsManager = () => {
       </div>
 
       {/* Skills List */}
-      <div className="bg-white shadow rounded-lg">
-        <div className="px-6 py-4 border-b border-gray-200">
+      <div className="rounded-lg bg-white shadow">
+        <div className="border-b border-gray-200 px-6 py-4">
           <h2 className="text-2xl font-bold">Skills List</h2>
         </div>
 
@@ -258,34 +258,34 @@ const SkillsManager = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Skill
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Category
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Proficiency
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 bg-white">
               {skills.map((skill) => (
                 <tr key={skill._id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     <div className="flex items-center">
                       <img
-                        className="h-8 w-8 object-contain mr-3"
+                        className="mr-3 h-8 w-8 object-contain"
                         src={skill.icon}
                         alt={skill.name}
                         onError={(e) => {
-                          e.target.src = "/default-icon.png";
+                          e.target.src = "/default-icon.png"
                         }}
                       />
                       <div>
@@ -298,12 +298,12 @@ const SkillsManager = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 capitalize">
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <span className="inline-flex rounded-full bg-blue-100 px-2 py-1 text-xs font-semibold capitalize text-blue-800">
                       {skill.category}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     <div className="flex items-center">
                       {Array.from({ length: 5 }, (_, index) => (
                         <span
@@ -315,9 +315,9 @@ const SkillsManager = () => {
                       ))}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="whitespace-nowrap px-6 py-4">
                     <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
                         skill.isVisible
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
@@ -326,7 +326,7 @@ const SkillsManager = () => {
                       {skill.isVisible ? "Visible" : "Hidden"}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEdit(skill)}
@@ -349,7 +349,7 @@ const SkillsManager = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SkillsManager;
+export default SkillsManager

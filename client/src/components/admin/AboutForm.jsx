@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { aboutAPI, uploadAPI } from "../../services/api";
+import React, { useState, useEffect, useRef } from "react"
+import { aboutAPI, uploadAPI } from "../../services/api"
 
 const AboutForm = () => {
   const [formData, setFormData] = useState({
@@ -15,139 +15,139 @@ const AboutForm = () => {
       twitter: "",
       email: "",
     },
-  });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [uploading, setUploading] = useState({ profile: false, resume: false });
-  const profileInputRef = useRef(null);
-  const resumeInputRef = useRef(null);
+  })
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("")
+  const [uploading, setUploading] = useState({ profile: false, resume: false })
+  const profileInputRef = useRef(null)
+  const resumeInputRef = useRef(null)
 
   useEffect(() => {
-    fetchAboutInfo();
-  }, []);
+    fetchAboutInfo()
+  }, [])
 
   const fetchAboutInfo = async () => {
     try {
-      const response = await aboutAPI.getAbout();
+      const response = await aboutAPI.getAbout()
       if (response.data.about) {
-        setFormData(response.data.about);
+        setFormData(response.data.about)
       }
     } catch (error) {
-      console.error("Error fetching about info:", error);
+      console.error("Error fetching about info:", error)
     }
-  };
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     if (name.startsWith("socialLinks.")) {
-      const field = name.split(".")[1];
+      const field = name.split(".")[1]
       setFormData({
         ...formData,
         socialLinks: {
           ...formData.socialLinks,
           [field]: value,
         },
-      });
+      })
     } else {
       setFormData({
         ...formData,
         [name]: value,
-      });
+      })
     }
-  };
+  }
 
   const handleFileUpload = async (file, type) => {
     try {
-      setUploading({ ...uploading, [type]: true });
+      setUploading({ ...uploading, [type]: true })
 
-      let response;
+      let response
       if (type === "profile") {
-        response = await uploadAPI.uploadProfileImage(file);
+        response = await uploadAPI.uploadProfileImage(file)
       } else if (type === "resume") {
-        response = await uploadAPI.uploadResume(file);
+        response = await uploadAPI.uploadResume(file)
       }
 
-      console.log(response.data);
+      console.log(response.data)
 
       if (response.data.success) {
         if (type === "profile") {
-          setFormData({ ...formData, profileImage: response.data.imageUrl });
+          setFormData({ ...formData, profileImage: response.data.imageUrl })
         } else if (type === "resume") {
-          setFormData({ ...formData, resumeUrl: response.data.resumeUrl });
+          setFormData({ ...formData, resumeUrl: response.data.resumeUrl })
         }
         setMessage(
           `${type === "profile" ? "Profile image" : "Resume"} uploaded successfully!`,
-        );
+        )
       }
     } catch (error) {
       setMessage(
         `Failed to upload ${type === "profile" ? "profile image" : "resume"}`,
-      );
-      console.error(`Error uploading ${type}:`, error);
+      )
+      console.error(`Error uploading ${type}:`, error)
     } finally {
-      setUploading({ ...uploading, [type]: false });
+      setUploading({ ...uploading, [type]: false })
     }
-  };
+  }
 
   const handleFileDelete = async (type) => {
     try {
       const filePath =
-        type === "profile" ? formData.profileImage : formData.resumeUrl;
+        type === "profile" ? formData.profileImage : formData.resumeUrl
 
       if (filePath && filePath.startsWith("/uploads/")) {
-        await uploadAPI.deleteFile(filePath, type);
+        await uploadAPI.deleteFile(filePath, type)
 
         if (type === "profile") {
           setFormData({
             ...formData,
             profileImage: "",
-          });
+          })
         } else if (type === "resume") {
-          setFormData({ ...formData, resumeUrl: "/api/download" });
+          setFormData({ ...formData, resumeUrl: "/api/download" })
         }
 
         setMessage(
           `${type === "profile" ? "Profile image" : "Resume"} deleted successfully!`,
-        );
+        )
       }
     } catch (error) {
       setMessage(
         `Failed to delete ${type === "profile" ? "profile image" : "resume"}`,
-      );
-      console.error(`Error deleting ${type}:`, error);
+      )
+      console.error(`Error deleting ${type}:`, error)
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
+    e.preventDefault()
+    setLoading(true)
+    setMessage("")
 
     try {
-      await aboutAPI.updateAbout(formData);
-      setMessage("About information updated successfully!");
+      await aboutAPI.updateAbout(formData)
+      setMessage("About information updated successfully!")
     } catch (error) {
-      setMessage("Failed to update about information");
-      console.error("Error updating about info:", error);
+      setMessage("Failed to update about information")
+      console.error("Error updating about info:", error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-6">About Information</h2>
+    <div className="rounded-lg bg-white p-6 shadow">
+      <h2 className="mb-6 text-2xl font-bold">About Information</h2>
 
       {message && (
         <div
-          className={`mb-4 p-3 rounded ${message.includes("success") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+          className={`mb-4 rounded p-3 ${message.includes("success") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
         >
           {message}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Name
@@ -158,7 +158,7 @@ const AboutForm = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
@@ -172,7 +172,7 @@ const AboutForm = () => {
               value={formData.title}
               onChange={handleChange}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
@@ -186,7 +186,7 @@ const AboutForm = () => {
               onChange={handleChange}
               required
               rows={3}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
@@ -200,12 +200,12 @@ const AboutForm = () => {
               onChange={handleChange}
               required
               rows={5}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-medium text-gray-700">
               Profile Image
             </label>
             <div className="space-y-3">
@@ -214,9 +214,9 @@ const AboutForm = () => {
                   <img
                     src={formData.profileImage}
                     alt="Profile preview"
-                    className="w-20 h-20 object-cover rounded-full border"
+                    className="h-20 w-20 rounded-full border object-cover"
                     onError={(e) => {
-                      console.log(e);
+                      console.log(e)
                     }}
                   />
                   <div className="flex-1">
@@ -227,7 +227,7 @@ const AboutForm = () => {
                       <button
                         type="button"
                         onClick={() => handleFileDelete("profile")}
-                        className="text-red-600 hover:text-red-800 text-sm"
+                        className="text-sm text-red-600 hover:text-red-800"
                       >
                         Delete uploaded image
                       </button>
@@ -242,8 +242,8 @@ const AboutForm = () => {
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) handleFileUpload(file, "profile");
+                    const file = e.target.files[0]
+                    if (file) handleFileUpload(file, "profile")
                   }}
                   className="hidden"
                 />
@@ -251,7 +251,7 @@ const AboutForm = () => {
                   type="button"
                   onClick={() => profileInputRef.current?.click()}
                   disabled={uploading.profile}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+                  className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
                 >
                   {uploading.profile ? "Uploading..." : "Upload New Image"}
                 </button>
@@ -261,14 +261,14 @@ const AboutForm = () => {
                   value={formData.profileImage}
                   onChange={handleChange}
                   placeholder="Or enter image URL"
-                  className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-medium text-gray-700">
               Resume
             </label>
             <div className="space-y-3">
@@ -278,12 +278,12 @@ const AboutForm = () => {
                     <p className="text-sm text-gray-600">
                       Current: {formData.resumeUrl}
                     </p>
-                    <div className="flex space-x-2 mt-1">
+                    <div className="mt-1 flex space-x-2">
                       <a
                         href={formData.resumeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm"
+                        className="text-sm text-blue-600 hover:text-blue-800"
                       >
                         View Resume
                       </a>
@@ -291,7 +291,7 @@ const AboutForm = () => {
                         <button
                           type="button"
                           onClick={() => handleFileDelete("resume")}
-                          className="text-red-600 hover:text-red-800 text-sm"
+                          className="text-sm text-red-600 hover:text-red-800"
                         >
                           Delete uploaded resume
                         </button>
@@ -307,8 +307,8 @@ const AboutForm = () => {
                   type="file"
                   accept=".pdf"
                   onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) handleFileUpload(file, "resume");
+                    const file = e.target.files[0]
+                    if (file) handleFileUpload(file, "resume")
                   }}
                   className="hidden"
                 />
@@ -316,7 +316,7 @@ const AboutForm = () => {
                   type="button"
                   onClick={() => resumeInputRef.current?.click()}
                   disabled={uploading.resume}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+                  className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
                 >
                   {uploading.resume ? "Uploading..." : "Upload New Resume"}
                 </button>
@@ -326,7 +326,7 @@ const AboutForm = () => {
                   value={formData.resumeUrl}
                   onChange={handleChange}
                   placeholder="Or enter resume URL"
-                  className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
                 />
               </div>
             </div>
@@ -335,7 +335,7 @@ const AboutForm = () => {
 
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-800">Social Links</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 GitHub
@@ -345,7 +345,7 @@ const AboutForm = () => {
                 name="socialLinks.github"
                 value={formData.socialLinks.github}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
@@ -358,7 +358,7 @@ const AboutForm = () => {
                 name="socialLinks.linkedin"
                 value={formData.socialLinks.linkedin}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
@@ -371,7 +371,7 @@ const AboutForm = () => {
                 name="socialLinks.twitter"
                 value={formData.socialLinks.twitter}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
@@ -384,7 +384,7 @@ const AboutForm = () => {
                 name="socialLinks.email"
                 value={formData.socialLinks.email}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
           </div>
@@ -394,14 +394,14 @@ const AboutForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-700 disabled:opacity-50"
+            className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700 disabled:opacity-50"
           >
             {loading ? "Updating..." : "Update About Information"}
           </button>
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default AboutForm;
+export default AboutForm

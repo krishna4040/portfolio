@@ -1,189 +1,205 @@
-import React, { useState, useEffect } from 'react';
-import { contactInfoAPI } from '../../services/api';
+import React, { useState, useEffect } from "react"
+import { contactInfoAPI } from "../../services/api"
 
 const ContactInfoForm = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    phone: '',
+    email: "",
+    phone: "",
     location: {
-      city: '',
-      state: '',
-      country: ''
+      city: "",
+      state: "",
+      country: "",
     },
-    availability: 'available',
-    preferredContactMethod: 'email',
-    responseTime: '24 hours',
+    availability: "available",
+    preferredContactMethod: "email",
+    responseTime: "24 hours",
     workingHours: {
-      timezone: 'UTC',
-      start: '09:00',
-      end: '17:00'
+      timezone: "UTC",
+      start: "09:00",
+      end: "17:00",
     },
     socialLinks: {
-      linkedin: '',
-      github: '',
-      twitter: '',
-      instagram: '',
-      website: ''
-    }
-  });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+      linkedin: "",
+      github: "",
+      twitter: "",
+      instagram: "",
+      website: "",
+    },
+  })
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("")
 
   const availabilityOptions = [
-    { value: 'available', label: 'Available' },
-    { value: 'busy', label: 'Busy' },
-    { value: 'not-available', label: 'Not Available' }
-  ];
+    { value: "available", label: "Available" },
+    { value: "busy", label: "Busy" },
+    { value: "not-available", label: "Not Available" },
+  ]
 
   const contactMethodOptions = [
-    { value: 'email', label: 'Email' },
-    { value: 'phone', label: 'Phone' },
-    { value: 'linkedin', label: 'LinkedIn' },
-    { value: 'any', label: 'Any' }
-  ];
+    { value: "email", label: "Email" },
+    { value: "phone", label: "Phone" },
+    { value: "linkedin", label: "LinkedIn" },
+    { value: "any", label: "Any" },
+  ]
 
   useEffect(() => {
-    fetchContactInfo();
-  }, []);
+    fetchContactInfo()
+  }, [])
 
   const fetchContactInfo = async () => {
     try {
-      const response = await contactInfoAPI.getContactInfo();
+      const response = await contactInfoAPI.getContactInfo()
       if (response.data.contactInfo) {
-        setFormData(response.data.contactInfo);
+        setFormData(response.data.contactInfo)
       }
     } catch (error) {
-      console.error('Error fetching contact info:', error);
+      console.error("Error fetching contact info:", error)
     }
-  };
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    
-    if (name.startsWith('location.')) {
-      const field = name.split('.')[1];
+    const { name, value } = e.target
+
+    if (name.startsWith("location.")) {
+      const field = name.split(".")[1]
       setFormData({
         ...formData,
         location: {
           ...formData.location,
-          [field]: value
-        }
-      });
-    } else if (name.startsWith('workingHours.')) {
-      const field = name.split('.')[1];
+          [field]: value,
+        },
+      })
+    } else if (name.startsWith("workingHours.")) {
+      const field = name.split(".")[1]
       setFormData({
         ...formData,
         workingHours: {
           ...formData.workingHours,
-          [field]: value
-        }
-      });
-    } else if (name.startsWith('socialLinks.')) {
-      const field = name.split('.')[1];
+          [field]: value,
+        },
+      })
+    } else if (name.startsWith("socialLinks.")) {
+      const field = name.split(".")[1]
       setFormData({
         ...formData,
         socialLinks: {
           ...formData.socialLinks,
-          [field]: value
-        }
-      });
+          [field]: value,
+        },
+      })
     } else {
       setFormData({
         ...formData,
-        [name]: value
-      });
+        [name]: value,
+      })
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
+    e.preventDefault()
+    setLoading(true)
+    setMessage("")
 
     try {
-      await contactInfoAPI.updateContactInfo(formData);
-      setMessage('Contact information updated successfully!');
+      await contactInfoAPI.updateContactInfo(formData)
+      setMessage("Contact information updated successfully!")
     } catch (error) {
-      setMessage('Failed to update contact information');
-      console.error('Error updating contact info:', error);
+      setMessage("Failed to update contact information")
+      console.error("Error updating contact info:", error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-      
+    <div className="rounded-lg bg-white p-6 shadow">
+      <h2 className="mb-6 text-2xl font-bold">Contact Information</h2>
+
       {message && (
-        <div className={`mb-4 p-3 rounded ${message.includes('success') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+        <div
+          className={`mb-4 rounded p-3 ${message.includes("success") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+        >
           {message}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Basic Contact Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Phone</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Phone
+            </label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Availability</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Availability
+            </label>
             <select
               name="availability"
               value={formData.availability}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             >
-              {availabilityOptions.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
+              {availabilityOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Preferred Contact Method</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Preferred Contact Method
+            </label>
             <select
               name="preferredContactMethod"
               value={formData.preferredContactMethod}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             >
-              {contactMethodOptions.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
+              {contactMethodOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Response Time</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Response Time
+            </label>
             <input
               type="text"
               name="responseTime"
               value={formData.responseTime}
               onChange={handleChange}
               placeholder="e.g., 24 hours, 2-3 days"
-              className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
           </div>
         </div>
@@ -191,37 +207,43 @@ const ContactInfoForm = () => {
         {/* Location */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-800">Location</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700">City</label>
+              <label className="block text-sm font-medium text-gray-700">
+                City
+              </label>
               <input
                 type="text"
                 name="location.city"
                 value={formData.location.city}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">State</label>
+              <label className="block text-sm font-medium text-gray-700">
+                State
+              </label>
               <input
                 type="text"
                 name="location.state"
                 value={formData.location.state}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Country</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Country
+              </label>
               <input
                 type="text"
                 name="location.country"
                 value={formData.location.country}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
           </div>
@@ -230,38 +252,44 @@ const ContactInfoForm = () => {
         {/* Working Hours */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-800">Working Hours</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Timezone</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Timezone
+              </label>
               <input
                 type="text"
                 name="workingHours.timezone"
                 value={formData.workingHours.timezone}
                 onChange={handleChange}
                 placeholder="e.g., UTC, EST, PST"
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Start Time</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Start Time
+              </label>
               <input
                 type="time"
                 name="workingHours.start"
                 value={formData.workingHours.start}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">End Time</label>
+              <label className="block text-sm font-medium text-gray-700">
+                End Time
+              </label>
               <input
                 type="time"
                 name="workingHours.end"
                 value={formData.workingHours.end}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
           </div>
@@ -270,59 +298,69 @@ const ContactInfoForm = () => {
         {/* Social Links */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-800">Social Links</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">LinkedIn</label>
+              <label className="block text-sm font-medium text-gray-700">
+                LinkedIn
+              </label>
               <input
                 type="url"
                 name="socialLinks.linkedin"
                 value={formData.socialLinks.linkedin}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">GitHub</label>
+              <label className="block text-sm font-medium text-gray-700">
+                GitHub
+              </label>
               <input
                 type="url"
                 name="socialLinks.github"
                 value={formData.socialLinks.github}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Twitter</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Twitter
+              </label>
               <input
                 type="url"
                 name="socialLinks.twitter"
                 value={formData.socialLinks.twitter}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Instagram</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Instagram
+              </label>
               <input
                 type="url"
                 name="socialLinks.instagram"
                 value={formData.socialLinks.instagram}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700">Website</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Website
+              </label>
               <input
                 type="url"
                 name="socialLinks.website"
                 value={formData.socialLinks.website}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
               />
             </div>
           </div>
@@ -332,14 +370,14 @@ const ContactInfoForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-700 disabled:opacity-50"
+            className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700 disabled:opacity-50"
           >
-            {loading ? 'Updating...' : 'Update Contact Information'}
+            {loading ? "Updating..." : "Update Contact Information"}
           </button>
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default ContactInfoForm;
+export default ContactInfoForm
