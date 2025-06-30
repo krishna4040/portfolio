@@ -64,7 +64,14 @@ router.get("/admin/all", auth, async (req, res) => {
 // Create project
 router.post("/", auth, async (req, res) => {
   try {
-    const projectData = { ...req.body }
+    const projectData = {
+      ...req.body,
+      technologies: req.body.technologies.map(({ name, icon }) => ({
+        name,
+        icon:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/" + icon,
+      })),
+    }
 
     // If no image provided, get one from Unsplash
     if (!projectData.imageUrl && projectData.title) {

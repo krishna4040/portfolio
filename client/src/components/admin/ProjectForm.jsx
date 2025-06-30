@@ -197,9 +197,9 @@ const ProjectForm = ({
               className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             />
             <input
-              type="url"
+              type="text"
               name="icon"
-              placeholder="Icon URL"
+              placeholder="Icon Key"
               value={techInput.icon}
               onChange={handleTechChange}
               className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
