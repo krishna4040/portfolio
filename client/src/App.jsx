@@ -14,13 +14,13 @@ import AdminDashboard from "./components/admin/AdminDashboard"
 import Preloader from "./components/Preloader"
 import useAppLoading from "./hooks/useAppLoading"
 
-const HomePage = ({ isDark, setIsDark, setIsModal, loadingHook }) => (
+const HomePage = ({ isDark, setIsDark, loadingHook }) => (
   <div
     className={`${isDark ? "dark" : ""} min-h-screen w-full overflow-y-auto overflow-x-hidden bg-white transition-colors duration-300 dark:bg-gray-900`}
   >
     <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
       <Navbar isDark={isDark} setIsDark={setIsDark} />
-      <Hero setIsModal={setIsModal} loadingHook={loadingHook} />
+      <Hero loadingHook={loadingHook} />
       <Projects loadingHook={loadingHook} />
       <Stack loadingHook={loadingHook} />
       <WorkExperience loadingHook={loadingHook} />
@@ -35,7 +35,6 @@ const App = () => {
     const saved = localStorage.getItem("darkMode")
     return saved ? JSON.parse(saved) : false
   })
-  const [isModal, setIsModal] = useState(false)
   const loadingHook = useAppLoading()
 
   // Save dark mode preference to localStorage
@@ -59,7 +58,6 @@ const App = () => {
             <HomePage
               isDark={isDark}
               setIsDark={setIsDark}
-              setIsModal={setIsModal}
               loadingHook={loadingHook}
             />
           }

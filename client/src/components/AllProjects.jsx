@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { projectsAPI } from "../services/api"
 import Card from "./Card"
-import Modal from "./Modal"
 
 const AllProjects = () => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [selectedProject, setSelectedProject] = useState(null)
-  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     fetchProjects()
@@ -29,11 +26,6 @@ const AllProjects = () => {
     } finally {
       setLoading(false)
     }
-  }
-
-  const handleShowModal = (project) => {
-    setSelectedProject(project)
-    setShowModal(true)
   }
 
   if (loading) {
@@ -103,18 +95,6 @@ const AllProjects = () => {
           ))
         )}
       </div>
-
-      {showModal && selectedProject && (
-        <Modal
-          link={selectedProject.liveUrl}
-          title={selectedProject.title}
-          content={
-            selectedProject.longDescription || selectedProject.description
-          }
-          show={showModal}
-          setShow={setShowModal}
-        />
-      )}
     </section>
   )
 }

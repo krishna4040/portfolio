@@ -9,7 +9,7 @@ import plus from "../assets/userAsset/plus.png"
 import zigzags from "../assets/userAsset/zigzags.png"
 import { gsap } from "gsap"
 
-const Hero = ({ setIsModel, loadingHook }) => {
+const Hero = ({ loadingHook }) => {
   const [aboutInfo, setAboutInfo] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
