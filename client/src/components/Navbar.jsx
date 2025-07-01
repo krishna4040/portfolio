@@ -9,7 +9,11 @@ const Navbar = ({ isDark, setIsDark }) => {
   const isAdminPage = location.pathname.startsWith("/admin")
 
   return (
-    <nav className="flex w-full flex-col items-center justify-between bg-white p-4 transition-colors duration-300 lg:flex-row dark:bg-gray-900">
+    <nav
+      className="flex w-full flex-col items-center justify-between bg-white p-4 transition-colors duration-300 lg:flex-row dark:bg-gray-900"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div className="relative w-full">
         <Link to="/">
           <img src={kLogo} alt="K" className="w-24" />
