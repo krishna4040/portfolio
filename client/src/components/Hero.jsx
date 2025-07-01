@@ -46,57 +46,79 @@ const Hero = ({ loadingHook }) => {
   }
 
   useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.fromTo(
-        profile.current,
-        {
-          scale: 1,
-        },
-        {
-          scale: 1.1,
-          repeat: -1,
-          filter: "grayScale(1)",
-          yoyo: true,
-          duration: 1,
-        },
-      )
-      gsap.to(cubeRef.current, {
-        y: 50,
-        rotateY: 360,
-        repeat: -1,
-        yoyo: true,
-        duration: 0.8,
-      })
-      gsap.to(dotsRef.current, {
-        y: -20,
-        repeat: -1,
-        yoyo: true,
-        duration: 0.5,
-      })
-      gsap.to(plusRef.current, {
-        top: "2%",
-        left: "48%",
-        repeat: -1,
-        yoyo: true,
-        duration: 0.5,
-      })
-      gsap.to(zigzagsRef.current, {
-        left: "5%",
-        top: "2%",
-        repeat: -1,
-        yoyo: true,
-        duration: 0.5,
-      })
-      gsap.to(circleRef.current, {
-        left: "5%",
-        bottom: "10%",
-        repeat: -1,
-        yoyo: true,
-        duration: 0.5,
-      })
+    if (loading) return // Don't run until loading is false
+
+    // Debug: log refs
+    console.log("GSAP refs:", {
+      profile: profile.current,
+      cube: cubeRef.current,
+      dots: dotsRef.current,
+      plus: plusRef.current,
+      zigzags: zigzagsRef.current,
+      circle: circleRef.current,
     })
-    return () => ctx.revert()
-  }, [])
+
+    if (
+      profile.current &&
+      cubeRef.current &&
+      dotsRef.current &&
+      plusRef.current &&
+      zigzagsRef.current &&
+      circleRef.current
+    ) {
+      let ctx = gsap.context(() => {
+        console.log("Running GSAP animations")
+        gsap.fromTo(
+          profile.current,
+          { scale: 1 },
+          {
+            scale: 1.1,
+            repeat: -1,
+            filter: "grayScale(1)",
+            yoyo: true,
+            duration: 1,
+          },
+        )
+        gsap.to(cubeRef.current, {
+          y: 50,
+          rotateY: 360,
+          repeat: -1,
+          yoyo: true,
+          duration: 0.8,
+        })
+        gsap.to(dotsRef.current, {
+          y: -20,
+          repeat: -1,
+          yoyo: true,
+          duration: 0.5,
+        })
+        gsap.to(plusRef.current, {
+          top: "2%",
+          left: "48%",
+          repeat: -1,
+          yoyo: true,
+          duration: 0.5,
+        })
+        gsap.to(zigzagsRef.current, {
+          left: "5%",
+          top: "2%",
+          repeat: -1,
+          yoyo: true,
+          duration: 0.5,
+        })
+        gsap.to(circleRef.current, {
+          left: "5%",
+          bottom: "10%",
+          repeat: -1,
+          yoyo: true,
+          duration: 0.5,
+        })
+      })
+      return () => ctx.revert()
+    } else {
+      console.warn("One or more GSAP refs are null, skipping animation")
+    }
+  }, [loading])
 
   if (loading) {
     return (
