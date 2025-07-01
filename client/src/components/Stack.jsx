@@ -3,7 +3,7 @@ import { gsap } from "gsap"
 import { skillsAPI, aboutAPI } from "../services/api"
 import blob from "../assets/userAsset/blobvector.png"
 
-const Stack = () => {
+const Stack = ({ loadingHook }) => {
   const [skills, setSkills] = useState([])
   const [aboutInfo, setAboutInfo] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -50,6 +50,9 @@ const Stack = () => {
       setAboutInfo(null)
     } finally {
       setLoading(false)
+      if (loadingHook) {
+        loadingHook.setComponentLoading("skills", false)
+      }
     }
   }
 

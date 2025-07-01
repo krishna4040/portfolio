@@ -11,18 +11,20 @@ import ProjectDetail from "./components/ProjectDetail"
 import WorkExperience from "./components/WorkExperience"
 import AdminLogin from "./components/admin/AdminLogin"
 import AdminDashboard from "./components/admin/AdminDashboard"
+import Preloader from "./components/Preloader"
+import useAppLoading from "./hooks/useAppLoading"
 
-const HomePage = ({ isDark, setIsDark, setIsModal }) => (
+const HomePage = ({ isDark, setIsDark, setIsModal, loadingHook }) => (
   <div
     className={`${isDark ? "dark" : ""} min-h-screen w-full overflow-y-auto overflow-x-hidden bg-white transition-colors duration-300 dark:bg-gray-900`}
   >
     <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
       <Navbar isDark={isDark} setIsDark={setIsDark} />
-      <Hero setIsModal={setIsModal} />
-      <Projects />
-      <Stack />
-      <WorkExperience />
-      <Contact />
+      <Hero setIsModal={setIsModal} loadingHook={loadingHook} />
+      <Projects loadingHook={loadingHook} />
+      <Stack loadingHook={loadingHook} />
+      <WorkExperience loadingHook={loadingHook} />
+      <Contact loadingHook={loadingHook} />
       <Footer />
     </div>
   </div>
@@ -34,6 +36,7 @@ const App = () => {
     return saved ? JSON.parse(saved) : false
   })
   const [isModal, setIsModal] = useState(false)
+  const loadingHook = useAppLoading()
 
   // Save dark mode preference to localStorage
   React.useEffect(() => {
@@ -42,6 +45,13 @@ const App = () => {
 
   return (
     <Router>
+      {/* Preloader */}
+      <Preloader
+        isLoading={loadingHook.isAppLoading}
+        loadingText={loadingHook.getLoadingMessage()}
+        progress={loadingHook.getLoadingProgress()}
+      />
+
       <Routes>
         <Route
           path="/"
@@ -50,6 +60,7 @@ const App = () => {
               isDark={isDark}
               setIsDark={setIsDark}
               setIsModal={setIsModal}
+              loadingHook={loadingHook}
             />
           }
         />

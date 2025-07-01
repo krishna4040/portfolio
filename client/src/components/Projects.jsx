@@ -4,7 +4,7 @@ import Card from "./Card"
 import Modal from "./Modal"
 import { projectsAPI } from "../services/api"
 
-const Projects = () => {
+const Projects = ({ loadingHook }) => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -29,6 +29,9 @@ const Projects = () => {
       setProjects([])
     } finally {
       setLoading(false)
+      if (loadingHook) {
+        loadingHook.setComponentLoading("projects", false)
+      }
     }
   }
 

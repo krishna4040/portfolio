@@ -1,10 +1,9 @@
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import Button from "./Button"
 import axios from "axios"
 import { RiSendPlaneFill } from "react-icons/ri"
 
-const Contact = () => {
+const Contact = ({ loadingHook }) => {
   const form = useForm()
   const { register, reset, handleSubmit, formState } = form
   const { errors, isSubmitSuccessful } = formState
@@ -12,6 +11,12 @@ const Contact = () => {
   useEffect(() => {
     isSubmitSuccessful ? reset() : null
   }, [isSubmitSuccessful])
+
+  useEffect(() => {
+    if (loadingHook) {
+      loadingHook.setComponentLoading("contact", false)
+    }
+  }, [])
 
   const sumbitHandler = (data) => {
     const { name, email, subject, message } = data

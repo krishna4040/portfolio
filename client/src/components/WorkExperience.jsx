@@ -12,7 +12,7 @@ import {
   FaExternalLinkAlt,
 } from "react-icons/fa"
 
-const WorkExperience = () => {
+const WorkExperience = ({ loadingHook }) => {
   const [experiences, setExperiences] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -34,6 +34,9 @@ const WorkExperience = () => {
       setExperiences([])
     } finally {
       setLoading(false)
+      if (loadingHook) {
+        loadingHook.setComponentLoading("workExperience", false)
+      }
     }
   }
 
