@@ -2,8 +2,13 @@ import axios from "axios"
 
 export const fetchGithubRepos = async (username) => {
   try {
+    const headers = {}
+    if (process.env.GITHUB_TOKEN) {
+      headers.Authorization = `token ${process.env.GITHUB_TOKEN}`
+    }
     const response = await axios.get(
       `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`,
+      { headers },
     )
     return response.data.map((repo) => ({
       id: repo.id,
