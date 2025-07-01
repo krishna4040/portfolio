@@ -14,7 +14,7 @@ YELLOW = \033[1;33m
 BLUE = \033[0;34m
 NC = \033[0m # No Color
 
-.PHONY: help install build dev start stop clean logs test docker-build docker-run docker-up docker-down docker-logs docker-clean setup-db create-admin seed-data reset-db
+.PHONY: help install build dev start stop clean logs test docker-build docker-run docker-up docker-down docker-logs docker-clean setup-db create-admin seed reset-db
 
 # Default target
 help: ## Show this help message
@@ -32,7 +32,7 @@ install: ## Install dependencies for both client and server
 
 build: ## Build the application for production
 	@echo "$(YELLOW)Building application...$(NC)"
-	cd client && npm run build && cp -r dist ../
+	cd client && npm run build && mv dist ../
 	@echo "$(GREEN)Application built successfully!$(NC)"
 
 dev: ## Start development server with hot reload
@@ -45,7 +45,7 @@ start: ## Start production server
 
 stop: ## Stop all running processes
 	@echo "$(YELLOW)Stopping all processes...$(NC)"
-	pkill -f "node index.js" || true
+	pkill -f "node server/index.js" || true
 	pkill -f "vite" || true
 	@echo "$(GREEN)Processes stopped!$(NC)"
 
@@ -54,7 +54,6 @@ clean: ## Clean build artifacts and node_modules
 	rm -rf dist/
 	rm -rf node_modules/
 	rm -rf client/node_modules/
-	rm -rf client/dist/
 	@echo "$(GREEN)Clean completed!$(NC)"
 
 # Docker Commands
@@ -98,7 +97,7 @@ docker-rebuild: ## Rebuild and restart services
 setup-db: ## Setup database with initial data
 	@echo "$(YELLOW)Setting up database...$(NC)"
 	$(DOCKER_COMPOSE) exec app npm run create-admin
-	$(DOCKER_COMPOSE) exec app npm run seed-all
+	$(DOCKER_COMPOSE) exec app npm run seed
 	@echo "$(GREEN)Database setup completed!$(NC)"
 
 create-admin: ## Create admin user
@@ -106,9 +105,9 @@ create-admin: ## Create admin user
 	$(DOCKER_COMPOSE) exec app npm run create-admin
 	@echo "$(GREEN)Admin user created!$(NC)"
 
-seed-data: ## Seed sample data
+seed: ## Seed sample data
 	@echo "$(YELLOW)Seeding sample data...$(NC)"
-	$(DOCKER_COMPOSE) exec app npm run seed-all
+	$(DOCKER_COMPOSE) exec app npm run seed
 	@echo "$(GREEN)Sample data seeded!$(NC)"
 
 reset-db: ## Reset database (WARNING: This will delete all data)

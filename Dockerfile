@@ -1,36 +1,38 @@
-# Use Node.js 18 Alpine as base image
-FROM node:18-alpine
+# Stage 1: Build client
+FROM node:18-alpine AS client-builder
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm install
+COPY client/ ./
+RUN npm run build
 
-# Set working directory
+# Stage 2: Prepare server
+FROM node:18-alpine AS server-builder
+WORKDIR /app
+COPY package*.json package-lock.json ./
+RUN npm ci --only=production --legacy-peer-deps
+COPY server/ ./server/
+COPY scripts/ ./scripts/
+COPY --from=client-builder /app/client/dist ./dist
+
+# Stage 3: Final image
+FROM node:18-alpine
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Create non-root user and change ownership
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001
 
-# Install dependencies
-RUN npm ci --only=production --legacy-peer-deps
+COPY --from=server-builder --chown=nextjs:nodejs /app .
 
-# Copy source code
-COPY . .
+# The 'uploads' directory will be mounted as a volume,
+# but we create it here and set permissions to avoid potential issues.
+RUN mkdir -p /app/uploads && \
+    chown -R nextjs:nodejs /app/uploads
 
-# Install client dependencies and build
-RUN cd client && npm install && npm run build
-
-# Copy built frontend to root
-RUN cp -r client/dist ./
-
-# Create non-root user
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-
-# Change ownership of the app directory
-RUN chown -R nextjs:nodejs /app
 USER nextjs
 
-# Expose port
 EXPOSE 5000
-
-# Set environment to production
 ENV NODE_ENV=production
 
 # Start the application

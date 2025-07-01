@@ -1,11 +1,10 @@
 import express from "express"
 import dotenv from "dotenv"
-import cors from "cors"
 import path from "path"
 import { fileURLToPath } from "url"
 import { dbConnect } from "./config/dbConnect.js"
 import Message from "./models/message.js"
-import { sendMail } from "./config/nodemailer.js"
+// import { sendMail } from "./config/nodemailer.js"
 
 // Import routes
 import authRoutes from "./routes/auth.js"
@@ -15,15 +14,19 @@ import skillRoutes from "./routes/skills.js"
 import workExperienceRoutes from "./routes/workExperience.js"
 import contactInfoRoutes from "./routes/contactInfo.js"
 import uploadRoutes from "./routes/upload.js"
-
-dotenv.config()
+import { existsSync } from "fs"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const env = process.env.NODE_ENV || "development"
+const envFile = path.resolve(__dirname, "..", `.env.${env}`)
+existsSync(envFile)
+  ? dotenv.config({ path: envFile })
+  : dotenv.config({ path: path.resolve(__dirname, "..", ".env") })
+
 const app = express()
 const port = process.env.PORT || 5000
-const isProduction = process.env.NODE_ENV === "production"
 
 dbConnect()
 
@@ -37,23 +40,21 @@ app.use("/api/skills", skillRoutes)
 app.use("/api/work-experience", workExperienceRoutes)
 app.use("/api/contact-info", contactInfoRoutes)
 app.use("/api/upload", uploadRoutes)
-
-// Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
-// Serve static files in production
-if (isProduction) {
+if (env === "production") {
   app.use(express.static(path.join(__dirname, "dist")))
 
-  // Handle React routing, return all requests to React app
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"))
-  })
+  app.get("*", (_, res) =>
+    res.sendFile(path.join(__dirname, "dist", "index.html")),
+  )
 }
 
 app.listen(port, () => {
   console.log(`Server started successfully at port ${port}`)
-  console.log(`Environment: ${isProduction ? "production" : "development"}`)
+  console.log(
+    `Environment: ${env === "production" ? "production" : "development"}`,
+  )
 })
 
 // Contact form endpoint
@@ -67,7 +68,7 @@ app.post("/api/createEntry", async (req, res) => {
       })
     }
 
-    const entry = await Message.create({
+    await Message.create({
       name,
       email,
       subject,
@@ -88,7 +89,7 @@ app.post("/api/createEntry", async (req, res) => {
 })
 
 // Resume download endpoint (optional)
-app.get("/api/download", (req, res) => {
+app.get("/api/download", (_, res) => {
   const fileURL = "./utils/resume.pdf"
   const fileName = "resume.pdf"
 

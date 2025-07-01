@@ -1,8 +1,5 @@
 import nodemailer from "nodemailer"
-import dotenv from "dotenv"
 import { template } from "../utils/template.js"
-
-dotenv.config()
 
 const transporter = nodemailer.createTransport({
   host: process.env.HOST,
