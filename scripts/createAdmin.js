@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-import Admin from "../models/admin.js"
+import Admin from "../server/models/admin.js"
 import dotenv from "dotenv"
 
-dotenv.config()
+dotenv.config({ path: "env.production" })
 
 const createAdmin = async () => {
   try {
