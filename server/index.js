@@ -41,10 +41,10 @@ app.use("/api/upload", uploadRoutes)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 if (env === "production") {
-  app.use(express.static(path.join(__dirname, "dist")))
+  app.use(express.static(path.join(__dirname, "..", "dist")))
 
   app.get("*", (_, res) =>
-    res.sendFile(path.join(__dirname, "dist", "index.html")),
+    res.sendFile(path.join(__dirname, "dist", "..", "index.html")),
   )
 }
 
