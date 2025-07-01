@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "@sira-ui/tailwind": "^0.9.1",
     "autoprefixer": "^10.4.15",
     "axios": "^1.5.1",
     "gsap": "^3.12.2",

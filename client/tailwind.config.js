@@ -5,5 +5,4 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("@sira-ui/tailwind")],
 }
