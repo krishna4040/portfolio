@@ -35,8 +35,8 @@ const seedData = async () => {
       description:
         "Passionate developer with expertise in modern web technologies",
       bio: "I am a dedicated full-stack developer with a passion for creating innovative web solutions. Currently pursuing BE(IT) at UIET, Panjab University, I specialize in the MERN stack and have experience with Next.js and TypeScript.",
-      profileImage: `${process.env.BASE_URL}/server/uploads/profiles/profile.jpg`,
-      resumeUrl: `${process.env.BASE_URL}/server/uploads/resumes/resume.pdf`,
+      profileImage: `${process.env.BASE_URL}/uploads/profiles/profile.jpg`,
+      resumeUrl: `${process.env.BASE_URL}/uploads/resumes/resume.pdf`,
       socialLinks: {
         github: "https://github.com/krishna4040",
         linkedin: "https://www.linkedin.com/in/krishna-jain-842539205/",
@@ -339,7 +339,7 @@ const seedData = async () => {
         githubUrl: "https://github.com/krishna4040/study-notion",
         liveUrl: "https://study-notion-ten-snowy.vercel.app/",
         youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        imageUrl: `${process.env.BASE_URL}/server/uploads/backgrounds/study-notion.png`,
+        imageUrl: `${process.env.BASE_URL}/uploads/backgrounds/study-notion.png`,
         images: [
           "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800",
           "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
@@ -401,7 +401,7 @@ const seedData = async () => {
         githubUrl: "https://github.com/krishna4040/Together",
         liveUrl: "https://together-social-media.netlify.app/",
         youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        imageUrl: `${process.env.BASE_URL}/server/uploads/backgrounds/together.png`,
+        imageUrl: `${process.env.BASE_URL}/uploads/backgrounds/together.png`,
         images: [
           "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800",
           "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
@@ -459,7 +459,7 @@ const seedData = async () => {
           "A comprehensive portfolio website built with MERN stack featuring a dynamic admin panel for content management. Includes dark mode support, responsive design, project showcase, skills management, and contact form integration. The admin panel allows for easy content updates without code changes.",
         githubUrl: "https://github.com/krishna4040/portfolio",
         liveUrl: "https://krishna-portfolio.vercel.app/",
-        imageUrl: `${process.env.BASE_URL}/server/uploads/backgrounds/portfolio.png`,
+        imageUrl: `${process.env.BASE_URL}/uploads/backgrounds/portfolio.png`,
         images: [
           "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
           "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
