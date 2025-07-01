@@ -332,11 +332,34 @@ const seedData = async () => {
       {
         title: "Study Notion",
         description: "Its a modern Ed-tech platform for teachers and students",
+        shortDescription:
+          "Modern Ed-tech platform with course management and video streaming",
         longDescription:
-          "A comprehensive education platform built with MERN stack featuring course management, video streaming, payment integration, and real-time communication.",
+          "A comprehensive education platform built with MERN stack featuring course management, video streaming, payment integration, and real-time communication. Students can enroll in courses, watch video lectures, take quizzes, and interact with instructors. The platform includes secure payment processing, progress tracking, and certificate generation.",
         githubUrl: "https://github.com/krishna4040/study-notion",
         liveUrl: "https://study-notion-ten-snowy.vercel.app/",
+        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         imageUrl: `${process.env.BASE_URL}/uploads/study-notion.png`,
+        images: [
+          "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800",
+          "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
+          "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800",
+        ],
+        videos: [
+          "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+        ],
+        features: [
+          "Course management system with video streaming",
+          "Secure payment integration with Razorpay",
+          "Real-time progress tracking and analytics",
+          "Interactive quizzes and assignments",
+          "Certificate generation upon completion",
+          "Instructor dashboard with student management",
+        ],
+        collaborators: ["Krishna Jain", "Team Member 1"],
+        startDate: new Date("2023-06-01"),
+        endDate: new Date("2023-09-30"),
+        status: "completed",
         technologies: [
           {
             name: "React",
@@ -359,6 +382,12 @@ const seedData = async () => {
             icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
           },
         ],
+        githubData: {
+          stars: 45,
+          forks: 12,
+          language: "JavaScript",
+          lastUpdated: new Date(),
+        },
         isFeatured: true,
         isVisible: true,
         order: 1,
@@ -366,11 +395,34 @@ const seedData = async () => {
       {
         title: "Together",
         description: "A platform for real time messaging audio and video call",
+        shortDescription: "Real-time communication platform with video calling",
         longDescription:
-          "Social media platform with real-time communication features including text messaging, voice calls, video calls, and file sharing using WebRTC technology.",
+          "Social media platform with real-time communication features including text messaging, voice calls, video calls, and file sharing using WebRTC technology. Built with modern web technologies to provide seamless communication experience with features like group chats, media sharing, and online status indicators.",
         githubUrl: "https://github.com/krishna4040/Together",
         liveUrl: "https://together-social-media.netlify.app/",
+        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         imageUrl: `${process.env.BASE_URL}/uploads/together.png`,
+        images: [
+          "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800",
+          "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800",
+          "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800",
+        ],
+        videos: [
+          "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+        ],
+        features: [
+          "Real-time text messaging with Socket.io",
+          "Video and audio calling with WebRTC",
+          "File and media sharing capabilities",
+          "Group chat functionality",
+          "Online status indicators",
+          "Message encryption for security",
+          "Mobile-responsive design",
+        ],
+        collaborators: ["Krishna Jain"],
+        startDate: new Date("2023-03-01"),
+        endDate: new Date("2023-05-30"),
+        status: "completed",
         technologies: [
           {
             name: "React",
@@ -389,9 +441,69 @@ const seedData = async () => {
             icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",
           },
         ],
+        githubData: {
+          stars: 32,
+          forks: 8,
+          language: "JavaScript",
+          lastUpdated: new Date(),
+        },
         isFeatured: true,
         isVisible: true,
         order: 2,
+      },
+      {
+        title: "Portfolio Website",
+        description: "Personal portfolio website with admin panel",
+        shortDescription: "Modern portfolio with dark mode and admin dashboard",
+        longDescription:
+          "A comprehensive portfolio website built with MERN stack featuring a dynamic admin panel for content management. Includes dark mode support, responsive design, project showcase, skills management, and contact form integration. The admin panel allows for easy content updates without code changes.",
+        githubUrl: "https://github.com/krishna4040/portfolio",
+        liveUrl: "https://krishna-portfolio.vercel.app/",
+        imageUrl: `${process.env.BASE_URL}/uploads/portfolio.png`,
+        images: [
+          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
+          "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
+        ],
+        features: [
+          "Dynamic content management through admin panel",
+          "Dark mode with smooth transitions",
+          "Responsive design for all devices",
+          "Project showcase with detailed pages",
+          "Skills and experience management",
+          "Contact form with email integration",
+          "SEO optimized with meta tags",
+        ],
+        collaborators: ["Krishna Jain"],
+        startDate: new Date("2024-01-01"),
+        endDate: null,
+        status: "in-progress",
+        technologies: [
+          {
+            name: "React",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+          },
+          {
+            name: "Node.js",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
+          },
+          {
+            name: "MongoDB",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",
+          },
+          {
+            name: "Tailwind CSS",
+            icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+          },
+        ],
+        githubData: {
+          stars: 15,
+          forks: 3,
+          language: "JavaScript",
+          lastUpdated: new Date(),
+        },
+        isFeatured: true,
+        isVisible: true,
+        order: 3,
       },
     ]
 

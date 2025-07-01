@@ -98,7 +98,7 @@ const AllProjects = () => {
               github={project.githubUrl}
               link={project.liveUrl}
               align={index % 2 === 0 ? "right" : "left"}
-              setShow={() => handleShowModal(project)}
+              projectId={project._id}
             />
           ))
         )}

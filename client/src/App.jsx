@@ -7,6 +7,7 @@ import Stack from "./components/Stack"
 import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import AllProjects from "./components/AllProjects"
+import ProjectDetail from "./components/ProjectDetail"
 import WorkExperience from "./components/WorkExperience"
 import AdminLogin from "./components/admin/AdminLogin"
 import AdminDashboard from "./components/admin/AdminDashboard"
@@ -61,6 +62,20 @@ const App = () => {
               <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
                 <Navbar isDark={isDark} setIsDark={setIsDark} />
                 <AllProjects />
+                <Footer />
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/project/:id"
+          element={
+            <div
+              className={`${isDark ? "dark" : ""} min-h-screen w-full overflow-y-auto overflow-x-hidden bg-white transition-colors duration-300 dark:bg-gray-900`}
+            >
+              <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
+                <Navbar isDark={isDark} setIsDark={setIsDark} />
+                <ProjectDetail />
                 <Footer />
               </div>
             </div>

@@ -10,6 +10,10 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    shortDescription: {
+      type: String,
+      default: "",
+    },
     longDescription: {
       type: String,
       default: "",
@@ -28,9 +32,50 @@ const projectSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    youtubeUrl: {
+      type: String,
+      default: "",
+    },
     imageUrl: {
       type: String,
       default: "",
+    },
+    images: [
+      {
+        type: String,
+        default: [],
+      },
+    ],
+    videos: [
+      {
+        type: String,
+        default: [],
+      },
+    ],
+    features: [
+      {
+        type: String,
+        default: [],
+      },
+    ],
+    collaborators: [
+      {
+        type: String,
+        default: [],
+      },
+    ],
+    startDate: {
+      type: Date,
+      default: null,
+    },
+    endDate: {
+      type: Date,
+      default: null,
+    },
+    status: {
+      type: String,
+      enum: ["planning", "in-progress", "completed", "on-hold"],
+      default: "completed",
     },
     isFeatured: {
       type: Boolean,
@@ -41,6 +86,12 @@ const projectSchema = new mongoose.Schema(
       default: true,
     },
     githubData: {
+      stars: { type: Number, default: 0 },
+      forks: { type: Number, default: 0 },
+      language: { type: String, default: "" },
+      lastUpdated: { type: Date, default: Date.now },
+    },
+    githubStats: {
       stars: { type: Number, default: 0 },
       forks: { type: Number, default: 0 },
       language: { type: String, default: "" },

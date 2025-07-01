@@ -1,5 +1,5 @@
 import React from "react"
-import Button from "./Button"
+import { Link } from "react-router-dom"
 import { FaGithub } from "react-icons/fa"
 import { BiLink } from "react-icons/bi"
 
@@ -13,7 +13,7 @@ const Card = ({
   number,
   github,
   link,
-  setShow,
+  projectId,
 }) => {
   return (
     <div
@@ -44,7 +44,12 @@ const Card = ({
         </h3>
         <p className="w-full italic text-white lg:w-[70%]">{desc}</p>
         <div className="flex items-center gap-4">
-          <Button text={"Read More"} border={0} setShow={setShow} />
+          <Link
+            to={`/project/${projectId}`}
+            className="relative z-10 w-fit bg-[#ff4500] px-9 py-3 text-white shadow-lg transition-all duration-700 before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0 before:z-[-1] before:origin-left before:scale-x-0 before:bg-white before:transition-all before:duration-700 before:content-[''] hover:bg-white hover:text-black before:hover:scale-x-100 dark:bg-[#ff6b35] dark:before:bg-gray-200 dark:hover:bg-gray-200"
+          >
+            Read More
+          </Link>
           <a href={github} target="_blank" rel="noreferrer">
             <FaGithub className="cursor-pointer text-4xl text-white transition-all duration-500 hover:text-[#ff4500] dark:hover:text-[#ff6b35]" />
           </a>

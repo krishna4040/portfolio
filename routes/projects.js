@@ -43,7 +43,7 @@ router.get("/:id", async (req, res) => {
         .status(404)
         .json({ success: false, message: "Project not found" })
     }
-    res.json({ success: true, project })
+    res.json(project)
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }
