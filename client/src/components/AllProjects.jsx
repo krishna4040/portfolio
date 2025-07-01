@@ -38,26 +38,30 @@ const AllProjects = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#e7e7e7]">
-        <div className="text-2xl text-[#ff4500]">Loading projects...</div>
+      <div className="flex min-h-screen items-center justify-center bg-[#e7e7e7] transition-colors duration-300 dark:bg-gray-800">
+        <div className="text-2xl text-[#ff4500] dark:text-[#ff6b35]">
+          Loading projects...
+        </div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <section className="flex min-h-screen flex-col items-center justify-center bg-[#e7e7e7] px-4">
-        <h1 className="mb-8 text-center text-[90px] text-[#ff4500]">
+      <section className="flex min-h-screen flex-col items-center justify-center bg-[#e7e7e7] px-4 transition-colors duration-300 dark:bg-gray-800">
+        <h1 className="mb-8 text-center text-[90px] text-[#ff4500] dark:text-[#ff6b35]">
           All Projects
         </h1>
         <div className="text-center">
-          <div className="mb-4 text-2xl text-red-600">
+          <div className="mb-4 text-2xl text-red-600 dark:text-red-400">
             Error loading projects:
           </div>
-          <div className="mb-6 text-lg text-gray-700">{error}</div>
+          <div className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+            {error}
+          </div>
           <button
             onClick={fetchProjects}
-            className="rounded-lg bg-[#ff4500] px-6 py-3 text-xl font-semibold text-white transition-colors duration-300 hover:bg-[#e03d00]"
+            className="rounded-lg bg-[#ff4500] px-6 py-3 text-xl font-semibold text-white transition-colors duration-300 hover:bg-[#e03d00] dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
           >
             Retry
           </button>
@@ -67,13 +71,13 @@ const AllProjects = () => {
   }
 
   return (
-    <section className="flex w-full flex-col items-center justify-center bg-[#e7e7e7] pb-16 pt-32 lg:-my-6">
-      <h1 className="mb-8 text-center text-[90px] text-[#ff4500]">
+    <section className="flex w-full flex-col items-center justify-center bg-[#e7e7e7] pb-16 pt-32 transition-colors duration-300 lg:-my-6 dark:bg-gray-800">
+      <h1 className="mb-8 text-center text-[90px] text-[#ff4500] dark:text-[#ff6b35]">
         All Projects
       </h1>
       <div className="mx-auto flex w-full flex-col gap-32 p-4 lg:max-w-[1200px] lg:p-12">
         {projects.length === 0 ? (
-          <div className="text-center text-2xl text-gray-600">
+          <div className="text-center text-2xl text-gray-600 dark:text-gray-300">
             <p>No projects found.</p>
             <p className="mt-2 text-lg">
               Please check the admin panel to add projects.

@@ -97,8 +97,8 @@ const Hero = ({ setIsModel }) => {
 
   if (loading) {
     return (
-      <header className="relative mt-16 flex min-h-[400px] flex-col items-center justify-center gap-16 px-4 py-2 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32">
-        <div className="text-center text-2xl text-gray-600">
+      <header className="relative mt-16 flex min-h-[400px] flex-col items-center justify-center gap-16 bg-gray-50 px-4 py-2 transition-colors duration-300 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32 dark:bg-gray-800">
+        <div className="text-center text-2xl text-gray-600 dark:text-gray-300">
           Loading about information...
         </div>
       </header>
@@ -107,15 +107,17 @@ const Hero = ({ setIsModel }) => {
 
   if (error) {
     return (
-      <header className="relative mt-16 flex min-h-[400px] flex-col items-center justify-center gap-16 px-4 py-2 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32">
+      <header className="relative mt-16 flex min-h-[400px] flex-col items-center justify-center gap-16 bg-gray-50 px-4 py-2 transition-colors duration-300 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32 dark:bg-gray-800">
         <div className="text-center">
-          <div className="mb-4 text-2xl text-red-600">
+          <div className="mb-4 text-2xl text-red-600 dark:text-red-400">
             Error loading about information:
           </div>
-          <div className="mb-6 text-lg text-gray-700">{error}</div>
+          <div className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+            {error}
+          </div>
           <button
             onClick={fetchAboutInfo}
-            className="rounded-lg bg-[#ff4500] px-6 py-3 text-white hover:bg-[#e03d00]"
+            className="rounded-lg bg-[#ff4500] px-6 py-3 text-white transition-colors duration-300 hover:bg-[#e03d00] dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
           >
             Retry
           </button>
@@ -126,12 +128,12 @@ const Hero = ({ setIsModel }) => {
 
   if (!aboutInfo) {
     return (
-      <header className="relative mt-16 flex min-h-[400px] flex-col items-center justify-center gap-16 px-4 py-2 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32">
+      <header className="relative mt-16 flex min-h-[400px] flex-col items-center justify-center gap-16 bg-gray-50 px-4 py-2 transition-colors duration-300 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32 dark:bg-gray-800">
         <div className="text-center">
-          <div className="mb-4 text-2xl text-gray-600">
+          <div className="mb-4 text-2xl text-gray-600 dark:text-gray-300">
             No about information available
           </div>
-          <div className="mb-6 text-lg text-gray-700">
+          <div className="mb-6 text-lg text-gray-700 dark:text-gray-400">
             Please check the admin panel to add your information.
           </div>
         </div>
@@ -145,10 +147,12 @@ const Hero = ({ setIsModel }) => {
   const displayImage = aboutInfo.profileImage
 
   return (
-    <header className="relative mt-16 flex flex-col justify-between gap-16 px-4 py-2 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32">
+    <header className="relative mt-16 flex flex-col justify-between gap-16 bg-gray-50 px-4 py-2 transition-colors duration-300 lg:flex-row lg:gap-0 lg:px-28 lg:pb-32 dark:bg-gray-800">
       <div className="flex w-full flex-col justify-center gap-5">
-        <p className="text-4xl text-[#343d68]">Hi! {displayName}</p>
-        <p className="text-4xl text-[#343d68]">
+        <p className="text-4xl text-[#343d68] transition-colors duration-300 dark:text-gray-200">
+          Hi! {displayName}
+        </p>
+        <p className="text-4xl text-[#343d68] transition-colors duration-300 dark:text-gray-200">
           I am a{" "}
           <TypeAnimation
             sequence={[
@@ -166,7 +170,9 @@ const Hero = ({ setIsModel }) => {
             repeat={Infinity}
           />
         </p>
-        <p className="mt-[112px]">{displayDescription}</p>
+        <p className="mt-[112px] transition-colors duration-300 dark:text-gray-300">
+          {displayDescription}
+        </p>
         <a href="#contact">
           <Button text={"Hire Me"} border={1} />
         </a>
@@ -211,11 +217,11 @@ const Hero = ({ setIsModel }) => {
           className="absolute top-0"
           ref={zigzagsRef}
         />
-        <span className="absolute -bottom-64 text-[112px] text-[#e7e7e7] lg:-bottom-3 lg:left-2 lg:hidden">
+        <span className="absolute -bottom-64 text-[112px] text-[#e7e7e7] transition-colors duration-300 lg:-bottom-3 lg:left-2 lg:hidden dark:text-gray-700">
           {displayName.toLowerCase()}
         </span>
       </div>
-      <span className="absolute hidden text-[112px] text-[#e7e7e7] lg:-bottom-3 lg:left-2 lg:block">
+      <span className="absolute hidden text-[112px] text-[#e7e7e7] transition-colors duration-300 lg:-bottom-3 lg:left-2 lg:block dark:text-gray-700">
         {displayName.toLowerCase()}
       </span>
     </header>

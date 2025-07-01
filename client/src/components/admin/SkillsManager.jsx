@@ -103,8 +103,8 @@ const SkillsManager = () => {
   return (
     <div className="space-y-6">
       {/* Form */}
-      <div className="rounded-lg bg-white p-6 shadow">
-        <h2 className="mb-6 text-2xl font-bold">
+      <div className="rounded-lg bg-white p-6 shadow transition-colors duration-300 dark:bg-gray-700">
+        <h2 className="mb-6 text-2xl font-bold dark:text-white">
           {editingSkill ? "Edit Skill" : "Add New Skill"}
         </h2>
 
@@ -231,7 +231,7 @@ const SkillsManager = () => {
           <div className="flex gap-4">
             <button
               type="submit"
-              className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700"
+              className="rounded bg-orange-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-orange-700 dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
             >
               {editingSkill ? "Update Skill" : "Add Skill"}
             </button>
@@ -239,7 +239,7 @@ const SkillsManager = () => {
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded bg-gray-600 px-6 py-2 text-white hover:bg-gray-700"
+                className="rounded bg-gray-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
               >
                 Cancel
               </button>
@@ -249,22 +249,22 @@ const SkillsManager = () => {
       </div>
 
       {/* Skills List */}
-      <div className="rounded-lg bg-white shadow">
-        <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-2xl font-bold">Skills List</h2>
+      <div className="rounded-lg bg-white shadow transition-colors duration-300 dark:bg-gray-700">
+        <div className="border-b border-gray-200 px-6 py-4 dark:border-gray-700">
+          <h2 className="text-2xl font-bold dark:text-white">Skills List</h2>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Skill
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Category
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Proficiency
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">

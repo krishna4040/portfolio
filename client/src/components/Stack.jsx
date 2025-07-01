@@ -56,10 +56,10 @@ const Stack = () => {
   if (loading) {
     return (
       <section
-        className="relative my-40 flex w-full flex-col gap-8 p-4 lg:flex-row lg:p-20"
+        className="relative my-40 flex w-full flex-col gap-8 bg-white p-4 transition-colors duration-300 lg:flex-row lg:p-20 dark:bg-gray-900"
         id="skills"
       >
-        <div className="text-center text-2xl text-gray-600">
+        <div className="text-center text-2xl text-gray-600 dark:text-gray-300">
           Loading skills and about info...
         </div>
       </section>
@@ -69,15 +69,19 @@ const Stack = () => {
   if (error) {
     return (
       <section
-        className="relative my-40 flex w-full flex-col gap-8 p-4 lg:flex-row lg:p-20"
+        className="relative my-40 flex w-full flex-col gap-8 bg-white p-4 transition-colors duration-300 lg:flex-row lg:p-20 dark:bg-gray-900"
         id="skills"
       >
         <div className="text-center">
-          <div className="mb-4 text-2xl text-red-600">Error loading data:</div>
-          <div className="mb-6 text-lg text-gray-700">{error}</div>
+          <div className="mb-4 text-2xl text-red-600 dark:text-red-400">
+            Error loading data:
+          </div>
+          <div className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+            {error}
+          </div>
           <button
             onClick={fetchData}
-            className="rounded-lg bg-[#ff4500] px-6 py-3 text-white hover:bg-[#e03d00]"
+            className="rounded-lg bg-[#ff4500] px-6 py-3 text-white transition-colors duration-300 hover:bg-[#e03d00] dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
           >
             Retry
           </button>
@@ -88,23 +92,25 @@ const Stack = () => {
 
   return (
     <section
-      className="relative my-40 flex w-full flex-col gap-8 p-4 lg:flex-row lg:p-20"
+      className="relative my-40 flex w-full flex-col gap-8 bg-white p-4 transition-colors duration-300 lg:flex-row lg:p-20 dark:bg-gray-900"
       id="skills"
     >
       <div className="flex w-full flex-col lg:w-1/2">
-        <h4 className="text-5xl font-semibold text-[#ff4500]">
+        <h4 className="text-5xl font-semibold text-[#ff4500] transition-colors duration-300 dark:text-[#ff6b35]">
           <span className="text-8xl">M</span>e and <br /> My Tech Stack
         </h4>
         <div className="mt-4 w-full text-justify lg:w-5/6">
           {aboutInfo ? (
             <div className="space-y-4">
-              <p className="m-4">
+              <p className="m-4 transition-colors duration-300 dark:text-gray-300">
                 <em>Hello there!</em> I'm {aboutInfo.name},{" "}
                 {aboutInfo.title.toLowerCase()} on a mission to craft
                 user-centric and robust applications.
               </p>
-              <p className="m-4">{aboutInfo.bio}</p>
-              <p className="m-4">
+              <p className="m-4 transition-colors duration-300 dark:text-gray-300">
+                {aboutInfo.bio}
+              </p>
+              <p className="m-4 transition-colors duration-300 dark:text-gray-300">
                 Ready to turn ideas into reality, I bring a blend of creativity
                 and precision to the code game. Let's build something amazing
                 together, shall we?
@@ -112,7 +118,7 @@ const Stack = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              <p className="m-4 text-red-600">
+              <p className="m-4 text-red-600 dark:text-red-400">
                 No about information available. Please check the admin panel to
                 add your information.
               </p>
@@ -133,14 +139,14 @@ const Stack = () => {
                   e.target.src = "/assets/stack/default.png"
                 }}
               />
-              <div className="absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-600">
                 {skill.name}
-                <div className="absolute left-1/2 top-full -translate-x-1/2 transform border-2 border-transparent border-t-gray-800"></div>
+                <div className="absolute left-1/2 top-full -translate-x-1/2 transform border-2 border-transparent border-t-gray-800 dark:border-t-gray-600"></div>
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center text-gray-600">
+          <div className="text-center text-gray-600 dark:text-gray-300">
             <p>No skills available.</p>
             <p className="mt-2 text-sm">
               Please check the admin panel to add skills.
@@ -154,7 +160,7 @@ const Stack = () => {
           className="absolute left-1/2 top-1/2 z-[-1] translate-x-[-50%] translate-y-[-50%]"
         />
       </div>
-      <span className="absolute bottom-[-31.5%] right-3 hidden select-none text-[14rem] font-semibold text-[#e7e7e7] lg:block">
+      <span className="absolute bottom-[-31.5%] right-3 hidden select-none text-[14rem] font-semibold text-[#e7e7e7] transition-colors duration-300 lg:block dark:text-gray-700">
         Skills
       </span>
     </section>

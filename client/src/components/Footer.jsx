@@ -15,13 +15,13 @@ const handles = [
 
 const Footer = () => {
   return (
-    <footer className="relative w-full overflow-hidden bg-[#343d68] px-10 py-20 lg:p-20">
+    <footer className="relative w-full overflow-hidden bg-[#343d68] px-10 py-20 transition-colors duration-300 lg:p-20 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-between gap-4 lg:flex-row lg:flex-wrap lg:items-center">
         <ul className="flex gap-5 lg:flex-wrap lg:justify-between">
           <li>
             <a
               href="#projects"
-              className="text-xl text-white transition-all duration-200 hover:text-[#ff4500]"
+              className="text-xl text-white transition-all duration-200 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]"
             >
               Projects
             </a>
@@ -29,7 +29,7 @@ const Footer = () => {
           <li>
             <a
               href="#skills"
-              className="text-xl text-white transition-all duration-200 hover:text-[#ff4500]"
+              className="text-xl text-white transition-all duration-200 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]"
             >
               Skills
             </a>
@@ -37,7 +37,7 @@ const Footer = () => {
           <li>
             <a
               href="#contact"
-              className="text-xl text-white transition-all duration-200 hover:text-[#ff4500]"
+              className="text-xl text-white transition-all duration-200 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]"
             >
               Contact Me
             </a>
@@ -45,24 +45,24 @@ const Footer = () => {
         </ul>
         <div className="flex gap-5 lg:flex-wrap lg:gap-4">
           <a href={handles[0]} target="_blank" rel="noreferrer">
-            <BsGithub className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500]" />
+            <BsGithub className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]" />
           </a>
           <a href={handles[3]} target="_blank" rel="noreferrer">
-            <BsInstagram className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500]" />
+            <BsInstagram className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]" />
           </a>
           <a href={handles[2]} target="_blank" rel="noreferrer">
-            <FaTwitter className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500]" />
+            <FaTwitter className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]" />
           </a>
           <a href={handles[1]} target="_blank" rel="noreferrer">
-            <AiFillLinkedin className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500]" />
+            <AiFillLinkedin className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]" />
           </a>
           <span className="tooltip bw top" data-tooltip="Download Resume">
             <a href={handles[4]} target="_blank" rel="noreferrer">
-              <FcDocument className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500]" />
+              <FcDocument className="cursor-pointer text-4xl text-white transition-all duration-300 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]" />
             </a>
           </span>
         </div>
-        <span className="absolute bottom-0 left-0 -z-10 select-none text-7xl text-[#535c87]">
+        <span className="absolute bottom-0 left-0 -z-10 select-none text-7xl text-[#535c87] transition-colors duration-300 dark:text-gray-600">
           Krishna Jain
         </span>
       </div>

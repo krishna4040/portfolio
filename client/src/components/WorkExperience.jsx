@@ -62,12 +62,15 @@ const WorkExperience = () => {
 
   if (loading) {
     return (
-      <section className="bg-gray-50 py-20" id="experience">
+      <section
+        className="bg-gray-50 py-20 transition-colors duration-300 dark:bg-gray-800"
+        id="experience"
+      >
         <div className="container mx-auto px-4">
-          <h2 className="mb-12 text-center text-4xl font-bold text-gray-800">
+          <h2 className="mb-12 text-center text-4xl font-bold text-gray-800 dark:text-gray-200">
             Work Experience
           </h2>
-          <div className="text-center">Loading...</div>
+          <div className="text-center dark:text-gray-300">Loading...</div>
         </div>
       </section>
     )
@@ -75,19 +78,24 @@ const WorkExperience = () => {
 
   if (error) {
     return (
-      <section className="bg-gray-50 py-20" id="experience">
+      <section
+        className="bg-gray-50 py-20 transition-colors duration-300 dark:bg-gray-800"
+        id="experience"
+      >
         <div className="container mx-auto px-4">
-          <h2 className="mb-12 text-center text-4xl font-bold text-gray-800">
+          <h2 className="mb-12 text-center text-4xl font-bold text-gray-800 dark:text-gray-200">
             Work Experience
           </h2>
           <div className="text-center">
-            <div className="mb-4 text-2xl text-red-600">
+            <div className="mb-4 text-2xl text-red-600 dark:text-red-400">
               Error loading work experience:
             </div>
-            <div className="mb-6 text-lg text-gray-700">{error}</div>
+            <div className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+              {error}
+            </div>
             <button
               onClick={fetchExperiences}
-              className="rounded-lg bg-[#ff4500] px-6 py-3 text-white hover:bg-[#e03d00]"
+              className="rounded-lg bg-[#ff4500] px-6 py-3 text-white transition-colors duration-300 hover:bg-[#e03d00] dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
             >
               Retry
             </button>
@@ -99,12 +107,15 @@ const WorkExperience = () => {
 
   if (experiences.length === 0) {
     return (
-      <section className="bg-gray-50 py-20" id="experience">
+      <section
+        className="bg-gray-50 py-20 transition-colors duration-300 dark:bg-gray-800"
+        id="experience"
+      >
         <div className="container mx-auto px-4">
-          <h2 className="mb-12 text-center text-4xl font-bold text-gray-800">
+          <h2 className="mb-12 text-center text-4xl font-bold text-gray-800 dark:text-gray-200">
             Work Experience
           </h2>
-          <div className="text-center text-gray-600">
+          <div className="text-center text-gray-600 dark:text-gray-300">
             <p>No work experience available.</p>
             <p className="mt-2 text-sm">
               Please check the admin panel to add work experience.
@@ -116,9 +127,12 @@ const WorkExperience = () => {
   }
 
   return (
-    <section className="bg-gray-50 py-20" id="experience">
+    <section
+      className="bg-gray-50 py-20 transition-colors duration-300 dark:bg-gray-800"
+      id="experience"
+    >
       <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-4xl font-bold text-gray-800">
+        <h2 className="mb-12 text-center text-4xl font-bold text-gray-800 dark:text-gray-200">
           Work Experience
         </h2>
 
@@ -141,14 +155,14 @@ const WorkExperience = () => {
               <div className="experience-content">
                 <div className="mb-4 flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-800">
+                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
                       {experience.position}
                     </h3>
-                    <h4 className="mb-2 text-lg font-semibold text-[#ff4500]">
+                    <h4 className="mb-2 text-lg font-semibold text-[#ff4500] dark:text-[#ff6b35]">
                       {experience.company}
                     </h4>
 
-                    <div className="mb-3 flex flex-wrap gap-4 text-sm text-gray-600">
+                    <div className="mb-3 flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
                       {experience.location && (
                         <div className="flex items-center gap-1">
                           <FaMapMarkerAlt />
@@ -164,7 +178,7 @@ const WorkExperience = () => {
                           )}
                         </span>
                       </div>
-                      <span className="rounded bg-gray-100 px-2 py-1 text-xs capitalize">
+                      <span className="rounded bg-gray-100 px-2 py-1 text-xs capitalize dark:bg-gray-600 dark:text-gray-200">
                         {experience.employmentType}
                       </span>
                     </div>
@@ -179,15 +193,17 @@ const WorkExperience = () => {
                   )}
                 </div>
 
-                <p className="mb-4 text-gray-700">{experience.description}</p>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  {experience.description}
+                </p>
 
                 {experience.responsibilities &&
                   experience.responsibilities.length > 0 && (
                     <div className="mb-4">
-                      <h5 className="mb-2 font-semibold text-gray-800">
+                      <h5 className="mb-2 font-semibold text-gray-800 dark:text-gray-200">
                         Key Responsibilities:
                       </h5>
-                      <ul className="list-inside list-disc space-y-1 text-gray-700">
+                      <ul className="list-inside list-disc space-y-1 text-gray-700 dark:text-gray-300">
                         {experience.responsibilities.map(
                           (responsibility, index) => (
                             <li key={index} className="text-sm">
@@ -202,12 +218,15 @@ const WorkExperience = () => {
                 {experience.achievements &&
                   experience.achievements.length > 0 && (
                     <div className="mb-4">
-                      <h5 className="mb-2 font-semibold text-gray-800">
+                      <h5 className="mb-2 font-semibold text-gray-800 dark:text-gray-200">
                         Key Achievements:
                       </h5>
-                      <ul className="list-inside list-disc space-y-1 text-gray-700">
+                      <ul className="list-inside list-disc space-y-1 text-gray-700 dark:text-gray-300">
                         {experience.achievements.map((achievement, index) => (
-                          <li key={index} className="text-sm text-green-700">
+                          <li
+                            key={index}
+                            className="text-sm text-green-700 dark:text-green-400"
+                          >
                             {achievement}
                           </li>
                         ))}
@@ -218,14 +237,14 @@ const WorkExperience = () => {
                 {experience.technologies &&
                   experience.technologies.length > 0 && (
                     <div className="mb-4">
-                      <h5 className="mb-2 font-semibold text-gray-800">
+                      <h5 className="mb-2 font-semibold text-gray-800 dark:text-gray-200">
                         Technologies Used:
                       </h5>
                       <div className="flex flex-wrap gap-2">
                         {experience.technologies.map((tech, index) => (
                           <span
                             key={index}
-                            className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-800"
+                            className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-800 dark:bg-blue-800 dark:text-blue-200"
                           >
                             {tech}
                           </span>
@@ -239,7 +258,7 @@ const WorkExperience = () => {
                     href={experience.companyWebsite}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-[#ff4500] hover:text-[#e03d00]"
+                    className="inline-flex items-center gap-1 text-sm text-[#ff4500] hover:text-[#e03d00] dark:text-[#ff6b35] dark:hover:text-[#ff4500]"
                   >
                     <FaExternalLinkAlt />
                     Company Website

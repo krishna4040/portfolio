@@ -13,21 +13,31 @@ import AdminDashboard from "./components/admin/AdminDashboard"
 
 const HomePage = ({ isDark, setIsDark, setIsModal }) => (
   <div
-    className={`${isDark ? "dark" : ""} h-screen w-full overflow-y-auto overflow-x-hidden`}
+    className={`${isDark ? "dark" : ""} min-h-screen w-full overflow-y-auto overflow-x-hidden bg-white transition-colors duration-300 dark:bg-gray-900`}
   >
-    <Navbar isDark={isDark} setIsDark={setIsDark} />
-    <Hero setIsModal={setIsModal} />
-    <Projects />
-    <Stack />
-    <WorkExperience />
-    <Contact />
-    <Footer />
+    <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
+      <Navbar isDark={isDark} setIsDark={setIsDark} />
+      <Hero setIsModal={setIsModal} />
+      <Projects />
+      <Stack />
+      <WorkExperience />
+      <Contact />
+      <Footer />
+    </div>
   </div>
 )
 
 const App = () => {
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem("darkMode")
+    return saved ? JSON.parse(saved) : false
+  })
   const [isModal, setIsModal] = useState(false)
+
+  // Save dark mode preference to localStorage
+  React.useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(isDark))
+  }, [isDark])
 
   return (
     <Router>
@@ -46,16 +56,42 @@ const App = () => {
           path="/projects"
           element={
             <div
-              className={`${isDark ? "dark" : ""} min-h-screen w-full overflow-y-auto overflow-x-hidden`}
+              className={`${isDark ? "dark" : ""} min-h-screen w-full overflow-y-auto overflow-x-hidden bg-white transition-colors duration-300 dark:bg-gray-900`}
             >
-              <Navbar isDark={isDark} setIsDark={setIsDark} />
-              <AllProjects />
-              <Footer />
+              <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
+                <Navbar isDark={isDark} setIsDark={setIsDark} />
+                <AllProjects />
+                <Footer />
+              </div>
             </div>
           }
         />
-        <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <div
+              className={`${isDark ? "dark" : ""} min-h-screen w-full bg-white transition-colors duration-300 dark:bg-gray-900`}
+            >
+              <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
+                <Navbar isDark={isDark} setIsDark={setIsDark} />
+                <AdminLogin />
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <div
+              className={`${isDark ? "dark" : ""} min-h-screen w-full bg-white transition-colors duration-300 dark:bg-gray-900`}
+            >
+              <div className="bg-white transition-colors duration-300 dark:bg-gray-900">
+                <Navbar isDark={isDark} setIsDark={setIsDark} />
+                <AdminDashboard />
+              </div>
+            </div>
+          }
+        />
       </Routes>
     </Router>
   )

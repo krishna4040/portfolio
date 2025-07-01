@@ -128,3 +128,66 @@
 .bg {
     background-image: url('./assets/styles/mesh-963.png');
 }
+
+/* Dark mode styles for vertical timeline */
+.dark .vertical-timeline-element-content {
+    background: #374151 !important;
+    color: #f3f4f6 !important;
+    box-shadow: 0 3px 0 #ff6b35 !important;
+}
+
+.dark .vertical-timeline-element-content-arrow {
+    border-right: 7px solid #374151 !important;
+}
+
+.dark .vertical-timeline-element-date {
+    color: #d1d5db !important;
+}
+
+/* Dark mode styles for admin forms */
+.dark label {
+    color: #f3f4f6 !important;
+}
+
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="url"],
+.dark input[type="tel"],
+.dark input[type="number"],
+.dark input[type="date"],
+.dark input[type="password"],
+.dark textarea,
+.dark select {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f3f4f6 !important;
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark input[type="url"]:focus,
+.dark input[type="tel"]:focus,
+.dark input[type="number"]:focus,
+.dark input[type="date"]:focus,
+.dark input[type="password"]:focus,
+.dark textarea:focus,
+.dark select:focus {
+    border-color: #ff6b35 !important;
+    ring-color: #ff6b35 !important;
+}
+
+/* Dark mode styles for admin tables */
+.dark td {
+    color: #f3f4f6 !important;
+}
+
+.dark th {
+    color: #d1d5db !important;
+}
+
+/* Dark mode styles for admin content */
+.dark p,
+.dark span,
+.dark div {
+    color: #e5e7eb;
+}

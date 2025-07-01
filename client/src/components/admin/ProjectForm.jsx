@@ -87,13 +87,13 @@ const ProjectForm = ({
   }
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow">
-      <h2 className="mb-6 text-2xl font-bold">
+    <div className="rounded-lg bg-white p-6 shadow transition-colors duration-300 dark:bg-gray-700">
+      <h2 className="mb-6 text-2xl font-bold dark:text-white">
         {editProject ? "Edit Project" : "Add New Project"}
       </h2>
 
       {error && (
-        <div className="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
+        <div className="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700 dark:border-red-600 dark:bg-red-900 dark:text-red-200">
           {error}
         </div>
       )}
@@ -258,7 +258,7 @@ const ProjectForm = ({
           <button
             type="submit"
             disabled={loading}
-            className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700 disabled:opacity-50"
+            className="rounded bg-orange-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-orange-700 disabled:opacity-50 dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
           >
             {loading
               ? "Saving..."
@@ -270,7 +270,7 @@ const ProjectForm = ({
             <button
               type="button"
               onClick={onCancel}
-              className="rounded bg-gray-600 px-6 py-2 text-white hover:bg-gray-700"
+              className="rounded bg-gray-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
             >
               Cancel
             </button>

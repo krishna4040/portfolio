@@ -76,20 +76,22 @@ const GithubRepos = ({ onProjectCreated }) => {
 
   if (loading && repos.length === 0) {
     return (
-      <div className="rounded-lg bg-white p-6 shadow">
-        <div className="text-center">Loading GitHub repositories...</div>
+      <div className="rounded-lg bg-white p-6 shadow transition-colors duration-300 dark:bg-gray-700">
+        <div className="text-center dark:text-white">
+          Loading GitHub repositories...
+        </div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="rounded-lg bg-white p-6 shadow">
-        <div className="text-center text-red-600">
+      <div className="rounded-lg bg-white p-6 shadow transition-colors duration-300 dark:bg-gray-700">
+        <div className="text-center text-red-600 dark:text-red-400">
           {error}
           <button
             onClick={fetchGithubRepos}
-            className="mx-auto mt-4 block rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="mx-auto mt-4 block rounded bg-blue-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             Retry
           </button>
@@ -99,24 +101,26 @@ const GithubRepos = ({ onProjectCreated }) => {
   }
 
   return (
-    <div className="rounded-lg bg-white shadow">
-      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-        <h2 className="text-2xl font-bold">GitHub Repositories</h2>
+    <div className="rounded-lg bg-white shadow transition-colors duration-300 dark:bg-gray-700">
+      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-gray-700">
+        <h2 className="text-2xl font-bold dark:text-white">
+          GitHub Repositories
+        </h2>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-gray-600 dark:text-gray-300">
             Selected: {selectedRepos.length}
           </span>
           <button
             onClick={createProjectsFromRepos}
             disabled={loading || selectedRepos.length === 0}
-            className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50"
+            className="rounded bg-green-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-green-700 disabled:opacity-50 dark:bg-green-700 dark:hover:bg-green-600"
           >
             {loading ? "Creating..." : "Create Projects"}
           </button>
           <button
             onClick={fetchGithubRepos}
             disabled={loading}
-            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+            className="rounded bg-blue-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-blue-700 disabled:opacity-50 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             Refresh
           </button>

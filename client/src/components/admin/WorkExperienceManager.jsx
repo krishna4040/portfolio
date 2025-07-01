@@ -173,8 +173,8 @@ const WorkExperienceManager = () => {
   return (
     <div className="space-y-6">
       {/* Form */}
-      <div className="rounded-lg bg-white p-6 shadow">
-        <h2 className="mb-6 text-2xl font-bold">
+      <div className="rounded-lg bg-white p-6 shadow transition-colors duration-300 dark:bg-gray-700">
+        <h2 className="mb-6 text-2xl font-bold dark:text-white">
           {editingExperience
             ? "Edit Work Experience"
             : "Add New Work Experience"}
@@ -439,7 +439,7 @@ const WorkExperienceManager = () => {
           <div className="flex gap-4">
             <button
               type="submit"
-              className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700"
+              className="rounded bg-orange-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-orange-700 dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
             >
               {editingExperience ? "Update Experience" : "Add Experience"}
             </button>
@@ -447,7 +447,7 @@ const WorkExperienceManager = () => {
               <button
                 type="button"
                 onClick={resetForm}
-                className="rounded bg-gray-600 px-6 py-2 text-white hover:bg-gray-700"
+                className="rounded bg-gray-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
               >
                 Cancel
               </button>
@@ -457,7 +457,7 @@ const WorkExperienceManager = () => {
       </div>
 
       {/* Experiences List */}
-      <div className="rounded-lg bg-white shadow">
+      <div className="rounded-lg bg-white shadow transition-colors duration-300 dark:bg-gray-700">
         <div className="border-b border-gray-200 px-6 py-4">
           <h2 className="text-2xl font-bold">Work Experiences</h2>
         </div>

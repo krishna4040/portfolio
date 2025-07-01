@@ -112,12 +112,14 @@ const ContactInfoForm = () => {
   }
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow">
-      <h2 className="mb-6 text-2xl font-bold">Contact Information</h2>
+    <div className="rounded-lg bg-white p-6 shadow transition-colors duration-300 dark:bg-gray-700">
+      <h2 className="mb-6 text-2xl font-bold dark:text-white">
+        Contact Information
+      </h2>
 
       {message && (
         <div
-          className={`mb-4 rounded p-3 ${message.includes("success") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+          className={`mb-4 rounded p-3 ${message.includes("success") ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200" : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200"}`}
         >
           {message}
         </div>
@@ -370,7 +372,7 @@ const ContactInfoForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="rounded bg-orange-600 px-6 py-2 text-white hover:bg-orange-700 disabled:opacity-50"
+            className="rounded bg-orange-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-orange-700 disabled:opacity-50 dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
           >
             {loading ? "Updating..." : "Update Contact Information"}
           </button>

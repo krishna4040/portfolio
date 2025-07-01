@@ -71,26 +71,28 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-2xl">Loading...</div>
+      <div className="flex min-h-screen items-center justify-center bg-gray-100 transition-colors duration-300 dark:bg-gray-900">
+        <div className="text-2xl dark:text-white">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 transition-colors duration-300 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-white shadow transition-colors duration-300 dark:bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-6">
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Admin Dashboard
             </h1>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">Welcome, {admin?.username}</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Welcome, {admin?.username}
+              </span>
               <button
                 onClick={handleLogout}
-                className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+                className="rounded bg-red-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600"
               >
                 Logout
               </button>
@@ -100,75 +102,75 @@ const AdminDashboard = () => {
       </header>
 
       {/* Navigation Tabs */}
-      <nav className="border-b bg-white">
+      <nav className="border-b bg-white transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8">
             <button
               onClick={() => setActiveTab("projects")}
-              className={`border-b-2 px-1 py-4 text-sm font-medium ${
+              className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                 activeTab === "projects"
-                  ? "border-orange-500 text-orange-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
               }`}
             >
               Projects
             </button>
             <button
               onClick={() => setActiveTab("add-project")}
-              className={`border-b-2 px-1 py-4 text-sm font-medium ${
+              className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                 activeTab === "add-project"
-                  ? "border-orange-500 text-orange-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
               }`}
             >
               Add Project
             </button>
             <button
               onClick={() => setActiveTab("github")}
-              className={`border-b-2 px-1 py-4 text-sm font-medium ${
+              className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                 activeTab === "github"
-                  ? "border-orange-500 text-orange-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
               }`}
             >
               GitHub Repos
             </button>
             <button
               onClick={() => setActiveTab("about")}
-              className={`border-b-2 px-1 py-4 text-sm font-medium ${
+              className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                 activeTab === "about"
-                  ? "border-orange-500 text-orange-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
               }`}
             >
               About
             </button>
             <button
               onClick={() => setActiveTab("skills")}
-              className={`border-b-2 px-1 py-4 text-sm font-medium ${
+              className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                 activeTab === "skills"
-                  ? "border-orange-500 text-orange-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
               }`}
             >
               Skills
             </button>
             <button
               onClick={() => setActiveTab("experience")}
-              className={`border-b-2 px-1 py-4 text-sm font-medium ${
+              className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                 activeTab === "experience"
-                  ? "border-orange-500 text-orange-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
               }`}
             >
               Experience
             </button>
             <button
               onClick={() => setActiveTab("contact")}
-              className={`border-b-2 px-1 py-4 text-sm font-medium ${
+              className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                 activeTab === "contact"
-                  ? "border-orange-500 text-orange-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
               }`}
             >
               Contact Info

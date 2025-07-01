@@ -46,10 +46,10 @@ const Card = ({
         <div className="flex items-center gap-4">
           <Button text={"Read More"} border={0} setShow={setShow} />
           <a href={github} target="_blank" rel="noreferrer">
-            <FaGithub className="cursor-pointer text-4xl text-white transition-all duration-500 hover:text-[#ff4500]" />
+            <FaGithub className="cursor-pointer text-4xl text-white transition-all duration-500 hover:text-[#ff4500] dark:hover:text-[#ff6b35]" />
           </a>
           <a href={link} target="_blank" rel="noreferrer">
-            <BiLink className="cursor-pointer text-4xl text-white transition-all duration-500 hover:text-[#ff4500]" />
+            <BiLink className="cursor-pointer text-4xl text-white transition-all duration-500 hover:text-[#ff4500] dark:hover:text-[#ff6b35]" />
           </a>
         </div>
       </div>
