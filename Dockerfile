@@ -21,14 +21,14 @@ WORKDIR /app
 
 # Create non-root user and change ownership
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001
+  adduser -S nextjs -u 1001
 
 COPY --from=server-builder --chown=nextjs:nodejs /app .
 
 # The 'uploads' directory will be mounted as a volume,
 # but we create it here and set permissions to avoid potential issues.
-RUN mkdir -p /app/uploads && \
-    chown -R nextjs:nodejs /app/uploads
+RUN mkdir -p /app/server/uploads && \
+  chown -R nextjs:nodejs /app/server/uploads
 
 USER nextjs
 
