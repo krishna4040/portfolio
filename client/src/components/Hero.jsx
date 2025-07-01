@@ -242,7 +242,7 @@ const Hero = ({ loadingHook }) => {
           className="absolute top-0"
           ref={zigzagsRef}
         />
-        <span className="absolute -bottom-64 text-[112px] text-[#e7e7e7] transition-colors duration-300 lg:-bottom-3 lg:left-2 lg:hidden dark:text-gray-700">
+        <span className="absolute -bottom-64 hidden text-[112px] text-[#e7e7e7] transition-colors duration-300 lg:-bottom-3 lg:left-2 lg:hidden dark:text-gray-700">
           {displayName.toLowerCase()}
         </span>
       </div>

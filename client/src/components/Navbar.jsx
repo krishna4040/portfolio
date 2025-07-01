@@ -52,7 +52,7 @@ const Navbar = ({ isDark, setIsDark }) => {
             <li>
               <a
                 href="#contact"
-                className="text-xl transition-all duration-200 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]"
+                className="hidden text-xl transition-all duration-200 hover:text-[#ff4500] md:inline dark:text-gray-200 dark:hover:text-[#ff6b35]"
               >
                 Contact Me
               </a>

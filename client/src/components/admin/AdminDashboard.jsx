@@ -104,7 +104,7 @@ const AdminDashboard = () => {
       {/* Navigation Tabs */}
       <nav className="border-b bg-white transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8">
+          <div className="flex space-x-8 overflow-x-auto">
             <button
               onClick={() => setActiveTab("projects")}
               className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${

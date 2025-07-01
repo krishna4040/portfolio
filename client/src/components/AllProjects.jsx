@@ -67,7 +67,7 @@ const AllProjects = () => {
       <h1 className="mb-8 text-center text-[90px] text-[#ff4500] dark:text-[#ff6b35]">
         All Projects
       </h1>
-      <div className="mx-auto flex w-full flex-col gap-32 p-4 lg:max-w-[1200px] lg:p-12">
+      <div className="mx-auto flex w-full flex-col gap-10 p-4 md:gap-32 lg:max-w-[1200px] lg:p-12">
         {projects.length === 0 ? (
           <div className="text-center text-2xl text-gray-600 dark:text-gray-300">
             <p>No projects found.</p>

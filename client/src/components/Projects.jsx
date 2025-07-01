@@ -88,7 +88,7 @@ const Projects = ({ loadingHook }) => {
           </p>
         </div>
       ) : (
-        <div className="mx-auto flex w-full flex-col gap-32 p-4 lg:max-w-[1200px] lg:p-12">
+        <div className="mx-auto flex w-full flex-col gap-10 p-4 md:gap-32 lg:max-w-[1200px] lg:p-12">
           {projects.map((project, index) => (
             <Card
               key={project._id}
