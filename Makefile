@@ -80,7 +80,6 @@ docker-clean: ## Clean up Docker containers and images
 	@echo "$(GREEN)Docker cleanup completed!$(NC)"
 
 # Database Commands
-# Database Commands
 setup-db: ## Setup database with initial data
 	@echo "$(YELLOW)Setting up database...$(NC)"
 	npm run create-admin
@@ -101,6 +100,11 @@ mongo-restore: ## Restore MongoDB data from JSON
 	@echo "$(YELLOW)Restoring MongoDB from JSON...$(NC)"
 	mongosh "$(DB)" --eval 'const fs = require("fs"); const data = JSON.parse(fs.readFileSync("backups/backup.json")); Object.entries(data).forEach(([coll, docs]) => { db[coll].deleteMany({}); db[coll].insertMany(docs); });'
 	@echo "$(GREEN)Restore completed successfully!$(NC)"
+
+mongo-reset: ## Drop all collections in the MongoDB database
+	@echo "$(RED)⚠️  Resetting MongoDB: All data will be deleted!$(NC)"
+	mongosh "$(DB)" --eval 'db.getCollectionNames().forEach(function(c) { db[c].drop(); });'
+	@echo "$(GREEN)✅ MongoDB database reset completed.$(NC)"
 
 # Utility Commands
 health-check: ## Check application health
