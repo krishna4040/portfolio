@@ -78,6 +78,19 @@ export const contactInfoAPI = {
   updateContactInfo: (contactData) => api.put("/contact-info", contactData),
 }
 
+// Messages API
+export const messagesAPI = {
+  // Public endpoint
+  sendMessage: (messageData) => api.post("/messages", messageData),
+
+  // Admin endpoints
+  getAllMessages: (page = 1, limit = 10) =>
+    api.get(`/messages?page=${page}&limit=${limit}`),
+  getMessage: (id) => api.get(`/messages/${id}`),
+  deleteMessage: (id) => api.delete(`/messages/${id}`),
+  markAsRead: (id, isRead) => api.patch(`/messages/${id}/read`, { isRead }),
+}
+
 // Upload API
 export const uploadAPI = {
   uploadProfileImage: (file) => {
