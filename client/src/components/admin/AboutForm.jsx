@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react"
 import { aboutAPI, uploadAPI } from "../../services/api"
+import { useAbout } from "../../contexts/AboutContext"
 
 const AboutForm = () => {
+  const { refetch } = useAbout()
   const [formData, setFormData] = useState({
     name: "",
     title: "",
@@ -126,6 +128,8 @@ const AboutForm = () => {
     try {
       await aboutAPI.updateAbout(formData)
       setMessage("About information updated successfully!")
+      // Refresh the about context to update all components
+      await refetch()
     } catch (error) {
       setMessage("Failed to update about information")
       console.error("Error updating about info:", error)

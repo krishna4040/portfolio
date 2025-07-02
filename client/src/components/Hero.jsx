@@ -1,7 +1,7 @@
-import React, { useLayoutEffect, useRef, useState, useEffect } from "react"
+import React, { useLayoutEffect, useRef } from "react"
 import { TypeAnimation } from "react-type-animation"
 import Button from "./Button"
-import { aboutAPI } from "../services/api"
+import { useAbout } from "../contexts/AboutContext"
 import circle from "../assets/userAsset/circle.png"
 import cube from "../assets/userAsset/cube.png"
 import dots from "../assets/userAsset/dots.png"
@@ -10,9 +10,7 @@ import zigzags from "../assets/userAsset/zigzags.png"
 import { gsap } from "gsap"
 
 const Hero = ({ loadingHook }) => {
-  const [aboutInfo, setAboutInfo] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { aboutInfo, loading, error, refetch } = useAbout()
 
   const profile = useRef(null)
   const cubeRef = useRef(null)
@@ -21,29 +19,12 @@ const Hero = ({ loadingHook }) => {
   const zigzagsRef = useRef(null)
   const circleRef = useRef(null)
 
-  useEffect(() => {
-    fetchAboutInfo()
-  }, [])
-
-  const fetchAboutInfo = async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      const response = await aboutAPI.getAbout()
-      setAboutInfo(response.data.about)
-    } catch (error) {
-      console.error("Error fetching about info:", error)
-      setError(
-        `Failed to fetch about info: ${error.response?.data?.message || error.message}`,
-      )
-      setAboutInfo(null)
-    } finally {
-      setLoading(false)
-      if (loadingHook) {
-        loadingHook.setComponentLoading("hero", false)
-      }
+  // Update loading hook when loading state changes
+  React.useEffect(() => {
+    if (loadingHook) {
+      loadingHook.setComponentLoading("hero", loading)
     }
-  }
+  }, [loading, loadingHook])
 
   useLayoutEffect(() => {
     if (loading) return // Don't run until loading is false
@@ -141,7 +122,7 @@ const Hero = ({ loadingHook }) => {
             {error}
           </div>
           <button
-            onClick={fetchAboutInfo}
+            onClick={refetch}
             className="rounded-lg bg-[#ff4500] px-6 py-3 text-white transition-colors duration-300 hover:bg-[#e03d00] dark:bg-[#ff6b35] dark:hover:bg-[#ff4500]"
           >
             Retry

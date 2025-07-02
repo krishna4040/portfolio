@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { projectsAPI } from "../services/api"
 import Card from "./Card"
+import PageHelmet from "./PageHelmet"
 
 const AllProjects = () => {
   const [projects, setProjects] = useState([])
@@ -63,39 +64,55 @@ const AllProjects = () => {
   }
 
   return (
-    <section className="flex w-full flex-col items-center justify-center bg-[#e7e7e7] pb-16 pt-32 transition-colors duration-300 lg:-my-6 dark:bg-gray-800">
-      <h1 className="mb-8 text-center text-[90px] text-[#ff4500] dark:text-[#ff6b35]">
-        All Projects
-      </h1>
-      <div className="mx-auto flex w-full flex-col gap-10 p-4 md:gap-32 lg:max-w-[1200px] lg:p-12">
-        {projects.length === 0 ? (
-          <div className="text-center text-2xl text-gray-600 dark:text-gray-300">
-            <p>No projects found.</p>
-            <p className="mt-2 text-lg">
-              Please check the admin panel to add projects.
-            </p>
-          </div>
-        ) : (
-          projects.map((project, index) => (
-            <Card
-              key={project._id}
-              background={project.imageUrl || "/default-project.png"}
-              tech={project.technologies.map((tech) => ({
-                src: tech.icon,
-                alt: tech.name,
-              }))}
-              title={project.title}
-              desc={project.description}
-              number={String(index + 1).padStart(2, "0")}
-              github={project.githubUrl}
-              link={project.liveUrl}
-              align={index % 2 === 0 ? "right" : "left"}
-              projectId={project._id}
-            />
-          ))
-        )}
-      </div>
-    </section>
+    <>
+      <PageHelmet
+        title="All Projects - Krishna Jain Portfolio"
+        description="Explore all projects by Krishna Jain, showcasing full-stack development skills and modern web technologies."
+        ogTitle="All Projects - Krishna Jain"
+        ogDescription="Browse through the complete portfolio of projects featuring React, Node.js, and modern web development."
+        keywords={[
+          "projects",
+          "portfolio",
+          "react",
+          "nodejs",
+          "web development",
+          "full stack",
+        ]}
+      />
+      <section className="flex w-full flex-col items-center justify-center bg-[#e7e7e7] pb-16 pt-32 transition-colors duration-300 lg:-my-6 dark:bg-gray-800">
+        <h1 className="mb-8 text-center text-[90px] text-[#ff4500] dark:text-[#ff6b35]">
+          All Projects
+        </h1>
+        <div className="mx-auto flex w-full flex-col gap-10 p-4 md:gap-32 lg:max-w-[1200px] lg:p-12">
+          {projects.length === 0 ? (
+            <div className="text-center text-2xl text-gray-600 dark:text-gray-300">
+              <p>No projects found.</p>
+              <p className="mt-2 text-lg">
+                Please check the admin panel to add projects.
+              </p>
+            </div>
+          ) : (
+            projects.map((project, index) => (
+              <Card
+                key={project._id}
+                background={project.imageUrl || "/default-project.png"}
+                tech={project.technologies.map((tech) => ({
+                  src: tech.icon,
+                  alt: tech.name,
+                }))}
+                title={project.title}
+                desc={project.description}
+                number={String(index + 1).padStart(2, "0")}
+                github={project.githubUrl}
+                link={project.liveUrl}
+                align={index % 2 === 0 ? "right" : "left"}
+                projectId={project._id}
+              />
+            ))
+          )}
+        </div>
+      </section>
+    </>
   )
 }
 

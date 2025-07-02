@@ -1,11 +1,12 @@
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react"
 import { gsap } from "gsap"
-import { skillsAPI, aboutAPI } from "../services/api"
+import { skillsAPI } from "../services/api"
+import { useAbout } from "../contexts/AboutContext"
 import blob from "../assets/userAsset/blobvector.png"
 
 const Stack = ({ loadingHook }) => {
+  const { aboutInfo } = useAbout()
   const [skills, setSkills] = useState([])
-  const [aboutInfo, setAboutInfo] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const blobRef = useRef(null)
@@ -34,20 +35,14 @@ const Stack = ({ loadingHook }) => {
     try {
       setLoading(true)
       setError(null)
-      const [skillsResponse, aboutResponse] = await Promise.all([
-        skillsAPI.getAllSkills(),
-        aboutAPI.getAbout(),
-      ])
-
+      const skillsResponse = await skillsAPI.getAllSkills()
       setSkills(skillsResponse.data.skills || [])
-      setAboutInfo(aboutResponse.data.about)
     } catch (error) {
-      console.error("Error fetching data:", error)
+      console.error("Error fetching skills:", error)
       setError(
-        `Failed to fetch data: ${error.response?.data?.message || error.message}`,
+        `Failed to fetch skills: ${error.response?.data?.message || error.message}`,
       )
       setSkills([])
-      setAboutInfo(null)
     } finally {
       setLoading(false)
       if (loadingHook) {
@@ -63,7 +58,7 @@ const Stack = ({ loadingHook }) => {
         id="skills"
       >
         <div className="text-center text-2xl text-gray-600 dark:text-gray-300">
-          Loading skills and about info...
+          Loading skills...
         </div>
       </section>
     )
@@ -77,7 +72,7 @@ const Stack = ({ loadingHook }) => {
       >
         <div className="text-center">
           <div className="mb-4 text-2xl text-red-600 dark:text-red-400">
-            Error loading data:
+            Error loading skills:
           </div>
           <div className="mb-6 text-lg text-gray-700 dark:text-gray-300">
             {error}
