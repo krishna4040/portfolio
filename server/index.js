@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import path from "path"
 import { fileURLToPath } from "url"
 import { dbConnect } from "./config/dbConnect.js"
+import configureCloudinary from "./config/cloudinary.js"
 
 // Import routes
 import authRoutes from "./routes/auth.js"
@@ -27,6 +28,7 @@ const app = express()
 const port = process.env.PORT || 5000
 
 dbConnect()
+configureCloudinary()
 
 app.use(express.json())
 
@@ -38,7 +40,6 @@ app.use("/api/skills", skillRoutes)
 app.use("/api/work-experience", workExperienceRoutes)
 app.use("/api/contact-info", contactInfoRoutes)
 app.use("/api/upload", uploadRoutes)
-app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 if (env === "production") {
   app.use(express.static(path.join(__dirname, "..", "dist")))

@@ -12,11 +12,13 @@ A modern, dynamic portfolio application with admin panel and GitHub integration.
 - **Routing**: Multi-page navigation with React Router
 
 ### Backend
-- **Admin Panel**: Complete CRUD operations for projects
+- **Admin Panel**: Complete CRUD operations for projects, skills, work experience
 - **Authentication**: JWT-based admin authentication
+- **File Upload**: Cloudinary integration for media management
 - **GitHub API Integration**: Fetch repository data automatically
 - **Featured Projects Management**: Select up to 4 featured projects for homepage
 - **Database**: MongoDB with Mongoose ODM
+- **Email Integration**: Contact form with nodemailer
 
 ## Setup Instructions
 
@@ -43,25 +45,57 @@ A modern, dynamic portfolio application with admin panel and GitHub integration.
    VITE_API_URL=http://localhost:5000/api
    ```
    
-   **Backend (server/.env)**
+   **Backend (.env)**
    ```
+   # Backend Configuration
    JWT_SECRET=your-super-secret-jwt-key-here
    DB=mongodb://localhost:27017/portfolio
    PORT=5000
+   BASE_URL=http://localhost:5000
+   
+   # Cloudinary Configuration (required for file uploads)
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   
+   # Optional: GitHub Integration
+   GITHUB_TOKEN=your_github_token
+   
+   # Optional: Email Configuration
+   HOST=smtp.gmail.com
+   USER=your-email@gmail.com
+   PASS=your-app-password
    ```
 
-3. **Database Setup**
+3. **Cloudinary Setup** (Required for file uploads)
+   - Create a free account at [Cloudinary](https://cloudinary.com/)
+   - Get your Cloud Name, API Key, and API Secret from the dashboard
+   - Add them to your `.env` file
+   - Test the connection: `npm run test-cloudinary`
+
+4. **Database Setup**
    ```bash
    # Start MongoDB service
    # Create admin user
-   cd server
    npm run create-admin
    
-   # Seed sample projects (optional)
-   npm run seed-projects
+   # Seed sample data (optional)
+   npm run seed
    ```
 
-4. **Start the application**
+5. **Testing** (Optional)
+   ```bash
+   # Test Cloudinary connection
+   npm run test-cloudinary
+   
+   # Test project assets upload
+   npm run test-project-assets
+   
+   # Test icon URL transformation
+   npm run test-icons
+   ```
+
+6. **Start the application**
    
    **Development Mode:**
    ```bash
@@ -95,10 +129,14 @@ A modern, dynamic portfolio application with admin panel and GitHub integration.
    - Password: `admin123`
 
 ### Admin Panel Features
-- **Project Management**: Add, edit, delete projects
-- **GitHub Integration**: Import projects from GitHub
+- **Project Management**: Add, edit, delete projects with media uploads
+- **Skills Management**: Organize skills by categories with proficiency levels
+- **Work Experience**: Manage employment history with company logo uploads
+- **About Section**: Update personal information, profile image, and resume
+- **GitHub Integration**: Import projects from GitHub repositories
 - **Featured Projects**: Select up to 4 projects for homepage
-- **Visibility Control**: Show/hide projects
+- **File Upload**: Upload images, videos, and documents via Cloudinary
+- **Visibility Control**: Show/hide content sections
 
 ## Technology Stack
 
@@ -106,4 +144,25 @@ A modern, dynamic portfolio application with admin panel and GitHub integration.
 - React 18, React Router DOM, Axios, Tailwind CSS, Vite
 
 ### Backend
-- Node.js, Express.js, MongoDB, Mongoose, JWT Authentication
+- Node.js, Express.js, MongoDB, Mongoose, JWT Authentication, Cloudinary, Nodemailer
+
+## File Upload System
+
+This application uses **Cloudinary** for media management, providing:
+- **Automatic Image Optimization**: Images are automatically optimized for web delivery
+- **Responsive Images**: Multiple sizes generated automatically
+- **Global CDN**: Fast delivery worldwide
+- **Secure Storage**: HTTPS URLs with secure access
+- **Transformation**: On-the-fly image transformations
+
+### Supported File Types
+- **Images**: JPG, PNG, GIF, WebP (for profile pictures and project images)
+- **Documents**: PDF (for resumes)
+
+### File Size Limits
+- **Images**: 100MB per upload (for high-quality project assets)
+- **Videos**: 100MB per upload (for project demos)
+- **Documents**: 10MB per upload (for resumes)
+- **Cloudinary free tier**: 25GB storage, 25GB monthly bandwidth
+
+For more details on the Cloudinary migration, see [CLOUDINARY_MIGRATION.md](./CLOUDINARY_MIGRATION.md).

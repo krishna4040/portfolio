@@ -94,7 +94,7 @@ const AboutForm = () => {
       const filePath =
         type === "profile" ? formData.profileImage : formData.resumeUrl
 
-      if (filePath && filePath.startsWith("/uploads/")) {
+      if (filePath && filePath.includes("cloudinary.com")) {
         await uploadAPI.deleteFile(filePath, type)
 
         if (type === "profile") {
@@ -225,7 +225,7 @@ const AboutForm = () => {
                     <p className="text-sm text-gray-600">
                       Current: {formData.profileImage}
                     </p>
-                    {formData.profileImage.startsWith("/uploads/") && (
+                    {formData.profileImage.includes("cloudinary.com") && (
                       <button
                         type="button"
                         onClick={() => handleFileDelete("profile")}
@@ -289,7 +289,7 @@ const AboutForm = () => {
                       >
                         View Resume
                       </a>
-                      {formData.resumeUrl.startsWith("/uploads/") && (
+                      {formData.resumeUrl.includes("cloudinary.com") && (
                         <button
                           type="button"
                           onClick={() => handleFileDelete("resume")}

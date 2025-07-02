@@ -3,10 +3,10 @@ import {
   upload,
   saveProfileImage,
   saveResume,
-  saveBackgroundImage,
+  saveProjectAsset,
   deleteFile,
   getFileInfo,
-} from "../utils/fileUpload.js"
+} from "../utils/cloudinaryUpload.js"
 import auth from "../middleware/auth.js"
 import About from "../models/about.js"
 
@@ -50,8 +50,8 @@ router.post(
         })
       }
 
-      // Delete old image if it exists and is not the default
-      if (oldImageUrl && oldImageUrl.startsWith("/uploads/")) {
+      // Delete old image if it exists and is from Cloudinary
+      if (oldImageUrl && oldImageUrl.includes("cloudinary.com")) {
         await deleteFile(oldImageUrl)
       }
 
@@ -98,8 +98,8 @@ router.post("/resume", auth, upload.single("resume"), async (req, res) => {
       })
     }
 
-    // Delete old resume if it exists and is not the default
-    if (oldResumeUrl && oldResumeUrl.startsWith("/uploads/")) {
+    // Delete old resume if it exists and is from Cloudinary
+    if (oldResumeUrl && oldResumeUrl.includes("cloudinary.com")) {
       await deleteFile(oldResumeUrl)
     }
 
@@ -114,11 +114,11 @@ router.post("/resume", auth, upload.single("resume"), async (req, res) => {
   }
 })
 
-// Upload background image
+// Upload project asset (image or video)
 router.post(
-  "/background",
+  "/project-assets",
   auth,
-  upload.single("background"),
+  upload.single("projectAsset"),
   async (req, res) => {
     try {
       if (!req.file) {
@@ -127,19 +127,26 @@ router.post(
           .json({ success: false, message: "No file uploaded" })
       }
 
-      // Save the new background
-      const backgroundUrl = await saveBackgroundImage(
+      // Determine file type
+      const fileType = req.file.mimetype.startsWith("video/")
+        ? "video"
+        : "image"
+
+      // Save the new project asset
+      const assetUrl = await saveProjectAsset(
         req.file.buffer,
         req.file.originalname,
+        fileType,
       )
 
       res.json({
         success: true,
-        message: "Background image uploaded successfully",
-        backgroundUrl: backgroundUrl,
+        message: `Project ${fileType} uploaded successfully`,
+        assetUrl: assetUrl,
+        fileType: fileType,
       })
     } catch (error) {
-      console.error("Error uploading background image:", error)
+      console.error("Error uploading project asset:", error)
       res.status(500).json({ success: false, message: error.message })
     }
   },
@@ -164,9 +171,9 @@ router.delete("/file", auth, async (req, res) => {
         const aboutInfo = await About.findOne({ isActive: true })
         if (aboutInfo) {
           if (type === "profile") {
-            aboutInfo.profileImage = "" // Default image
+            aboutInfo.profileImage = "" // Reset to default
           } else if (type === "resume") {
-            aboutInfo.resumeUrl = "" // Default download
+            aboutInfo.resumeUrl = "" // Reset to default
           }
           await aboutInfo.save()
         }
@@ -219,11 +226,12 @@ router.get("/files", auth, async (req, res) => {
     const files = {
       profileImage: {
         url: aboutInfo?.profileImage,
-        isUploaded: aboutInfo?.profileImage?.startsWith("/uploads/") || false,
+        isUploaded:
+          aboutInfo?.profileImage?.includes("cloudinary.com") || false,
       },
       resume: {
         url: aboutInfo?.resumeUrl,
-        isUploaded: aboutInfo?.resumeUrl?.startsWith("/uploads/") || false,
+        isUploaded: aboutInfo?.resumeUrl?.includes("cloudinary.com") || false,
       },
     }
 

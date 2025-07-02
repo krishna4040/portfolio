@@ -25,10 +25,7 @@ RUN addgroup -g 1001 -S nodejs && \
 
 COPY --from=server-builder --chown=nextjs:nodejs /app .
 
-# The 'uploads' directory will be mounted as a volume,
-# but we create it here and set permissions to avoid potential issues.
-RUN mkdir -p /app/server/uploads && \
-  chown -R nextjs:nodejs /app/server/uploads
+# No longer need uploads directory since we're using Cloudinary
 
 USER nextjs
 

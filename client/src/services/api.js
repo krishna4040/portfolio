@@ -94,10 +94,10 @@ export const uploadAPI = {
       headers: { "Content-Type": "multipart/form-data" },
     })
   },
-  uploadBackground: (file) => {
+  uploadProjectAsset: (file) => {
     const formData = new FormData()
-    formData.append("background", file)
-    return api.post("/upload/background", formData, {
+    formData.append("projectAsset", file)
+    return api.post("/upload/project-assets", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
   },

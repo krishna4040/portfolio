@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react"
-import { workExperienceAPI } from "../../services/api"
+import React, { useState, useEffect, useRef } from "react"
+import { workExperienceAPI, uploadAPI } from "../../services/api"
 
 const WorkExperienceManager = () => {
   const [experiences, setExperiences] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingExperience, setEditingExperience] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadMessage, setUploadMessage] = useState("")
+  const logoInputRef = useRef(null)
   const [formData, setFormData] = useState({
     company: "",
     position: "",
@@ -76,6 +79,28 @@ const WorkExperienceManager = () => {
       ...formData,
       [field]: newArray,
     })
+  }
+
+  // Logo upload handler
+  const handleLogoUpload = async (file) => {
+    try {
+      setUploading(true)
+      setUploadMessage("")
+
+      const response = await uploadAPI.uploadProjectAsset(file)
+
+      if (response.data.success) {
+        setFormData({ ...formData, companyLogo: response.data.assetUrl })
+        setUploadMessage("Company logo uploaded successfully!")
+        setTimeout(() => setUploadMessage(""), 3000)
+      }
+    } catch (error) {
+      setUploadMessage("Failed to upload company logo")
+      console.error("Error uploading logo:", error)
+      setTimeout(() => setUploadMessage(""), 3000)
+    } finally {
+      setUploading(false)
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -180,6 +205,18 @@ const WorkExperienceManager = () => {
             : "Add New Work Experience"}
         </h2>
 
+        {uploadMessage && (
+          <div
+            className={`mb-4 rounded border px-4 py-3 ${
+              uploadMessage.includes("success")
+                ? "border-green-400 bg-green-100 text-green-700 dark:border-green-600 dark:bg-green-900 dark:text-green-200"
+                : "border-red-400 bg-red-100 text-red-700 dark:border-red-600 dark:bg-red-900 dark:text-red-200"
+            }`}
+          >
+            {uploadMessage}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
@@ -269,16 +306,60 @@ const WorkExperienceManager = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Company Logo URL
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Company Logo
               </label>
-              <input
-                type="url"
-                name="companyLogo"
-                value={formData.companyLogo}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
-              />
+              <div className="space-y-3">
+                {formData.companyLogo && (
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={formData.companyLogo}
+                      alt="Company logo preview"
+                      className="h-16 w-16 rounded border bg-white object-contain p-2"
+                      onError={(e) => {
+                        console.log("Logo load error:", e)
+                      }}
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                        Current:{" "}
+                        {formData.companyLogo.length > 50
+                          ? `${formData.companyLogo.substring(0, 50)}...`
+                          : formData.companyLogo}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex space-x-2">
+                  <input
+                    ref={logoInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0]
+                      if (file) handleLogoUpload(file)
+                    }}
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => logoInputRef.current?.click()}
+                    disabled={uploading}
+                    className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+                  >
+                    {uploading ? "Uploading..." : "Upload Logo"}
+                  </button>
+                  <input
+                    type="url"
+                    name="companyLogo"
+                    value={formData.companyLogo}
+                    onChange={handleChange}
+                    placeholder="Or enter logo URL"
+                    className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+                  />
+                </div>
+              </div>
             </div>
 
             <div>
@@ -466,45 +547,57 @@ const WorkExperienceManager = () => {
           {experiences.map((experience) => (
             <div key={experience._id} className="p-6">
               <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {experience.position}
-                  </h3>
-                  <p className="text-md font-medium text-orange-600">
-                    {experience.company}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {experience.location} • {formatDate(experience.startDate)} -{" "}
-                    {formatDate(experience.endDate)}
-                  </p>
-                  <p className="mt-2 text-sm text-gray-700">
-                    {experience.description}
-                  </p>
+                <div className="flex items-start space-x-4">
+                  {experience.companyLogo && (
+                    <img
+                      src={experience.companyLogo}
+                      alt={`${experience.company} logo`}
+                      className="h-12 w-12 flex-shrink-0 rounded border bg-white object-contain p-1"
+                      onError={(e) => {
+                        e.target.style.display = "none"
+                      }}
+                    />
+                  )}
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {experience.position}
+                    </h3>
+                    <p className="text-md font-medium text-orange-600">
+                      {experience.company}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {experience.location} � {formatDate(experience.startDate)}{" "}
+                      - {formatDate(experience.endDate)}
+                    </p>
+                    <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+                      {experience.description}
+                    </p>
 
-                  {experience.technologies.length > 0 && (
-                    <div className="mt-2">
-                      <span className="text-sm font-medium text-gray-700">
-                        Technologies:{" "}
+                    {experience.technologies.length > 0 && (
+                      <div className="mt-2">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Technologies:{" "}
+                        </span>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                          {experience.technologies.join(", ")}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="mt-2 flex items-center gap-4">
+                      <span
+                        className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold capitalize ${
+                          experience.isVisible
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {experience.isVisible ? "Visible" : "Hidden"}
                       </span>
-                      <span className="text-sm text-gray-600">
-                        {experience.technologies.join(", ")}
+                      <span className="inline-flex rounded-full bg-blue-100 px-2 py-1 text-xs font-semibold capitalize text-blue-800">
+                        {experience.employmentType}
                       </span>
                     </div>
-                  )}
-
-                  <div className="mt-2 flex items-center gap-4">
-                    <span
-                      className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold capitalize ${
-                        experience.isVisible
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {experience.isVisible ? "Visible" : "Hidden"}
-                    </span>
-                    <span className="inline-flex rounded-full bg-blue-100 px-2 py-1 text-xs font-semibold capitalize text-blue-800">
-                      {experience.employmentType}
-                    </span>
                   </div>
                 </div>
 

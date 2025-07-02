@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { projectsAPI } from "../../services/api"
+import React, { useState, useRef } from "react"
+import { projectsAPI, uploadAPI } from "../../services/api"
 
 const ProjectForm = ({
   onProjectCreated,
@@ -38,6 +38,17 @@ const ProjectForm = ({
   const [newCollaborator, setNewCollaborator] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const [uploading, setUploading] = useState({
+    mainImage: false,
+    additionalImage: false,
+    video: false,
+  })
+  const [uploadMessage, setUploadMessage] = useState("")
+
+  // File input refs
+  const mainImageInputRef = useRef(null)
+  const additionalImageInputRef = useRef(null)
+  const videoInputRef = useRef(null)
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -139,6 +150,43 @@ const ProjectForm = ({
     })
   }
 
+  // File upload handlers
+  const handleFileUpload = async (file, type) => {
+    try {
+      setUploading({ ...uploading, [type]: true })
+      setUploadMessage("")
+
+      const response = await uploadAPI.uploadProjectAsset(file)
+
+      if (response.data.success) {
+        const assetUrl = response.data.assetUrl
+
+        if (type === "mainImage") {
+          setFormData({ ...formData, imageUrl: assetUrl })
+        } else if (type === "additionalImage") {
+          setFormData({
+            ...formData,
+            images: [...formData.images, assetUrl],
+          })
+        } else if (type === "video") {
+          setFormData({
+            ...formData,
+            videos: [...formData.videos, assetUrl],
+          })
+        }
+
+        setUploadMessage(`${response.data.fileType} uploaded successfully!`)
+        setTimeout(() => setUploadMessage(""), 3000)
+      }
+    } catch (error) {
+      setUploadMessage(`Failed to upload ${type}`)
+      console.error(`Error uploading ${type}:`, error)
+      setTimeout(() => setUploadMessage(""), 3000)
+    } finally {
+      setUploading({ ...uploading, [type]: false })
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -192,6 +240,18 @@ const ProjectForm = ({
         </div>
       )}
 
+      {uploadMessage && (
+        <div
+          className={`mb-4 rounded border px-4 py-3 ${
+            uploadMessage.includes("success")
+              ? "border-green-400 bg-green-100 text-green-700 dark:border-green-600 dark:bg-green-900 dark:text-green-200"
+              : "border-red-400 bg-red-100 text-red-700 dark:border-red-600 dark:bg-red-900 dark:text-red-200"
+          }`}
+        >
+          {uploadMessage}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
@@ -236,16 +296,60 @@ const ProjectForm = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Image URL
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+              Main Project Image
             </label>
-            <input
-              type="url"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
-            />
+            <div className="space-y-3">
+              {formData.imageUrl && (
+                <div className="flex items-center space-x-4">
+                  <img
+                    src={formData.imageUrl}
+                    alt="Project preview"
+                    className="h-20 w-20 rounded border object-cover"
+                    onError={(e) => {
+                      console.log("Image load error:", e)
+                    }}
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Current:{" "}
+                      {formData.imageUrl.length > 50
+                        ? `${formData.imageUrl.substring(0, 50)}...`
+                        : formData.imageUrl}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex space-x-2">
+                <input
+                  ref={mainImageInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0]
+                    if (file) handleFileUpload(file, "mainImage")
+                  }}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => mainImageInputRef.current?.click()}
+                  disabled={uploading.mainImage}
+                  className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+                >
+                  {uploading.mainImage ? "Uploading..." : "Upload Image"}
+                </button>
+                <input
+                  type="url"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  placeholder="Or enter image URL"
+                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
+                />
+              </div>
+            </div>
           </div>
 
           <div>
@@ -401,8 +505,26 @@ const ProjectForm = ({
           </label>
           <div className="mb-2 flex gap-2">
             <input
+              ref={additionalImageInputRef}
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0]
+                if (file) handleFileUpload(file, "additionalImage")
+              }}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => additionalImageInputRef.current?.click()}
+              disabled={uploading.additionalImage}
+              className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+            >
+              {uploading.additionalImage ? "Uploading..." : "Upload Image"}
+            </button>
+            <input
               type="url"
-              placeholder="Image URL"
+              placeholder="Or enter image URL"
               value={newImage}
               onChange={(e) => setNewImage(e.target.value)}
               className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
@@ -412,24 +534,32 @@ const ProjectForm = ({
               onClick={addImage}
               className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
             >
-              Add
+              Add URL
             </button>
           </div>
           <div className="flex flex-wrap gap-2">
             {formData.images.map((image, index) => (
-              <span
+              <div
                 key={index}
-                className="flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm dark:bg-gray-600 dark:text-white"
+                className="flex items-center gap-2 rounded bg-gray-100 px-3 py-2 text-sm dark:bg-gray-600 dark:text-white"
               >
-                Image {index + 1}
+                <img
+                  src={image}
+                  alt={`Additional ${index + 1}`}
+                  className="h-8 w-8 rounded object-cover"
+                  onError={(e) => {
+                    e.target.style.display = "none"
+                  }}
+                />
+                <span>Image {index + 1}</span>
                 <button
                   type="button"
                   onClick={() => removeImage(index)}
                   className="text-red-600 hover:text-red-800 dark:text-red-400"
                 >
-                  �
+                  ×
                 </button>
-              </span>
+              </div>
             ))}
           </div>
         </div>
@@ -441,8 +571,26 @@ const ProjectForm = ({
           </label>
           <div className="mb-2 flex gap-2">
             <input
+              ref={videoInputRef}
+              type="file"
+              accept="video/*"
+              onChange={(e) => {
+                const file = e.target.files[0]
+                if (file) handleFileUpload(file, "video")
+              }}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => videoInputRef.current?.click()}
+              disabled={uploading.video}
+              className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+            >
+              {uploading.video ? "Uploading..." : "Upload Video"}
+            </button>
+            <input
               type="url"
-              placeholder="Video URL"
+              placeholder="Or enter video URL"
               value={newVideo}
               onChange={(e) => setNewVideo(e.target.value)}
               className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
@@ -452,24 +600,31 @@ const ProjectForm = ({
               onClick={addVideo}
               className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
             >
-              Add
+              Add URL
             </button>
           </div>
           <div className="flex flex-wrap gap-2">
             {formData.videos.map((video, index) => (
-              <span
+              <div
                 key={index}
-                className="flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm dark:bg-gray-600 dark:text-white"
+                className="flex items-center gap-2 rounded bg-gray-100 px-3 py-2 text-sm dark:bg-gray-600 dark:text-white"
               >
-                Video {index + 1}
+                <video
+                  src={video}
+                  className="h-8 w-12 rounded object-cover"
+                  onError={(e) => {
+                    e.target.style.display = "none"
+                  }}
+                />
+                <span>Video {index + 1}</span>
                 <button
                   type="button"
                   onClick={() => removeVideo(index)}
                   className="text-red-600 hover:text-red-800 dark:text-red-400"
                 >
-                  �
+                  ×
                 </button>
-              </span>
+              </div>
             ))}
           </div>
         </div>
@@ -509,7 +664,7 @@ const ProjectForm = ({
                   onClick={() => removeFeature(index)}
                   className="text-red-600 hover:text-red-800 dark:text-red-400"
                 >
-                  �
+                  ×
                 </button>
               </span>
             ))}
@@ -549,7 +704,7 @@ const ProjectForm = ({
                   onClick={() => removeCollaborator(index)}
                   className="text-red-600 hover:text-red-800 dark:text-red-400"
                 >
-                  �
+                  ×
                 </button>
               </span>
             ))}
