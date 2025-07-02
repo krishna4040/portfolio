@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { projectsAPI } from "../services/api"
 import Card from "./Card"
 import PageHelmet from "./PageHelmet"
+import PageLoader from "./PageLoader"
 
 const AllProjects = () => {
   const [projects, setProjects] = useState([])
@@ -32,9 +33,7 @@ const AllProjects = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#e7e7e7] transition-colors duration-300 dark:bg-gray-800">
-        <div className="text-2xl text-[#ff4500] dark:text-[#ff6b35]">
-          Loading projects...
-        </div>
+        <PageLoader message="Loading projects..." size="large" />
       </div>
     )
   }
