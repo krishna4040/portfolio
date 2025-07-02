@@ -2,11 +2,21 @@ import React from "react"
 import { Link, useLocation } from "react-router-dom"
 import kLogo from "../assets/userAsset/k.png"
 import { BsFillMoonFill, BsSunFill } from "react-icons/bs"
+import { FaDownload } from "react-icons/fa"
+import { useAbout } from "../contexts/AboutContext"
+import { downloadResume } from "../utils/downloadUtils"
 
 const Navbar = ({ isDark, setIsDark }) => {
+  const { aboutInfo } = useAbout()
   const location = useLocation()
   const isHomePage = location.pathname === "/"
   const isAdminPage = location.pathname.startsWith("/admin")
+
+  const handleResumeDownload = async () => {
+    if (aboutInfo?.resumeUrl) {
+      await downloadResume(aboutInfo.resumeUrl, aboutInfo.name)
+    }
+  }
 
   return (
     <nav
@@ -61,6 +71,18 @@ const Navbar = ({ isDark, setIsDark }) => {
                 Contact Me
               </a>
             </li>
+            {aboutInfo?.resumeUrl && (
+              <li>
+                <button
+                  onClick={handleResumeDownload}
+                  className="flex items-center gap-2 text-xl transition-all duration-200 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]"
+                  title="Download Resume"
+                >
+                  <FaDownload className="text-sm" />
+                  <span className="hidden sm:inline">Resume</span>
+                </button>
+              </li>
+            )}
             <li>
               <Link
                 to="/admin"
@@ -88,6 +110,18 @@ const Navbar = ({ isDark, setIsDark }) => {
                 All Projects
               </Link>
             </li>
+            {aboutInfo?.resumeUrl && (
+              <li>
+                <button
+                  onClick={handleResumeDownload}
+                  className="flex items-center gap-2 text-xl transition-all duration-200 hover:text-[#ff4500] dark:text-gray-200 dark:hover:text-[#ff6b35]"
+                  title="Download Resume"
+                >
+                  <FaDownload className="text-sm" />
+                  <span className="hidden sm:inline">Resume</span>
+                </button>
+              </li>
+            )}
             <li>
               <Link
                 to="/admin"

@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef } from "react"
 import { TypeAnimation } from "react-type-animation"
 import Button from "./Button"
+import ResumeButton from "./ResumeButton"
 import { useAbout } from "../contexts/AboutContext"
 import circle from "../assets/userAsset/circle.png"
 import cube from "../assets/userAsset/cube.png"
@@ -179,9 +180,16 @@ const Hero = ({ loadingHook }) => {
         <p className="mt-[112px] transition-colors duration-300 dark:text-gray-300">
           {displayDescription}
         </p>
-        <a href="#contact">
-          <Button text={"Hire Me"} border={1} />
-        </a>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <a href="#contact">
+            <Button text={"Hire Me"} border={1} />
+          </a>
+          <ResumeButton
+            resumeUrl={aboutInfo.resumeUrl}
+            name={displayName}
+            variant="download"
+          />
+        </div>
       </div>
       <div className="relative p-10">
         <img
