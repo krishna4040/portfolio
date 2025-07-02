@@ -21,7 +21,7 @@ YELLOW := $(ESC)[1;33m
 BLUE := $(ESC)[0;34m
 NC := $(ESC)[0m
 
-.PHONY: help install build dev start stop clean docker-build docker-run docker-clean setup-db seed 
+.PHONY: help install build dev start stop clean docker-build docker-run docker-clean setup-db
 
 # Default target
 help: ## Show this help message
@@ -84,7 +84,6 @@ docker-clean: ## Clean up Docker containers and images
 setup-db: ## Setup database with initial data
 	@echo "$(YELLOW)Setting up database...$(NC)"
 	npm run create-admin
-	npm run seed
 	@echo "$(GREEN)Database setup completed!$(NC)"
 
 # MongoDB Commands
