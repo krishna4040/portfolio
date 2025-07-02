@@ -98,6 +98,12 @@ A modern, dynamic portfolio application with admin panel and GitHub integration.
 
    # Test icon URL transformation
    npm run test-icons
+
+   # Test upload path structure (verify no duplicate paths)
+   npm run test-paths
+
+   # Test media gallery functionality
+   npm run test-media-gallery
    ```
 
 6. **Start the application**
@@ -180,5 +186,7 @@ This application uses **Cloudinary** for media management, providing:
 - **Documents**: 10MB per upload (for resumes)
 - **Cloudinary free tier**: 25GB storage, 25GB monthly bandwidth
 
-For more details on the Cloudinary migration, see [CLOUDINARY_MIGRATION.md](./CLOUDINARY_MIGRATION.md).
+### Recent Fixes
+- **Path Duplication Fix**: Resolved duplicate folder paths in Cloudinary URLs. See [CLOUDINARY_PATH_FIX.md](./CLOUDINARY_PATH_FIX.md) for details.
+- **Media Gallery Enhancement**: Fixed video display and navigation in project galleries. See [MEDIA_GALLERY_FIX.md](./MEDIA_GALLERY_FIX.md) for details.
 

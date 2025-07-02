@@ -16,11 +16,57 @@ const ProjectDetail = () => {
   const [project, setProject] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-  const [selectedImage, setSelectedImage] = useState(0)
+  const [selectedMedia, setSelectedMedia] = useState(0)
+  const [mediaType, setMediaType] = useState("image") // "image" or "video"
 
   useEffect(() => {
     fetchProject()
   }, [id])
+
+  useEffect(() => {
+    if (project) {
+      // Set initial media type based on what's available
+      if (project.images && project.images.length > 0) {
+        setMediaType("image")
+        setSelectedMedia(0)
+      } else if (project.videos && project.videos.length > 0) {
+        setMediaType("video")
+        setSelectedMedia(0)
+      } else if (project.imageUrl) {
+        setMediaType("image")
+        setSelectedMedia(0)
+      }
+    }
+  }, [project])
+
+  // Helper function to get all media items
+  const getAllMedia = () => {
+    const media = []
+
+    // Add main image if exists
+    if (project?.imageUrl) {
+      media.push({ type: "image", url: project.imageUrl, isMain: true })
+    }
+
+    // Add additional images
+    if (project?.images && project.images.length > 0) {
+      project.images.forEach((image) => {
+        media.push({ type: "image", url: image, isMain: false })
+      })
+    }
+
+    // Add videos
+    if (project?.videos && project.videos.length > 0) {
+      project.videos.forEach((video) => {
+        media.push({ type: "video", url: video, isMain: false })
+      })
+    }
+
+    return media
+  }
+
+  const allMedia = getAllMedia()
+  const currentMedia = allMedia[selectedMedia]
 
   const fetchProject = async () => {
     try {
@@ -189,9 +235,7 @@ const ProjectDetail = () => {
           {/* Main Content Column */}
           <div className="lg:col-span-2">
             {/* Project Images/Videos */}
-            {((project.images && project.images.length > 0) ||
-              (project.videos && project.videos.length > 0) ||
-              project.imageUrl) && (
+            {allMedia.length > 0 && (
               <div className="mb-12">
                 <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
                   Media Gallery
@@ -199,30 +243,23 @@ const ProjectDetail = () => {
 
                 {/* Main Display */}
                 <div className="mb-4 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
-                  {project.images &&
-                  project.images.length > 0 &&
-                  project.images[selectedImage] ? (
-                    <img
-                      src={project.images[selectedImage]}
-                      alt={`${project.title} screenshot ${selectedImage + 1}`}
-                      className="h-96 w-full object-cover"
-                    />
-                  ) : project.videos &&
-                    project.videos.length > 0 &&
-                    project.videos[0] ? (
-                    <video
-                      src={project.videos[0]}
-                      controls
-                      className="h-96 w-full object-cover"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : project.imageUrl ? (
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className="h-96 w-full object-cover"
-                    />
+                  {currentMedia ? (
+                    currentMedia.type === "image" ? (
+                      <img
+                        src={currentMedia.url}
+                        alt={`${project.title} ${currentMedia.isMain ? "main image" : "screenshot"}`}
+                        className="h-96 w-full object-cover"
+                      />
+                    ) : (
+                      <video
+                        src={currentMedia.url}
+                        controls
+                        className="h-96 w-full object-cover"
+                        key={currentMedia.url} // Force re-render when video changes
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    )
                   ) : (
                     <div className="flex h-96 items-center justify-center text-gray-500 dark:text-gray-400">
                       No media available
@@ -230,24 +267,110 @@ const ProjectDetail = () => {
                   )}
                 </div>
 
+                {/* Media Type Tabs */}
+                {((project.images && project.images.length > 0) ||
+                  project.imageUrl) &&
+                  project.videos &&
+                  project.videos.length > 0 && (
+                    <div className="mb-4 flex gap-2">
+                      <button
+                        onClick={() => {
+                          setMediaType("image")
+                          // Find first image index
+                          const firstImageIndex = allMedia.findIndex(
+                            (media) => media.type === "image",
+                          )
+                          if (firstImageIndex !== -1)
+                            setSelectedMedia(firstImageIndex)
+                        }}
+                        className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                          mediaType === "image"
+                            ? "bg-[#ff4500] text-white dark:bg-[#ff6b35]"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                        }`}
+                      >
+                        Images (
+                        {(project.images?.length || 0) +
+                          (project.imageUrl ? 1 : 0)}
+                        )
+                      </button>
+                      <button
+                        onClick={() => {
+                          setMediaType("video")
+                          // Find first video index
+                          const firstVideoIndex = allMedia.findIndex(
+                            (media) => media.type === "video",
+                          )
+                          if (firstVideoIndex !== -1)
+                            setSelectedMedia(firstVideoIndex)
+                        }}
+                        className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                          mediaType === "video"
+                            ? "bg-[#ff4500] text-white dark:bg-[#ff6b35]"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                        }`}
+                      >
+                        Videos ({project.videos?.length || 0})
+                      </button>
+                    </div>
+                  )}
+
                 {/* Thumbnails */}
-                {project.images && project.images.length > 1 && (
-                  <div className="flex gap-2 overflow-x-auto">
-                    {project.images.map((image, index) => (
+                {allMedia.length > 1 && (
+                  <div className="flex gap-2 overflow-x-auto pb-2">
+                    {allMedia.map((media, index) => (
                       <button
                         key={index}
-                        onClick={() => setSelectedImage(index)}
-                        className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors duration-300 ${
-                          selectedImage === index
+                        onClick={() => setSelectedMedia(index)}
+                        className={`relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors duration-300 ${
+                          selectedMedia === index
                             ? "border-[#ff4500] dark:border-[#ff6b35]"
                             : "border-gray-300 dark:border-gray-600"
                         }`}
                       >
-                        <img
-                          src={image}
-                          alt={`Thumbnail ${index + 1}`}
-                          className="h-full w-full object-cover"
-                        />
+                        {media.type === "image" ? (
+                          <img
+                            src={media.url}
+                            alt={`Thumbnail ${index + 1}`}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <div className="relative h-full w-full bg-gray-800">
+                            <video
+                              src={media.url}
+                              className="h-full w-full object-cover"
+                              muted
+                            />
+                            {/* Video play icon overlay */}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                              <div className="rounded-full bg-white bg-opacity-80 p-1">
+                                <svg
+                                  className="h-4 w-4 text-gray-800"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                    clipRule="evenodd"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {/* Media type indicator */}
+                        <div className="absolute right-1 top-1">
+                          <span
+                            className={`inline-block rounded px-1 py-0.5 text-xs font-medium text-white ${
+                              media.type === "image"
+                                ? "bg-blue-500"
+                                : "bg-red-500"
+                            }`}
+                          >
+                            {media.type === "image" ? "IMG" : "VID"}
+                          </span>
+                        </div>
                       </button>
                     ))}
                   </div>
