@@ -61,8 +61,10 @@ router.post("/", auth, async (req, res) => {
     const skillData = {
       ...req.body,
       icon:
-        "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/" +
-        req.body.icon,
+        req.body.icon && !req.body.icon.startsWith("http")
+          ? "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/" +
+            req.body.icon
+          : req.body.icon,
     }
 
     const skill = new Skill(skillData)
@@ -76,7 +78,16 @@ router.post("/", auth, async (req, res) => {
 // Update skill
 router.put("/:id", auth, async (req, res) => {
   try {
-    const skill = await Skill.findByIdAndUpdate(req.params.id, req.body, {
+    const updateData = { ...req.body }
+
+    // Transform icon key to full URL if icon is provided
+    if (updateData.icon && !updateData.icon.startsWith("http")) {
+      updateData.icon =
+        "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/" +
+        updateData.icon
+    }
+
+    const skill = await Skill.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     })
     if (!skill) {

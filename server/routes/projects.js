@@ -69,7 +69,10 @@ router.post("/", auth, async (req, res) => {
       technologies: req.body.technologies.map(({ name, icon }) => ({
         name,
         icon:
-          "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/" + icon,
+          icon && !icon.startsWith("http")
+            ? "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/" +
+              icon
+            : icon,
       })),
     }
 
@@ -104,7 +107,23 @@ router.post("/", auth, async (req, res) => {
 // Update project
 router.put("/:id", auth, async (req, res) => {
   try {
-    const project = await Project.findByIdAndUpdate(req.params.id, req.body, {
+    const updateData = { ...req.body }
+
+    // Transform technologies icon keys to full URLs if technologies are provided
+    if (updateData.technologies && Array.isArray(updateData.technologies)) {
+      updateData.technologies = updateData.technologies.map(
+        ({ name, icon }) => ({
+          name,
+          icon:
+            icon && !icon.startsWith("http")
+              ? "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/" +
+                icon
+              : icon,
+        }),
+      )
+    }
+
+    const project = await Project.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     })
     if (!project) {
