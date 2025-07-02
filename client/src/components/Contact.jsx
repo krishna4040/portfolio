@@ -27,7 +27,7 @@ const Contact = ({ loadingHook }) => {
     if (loadingHook) {
       loadingHook.setComponentLoading("contact", false)
     }
-  }, [])
+  }, [loadingHook.setComponentLoading])
 
   const submitHandler = async (data) => {
     const { name, email, subject, message } = data

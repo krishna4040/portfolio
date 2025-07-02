@@ -12,15 +12,24 @@ const Stack = ({ loadingHook }) => {
   const blobRef = useRef(null)
 
   useLayoutEffect(() => {
+    if (!blobRef.current) return
+
     let ctx = gsap.context(() => {
       gsap.fromTo(
         blobRef.current,
-        {},
         {
-          top: "54%",
-          left: "56%",
+          x: 0,
+          y: 0,
+          rotation: 0,
+        },
+        {
+          x: 20,
+          y: -20,
+          rotation: 360,
           repeat: -1,
           yoyo: true,
+          duration: 4,
+          ease: "power2.inOut",
         },
       )
     })
