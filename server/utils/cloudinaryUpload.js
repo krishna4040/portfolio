@@ -70,7 +70,6 @@ export const saveProfileImage = async (buffer, originalName) => {
 
     const result = await uploadToCloudinary(buffer, {
       public_id: publicId,
-      folder: "portfolio/profiles",
       transformation: [
         {
           width: 400,
@@ -97,7 +96,6 @@ export const saveResume = async (buffer, originalName) => {
 
     const result = await uploadToCloudinary(buffer, {
       public_id: publicId,
-      folder: "portfolio/resumes",
       resource_type: "raw", // For non-image files like PDFs
       format: "pdf",
     })
@@ -119,7 +117,6 @@ export const saveProjectAsset = async (
 
     let uploadOptions = {
       public_id: publicId,
-      folder: "portfolio/project-assets",
     }
 
     if (fileType === "image") {
