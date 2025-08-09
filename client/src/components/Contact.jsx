@@ -97,12 +97,12 @@ const Contact = ({ loadingHook }) => {
         <form
           noValidate
           onSubmit={handleSubmit(submitHandler)}
-          className="mx-20 my-8 flex w-full flex-col justify-center gap-10 md:gap-5"
+          className="mx-4 my-8 flex w-full max-w-6xl flex-col justify-center gap-6 sm:mx-8 lg:mx-20 lg:ml-28 md:gap-5"
         >
-          <div className="-ml-20 lg:ml-7">
+          <div className="w-full">
             <input
-              className={`h-10 w-full px-4 py-0 text-lg font-medium shadow-md transition-colors duration-300 lg:w-[1200px] lg:px-8 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 ${
-                errors.name ? "border-2 border-red-500" : ""
+              className={`h-10 w-full px-4 py-2 text-base font-medium shadow-md transition-colors duration-300 rounded-md border border-gray-300 focus:border-[#ff4500] focus:outline-none focus:ring-2 focus:ring-[#ff4500]/20 lg:text-lg lg:px-6 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 dark:border-gray-600 dark:focus:border-[#ff6b35] dark:focus:ring-[#ff6b35]/20 ${
+                errors.name ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""
               }`}
               type="text"
               placeholder="Enter Your Name *"
@@ -125,10 +125,10 @@ const Contact = ({ loadingHook }) => {
             )}
           </div>
 
-          <div className="-ml-20 lg:ml-7">
+          <div className="w-full">
             <input
-              className={`h-10 w-full px-4 py-0 text-lg font-medium shadow-md transition-colors duration-300 lg:w-[1200px] lg:px-8 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 ${
-                errors.email ? "border-2 border-red-500" : ""
+              className={`h-10 w-full px-4 py-2 text-base font-medium shadow-md transition-colors duration-300 rounded-md border border-gray-300 focus:border-[#ff4500] focus:outline-none focus:ring-2 focus:ring-[#ff4500]/20 lg:text-lg lg:px-6 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 dark:border-gray-600 dark:focus:border-[#ff6b35] dark:focus:ring-[#ff6b35]/20 ${
+                errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""
               }`}
               type="email"
               placeholder="Enter Your Email *"
@@ -147,10 +147,10 @@ const Contact = ({ loadingHook }) => {
             )}
           </div>
 
-          <div className="-ml-20 lg:ml-7">
+          <div className="w-full">
             <input
-              className={`h-10 w-full px-4 py-0 text-lg font-medium shadow-md transition-colors duration-300 lg:w-[1200px] lg:px-8 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 ${
-                errors.subject ? "border-2 border-red-500" : ""
+              className={`h-10 w-full px-4 py-2 text-base font-medium shadow-md transition-colors duration-300 rounded-md border border-gray-300 focus:border-[#ff4500] focus:outline-none focus:ring-2 focus:ring-[#ff4500]/20 lg:text-lg lg:px-6 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 dark:border-gray-600 dark:focus:border-[#ff6b35] dark:focus:ring-[#ff6b35]/20 ${
+                errors.subject ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""
               }`}
               type="text"
               placeholder="Enter Your Subject *"
@@ -173,13 +173,12 @@ const Contact = ({ loadingHook }) => {
             )}
           </div>
 
-          <div className="-ml-20 lg:ml-7">
+          <div className="w-full">
             <textarea
-              className={`h-auto w-full px-4 py-0 pt-4 text-lg font-medium shadow-md transition-colors duration-300 lg:w-[1200px] lg:px-8 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 ${
-                errors.message ? "border-2 border-red-500" : ""
+              className={`w-full px-4 py-3 text-base font-medium shadow-md transition-colors duration-300 rounded-md border border-gray-300 focus:border-[#ff4500] focus:outline-none focus:ring-2 focus:ring-[#ff4500]/20 lg:text-lg lg:px-6 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300 dark:border-gray-600 dark:focus:border-[#ff6b35] dark:focus:ring-[#ff6b35]/20 resize-vertical ${
+                errors.message ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""
               }`}
-              cols="30"
-              rows="10"
+              rows="8"
               placeholder="Enter Your Message *"
               {...register("message", {
                 required: "Message is required",
@@ -202,10 +201,10 @@ const Contact = ({ loadingHook }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`relative z-10 -ml-20 flex w-fit items-center justify-center gap-3 px-9 py-3 text-2xl text-white shadow-lg transition-all duration-700 before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0 before:z-[-1] before:origin-left before:scale-x-0 before:bg-white before:transition-all before:duration-700 before:content-[""] lg:ml-7 ${
+            className={`relative z-10 flex w-fit items-center justify-center gap-3 px-6 py-3 text-lg font-medium text-white shadow-lg transition-all duration-300 rounded-md lg:px-9 lg:text-xl ${
               isSubmitting
                 ? "cursor-not-allowed bg-gray-400 dark:bg-gray-600"
-                : "bg-[#ff4500] hover:scale-90 hover:bg-white hover:text-black before:hover:scale-x-100 dark:bg-[#ff6b35] dark:before:bg-gray-200 dark:hover:bg-gray-200"
+                : "bg-[#ff4500] hover:bg-[#e63e00] hover:shadow-xl transform hover:scale-105 dark:bg-[#ff6b35] dark:hover:bg-[#ff5722]"
             }`}
           >
             <p>{isSubmitting ? "Sending..." : "Send Message"}</p>
