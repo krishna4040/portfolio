@@ -27,6 +27,11 @@ const GithubRepos = ({ onProjectCreated }) => {
   }
 
   const handleRepoSelect = (repo) => {
+    // Prevent selection of already imported repos
+    if (repo.isImported) {
+      return
+    }
+    
     setSelectedRepos((prev) => {
       const isSelected = prev.find((r) => r.id === repo.id)
       if (isSelected) {
@@ -348,7 +353,11 @@ const GithubRepos = ({ onProjectCreated }) => {
             {repos.map((repo) => (
               <div
                 key={repo.id}
-                className="flex items-start justify-between rounded-lg border border-gray-200 p-4 transition-colors duration-200 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-600"
+                className={`flex items-start justify-between rounded-lg border p-4 transition-colors duration-200 ${
+                  repo.isImported
+                    ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20"
+                    : "border-gray-200 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-600"
+                }`}
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
@@ -356,11 +365,21 @@ const GithubRepos = ({ onProjectCreated }) => {
                       type="checkbox"
                       checked={!!selectedRepos.find((r) => r.id === repo.id)}
                       onChange={() => handleRepoSelect(repo)}
-                      className="mr-2"
+                      disabled={repo.isImported}
+                      className="mr-2 disabled:opacity-50"
                     />
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                    <h3 className={`text-lg font-medium ${
+                      repo.isImported 
+                        ? "text-green-800 dark:text-green-200" 
+                        : "text-gray-900 dark:text-white"
+                    }`}>
                       {repo.name}
                     </h3>
+                    {repo.isImported && (
+                      <span className="rounded bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-800 dark:text-green-200">
+                        ✓ Imported as "{repo.existingProject?.title}"
+                      </span>
+                    )}
                     {repo.language && (
                       <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-800 dark:bg-gray-600 dark:text-gray-200">
                         {repo.language}

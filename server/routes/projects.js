@@ -174,7 +174,23 @@ router.get("/github/repos", auth, async (req, res) => {
     }
 
     const repos = await fetchGithubRepos(req.admin.githubUsername)
-    res.json({ success: true, repos })
+
+    // Get existing projects to mark which repos are already imported
+    const existingProjects = await Project.find({}, "githubUrl title")
+    const existingGithubUrls = existingProjects.map(
+      (project) => project.githubUrl,
+    )
+
+    // Add isImported flag to each repo
+    const reposWithImportStatus = repos.map((repo) => ({
+      ...repo,
+      isImported: existingGithubUrls.includes(repo.html_url),
+      existingProject: existingProjects.find(
+        (project) => project.githubUrl === repo.html_url,
+      ),
+    }))
+
+    res.json({ success: true, repos: reposWithImportStatus })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }
