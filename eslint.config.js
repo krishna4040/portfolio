@@ -4,6 +4,7 @@ import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import pluginReact from "eslint-plugin-react"
+import jsxa11y from "eslint-plugin-jsx-a11y"
 import { defineConfig } from "eslint/config"
 
 export default defineConfig([
@@ -27,4 +28,5 @@ export default defineConfig([
     rules: {},
   },
   eslintPluginPrettierRecommended,
+  jsxa11y.flatConfigs.recommended,
 ])
