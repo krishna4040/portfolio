@@ -1,28 +1,30 @@
 import js from "@eslint/js"
 import globals from "globals"
+import reactHooks from "eslint-plugin-react-hooks"
+import reactRefresh from "eslint-plugin-react-refresh"
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import pluginReact from "eslint-plugin-react"
 import { defineConfig } from "eslint/config"
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
-    ignores: ["node_modules/", "dist/", "build/", "client/dist/", "coverage/"],
-    plugins: { js },
-    rules: {
-      "no-unused-vars": "off",
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs["recommended-latest"],
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
     },
-    extends: ["js/recommended"],
-  },
-  {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
-    languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    rules: {
+      "react-refresh/only-export-components": "warn",
+    },
   },
   {
     ...pluginReact.configs.flat.recommended,
-    rules: {
-      "react/prop-types": "off",
-    },
+    rules: {},
   },
   eslintPluginPrettierRecommended,
 ])
