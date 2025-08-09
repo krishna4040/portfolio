@@ -4,6 +4,7 @@ import {
   saveProfileImage,
   saveResume,
   saveProjectAsset,
+  saveAchievementImage,
   deleteFile,
   getFileInfo,
 } from "../utils/cloudinaryUpload.js"
@@ -147,6 +148,37 @@ router.post(
       })
     } catch (error) {
       console.error("Error uploading project asset:", error)
+      res.status(500).json({ success: false, message: error.message })
+    }
+  },
+)
+
+// Upload achievement image
+router.post(
+  "/achievement-image",
+  auth,
+  upload.single("achievementImage"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res
+          .status(400)
+          .json({ success: false, message: "No file uploaded" })
+      }
+
+      // Save the achievement image
+      const imageUrl = await saveAchievementImage(
+        req.file.buffer,
+        req.file.originalname,
+      )
+
+      res.json({
+        success: true,
+        message: "Achievement image uploaded successfully",
+        url: imageUrl,
+      })
+    } catch (error) {
+      console.error("Error uploading achievement image:", error)
       res.status(500).json({ success: false, message: error.message })
     }
   },

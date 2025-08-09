@@ -14,6 +14,7 @@ import workExperienceRoutes from "./routes/workExperience.js"
 import contactInfoRoutes from "./routes/contactInfo.js"
 import uploadRoutes from "./routes/upload.js"
 import messageRoutes from "./routes/messages.js"
+import achievementRoutes from "./routes/achievements.js"
 import { existsSync } from "fs"
 
 const __filename = fileURLToPath(import.meta.url)
@@ -42,6 +43,7 @@ app.use("/api/work-experience", workExperienceRoutes)
 app.use("/api/contact-info", contactInfoRoutes)
 app.use("/api/upload", uploadRoutes)
 app.use("/api/messages", messageRoutes)
+app.use("/api/achievements", achievementRoutes)
 
 if (env === "production") {
   app.use(express.static(path.join(__dirname, "..", "dist")))

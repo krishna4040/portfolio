@@ -34,6 +34,13 @@ const fileFilter = (req, file, cb) => {
         false,
       )
     }
+  } else if (file.fieldname === "achievementImage") {
+    // Accept only images for achievements
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true)
+    } else {
+      cb(new Error("Only image files are allowed for achievements"), false)
+    }
   } else {
     cb(new Error("Invalid field name"), false)
   }
@@ -152,6 +159,31 @@ export const saveProjectAsset = async (
     return result.secure_url
   } catch (error) {
     throw new Error(`Error processing project ${fileType}: ` + error.message)
+  }
+}
+
+// Process and save achievement image
+export const saveAchievementImage = async (buffer, originalName) => {
+  try {
+    const publicId = `portfolio/achievements/achievement-${uuidv4()}`
+
+    const result = await uploadToCloudinary(buffer, {
+      public_id: publicId,
+      transformation: [
+        {
+          width: 800,
+          height: 600,
+          crop: "limit", // Don't crop, just resize if larger
+          quality: "auto:good",
+          format: "auto", // Auto-select best format (WebP, etc.)
+        },
+      ],
+      resource_type: "image",
+    })
+
+    return result.secure_url
+  } catch (error) {
+    throw new Error("Error processing achievement image: " + error.message)
   }
 }
 
