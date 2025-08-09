@@ -7,6 +7,7 @@ import GithubRepos from "./GithubRepos"
 import AboutForm from "./AboutForm"
 import SkillsManager from "./SkillsManager"
 import WorkExperienceManager from "./WorkExperienceManager"
+import AchievementsManager from "./AchievementsManager"
 import ContactInfoForm from "./ContactInfoForm"
 import MessagesManager from "./MessagesManager"
 import PageHelmet from "../PageHelmet"
@@ -191,6 +192,16 @@ const AdminDashboard = () => {
                 Contact Info
               </button>
               <button
+                onClick={() => setActiveTab("achievements")}
+                className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
+                  activeTab === "achievements"
+                    ? "border-orange-500 text-orange-600 dark:text-[#ff6b35]"
+                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
+                }`}
+              >
+                Achievements
+              </button>
+              <button
                 onClick={() => setActiveTab("messages")}
                 className={`border-b-2 px-1 py-4 text-sm font-medium transition-colors duration-300 ${
                   activeTab === "messages"
@@ -224,6 +235,7 @@ const AdminDashboard = () => {
             {activeTab === "skills" && <SkillsManager />}
             {activeTab === "experience" && <WorkExperienceManager />}
             {activeTab === "contact" && <ContactInfoForm />}
+            {activeTab === "achievements" && <AchievementsManager />}
             {activeTab === "messages" && <MessagesManager />}
           </div>
         </main>

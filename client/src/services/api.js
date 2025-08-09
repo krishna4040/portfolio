@@ -91,6 +91,25 @@ export const messagesAPI = {
   markAsRead: (id, isRead) => api.patch(`/messages/${id}/read`, { isRead }),
 }
 
+// Achievements API
+export const achievementsAPI = {
+  // Public endpoints
+  getAllAchievements: () => api.get("/achievements"),
+  getAchievementsByCategory: (category) =>
+    api.get(`/achievements/category/${category}`),
+  getAchievement: (id) => api.get(`/achievements/${id}`),
+
+  // Admin endpoints
+  getAllAchievementsAdmin: () => api.get("/achievements/admin/all"),
+  createAchievement: (achievementData) =>
+    api.post("/achievements", achievementData),
+  updateAchievement: (id, achievementData) =>
+    api.put(`/achievements/${id}`, achievementData),
+  deleteAchievement: (id) => api.delete(`/achievements/${id}`),
+  reorderAchievements: (achievements) =>
+    api.patch("/achievements/reorder", { achievements }),
+}
+
 // Upload API
 export const uploadAPI = {
   uploadProfileImage: (file) => {
@@ -111,6 +130,13 @@ export const uploadAPI = {
     const formData = new FormData()
     formData.append("projectAsset", file)
     return api.post("/upload/project-assets", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+  },
+  uploadAchievementImage: (file) => {
+    const formData = new FormData()
+    formData.append("achievementImage", file)
+    return api.post("/upload/achievement-image", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
   },

@@ -9,6 +9,7 @@ import Footer from "./components/Footer"
 import AllProjects from "./components/AllProjects"
 import ProjectDetail from "./components/ProjectDetail"
 import WorkExperience from "./components/WorkExperience"
+import AchievementsCarousel from "./components/AchievementsCarousel"
 import AdminLogin from "./components/admin/AdminLogin"
 import AdminDashboard from "./components/admin/AdminDashboard"
 import NotFound from "./components/NotFound"
@@ -38,6 +39,7 @@ const HomePage = ({ isDark, setIsDark }) => {
           <Projects loadingHook={loadingHook} />
           <Stack loadingHook={loadingHook} />
           <WorkExperience loadingHook={loadingHook} />
+          <AchievementsCarousel />
           <Contact loadingHook={loadingHook} />
           <Footer />
         </div>
